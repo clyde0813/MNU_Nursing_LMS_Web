@@ -4,7 +4,7 @@ from function.professor.curriculum import *
 from function.professor.html import *
 
 
-@login_required
+@login_required(redirect_field_name=None)
 # Create your views here.
 def index(request):
     subject_objects = Subject.objects.filter(professor=request.user).all()
@@ -12,20 +12,20 @@ def index(request):
     return render(request, "professor/subject/list.html", context)
 
 
-@login_required
+@login_required(redirect_field_name=None)
 def subject_create(request):
     name = request.POST.get("name")
     Subject.objects.create(professor=request.user, name=name)
     return redirect("common:index")
 
 
-@login_required
+@login_required(redirect_field_name=None)
 def subject_delete(request, subject_id):
     Subject.objects.get(professor=request.user, id=subject_id).delete()
     return redirect("common:index")
 
 
-@login_required
+@login_required(redirect_field_name=None)
 def subject_modify(request):
     subject_id = request.POST.get("subject_id")
     subject_object = Subject.objects.get(professor=request.user, id=int(subject_id))
@@ -34,7 +34,7 @@ def subject_modify(request):
     return redirect("common:index")
 
 
-@login_required
+@login_required(redirect_field_name=None)
 def curriculum(request, subject_id, type_id):
     curriculum_objects = Curriculum.objects.filter(subject_id=subject_id, type_id=type_id) \
         .order_by("created_date").all()
@@ -45,7 +45,7 @@ def curriculum(request, subject_id, type_id):
     return render(request, "professor/list/list_layout.html", context)
 
 
-@login_required
+@login_required(redirect_field_name=None)
 def curriculum_create(request, subject_id, type_id):
     if request.method == "POST":
         curriculum_create_func(request, subject_id, type_id)
@@ -54,7 +54,7 @@ def curriculum_create(request, subject_id, type_id):
     return render(request, html_return(type_id, "create"), context)
 
 
-@login_required
+@login_required(redirect_field_name=None)
 def curriculum_modify(request, subject_id, type_id, curriculum_id):
     if request.method == "POST":
         curriculum_modify_func(request, type_id, curriculum_id)
@@ -63,26 +63,26 @@ def curriculum_modify(request, subject_id, type_id, curriculum_id):
     return render(request, html_return(type_id, "modify"), context)
 
 
-@login_required
+@login_required(redirect_field_name=None)
 def curriculum_delete(request, subject_id, type_id, curriculum_id):
     Curriculum.objects.get(id=curriculum_id).delete()
     return redirect("professor:curriculum", subject_id, type_id)
 
 
-@login_required
+@login_required(redirect_field_name=None)
 def curriculum_detail(request, subject_id, type_id, curriculum_id):
     context = curriculum_context(subject_id, type_id, curriculum_id, "detail")
     return render(request, html_return(type_id, "detail"), context)
 
 
-@login_required
+@login_required(redirect_field_name=None)
 def assignment_detail(request, subject_id, type_id, curriculum_id, assignment_id):
     context = assignment_context(request=request, subject_id=subject_id, curriculum_id=curriculum_id, type_id=type_id,
                                  assignment_id=assignment_id)
     return render(request, html_return(type_id, "assignment"), context)
 
 
-@login_required
+@login_required(redirect_field_name=None)
 def assignment_evaluate(request, subject_id, type_id, curriculum_id, assignment_id):
     if request.method == "POST":
         checklist_set_object = ChecklistCurriculum.objects.get(curriculum_id=curriculum_id).checklist_set
@@ -118,7 +118,7 @@ def journal_create(request, subject_id):
     return render(request, "professor/journal/journal_create.html", context)
 
 
-@login_required
+@login_required(redirect_field_name=None)
 def enrollment(request, subject_id):
     subject_name = Subject.objects.get(id=subject_id).name
     enrollment_objects = Enrollment.objects.filter(subject_id=subject_id).all()
@@ -127,7 +127,7 @@ def enrollment(request, subject_id):
     return render(request, "professor/subject/enrollment.html", context)
 
 
-@login_required
+@login_required(redirect_field_name=None)
 def enrollment_confirm(request, subject_id, enrollment_id):
     enrollment_object = Enrollment.objects.get(id=enrollment_id)
     enrollment_object.status = True

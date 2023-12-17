@@ -12,7 +12,7 @@ def get_student_enrollments(student):
     return all_enrollments, active_enrollments, pending_enrollments
 
 
-@login_required
+@login_required(redirect_field_name=None)
 def index(request):
     subjects = Subject.objects.all()
     all_enrolls, active_enrolls, pending_enrolls = get_student_enrollments(request.user)
@@ -23,7 +23,7 @@ def index(request):
             subject_enrollments.append({
                 "id": subject.id,
                 "name": subject.name,
-                "journal": subject.professor.profile.name
+                "professor": subject.professor.profile.name
             })
 
     context = {
@@ -35,7 +35,7 @@ def index(request):
     return render(request, "student/subject/list.html", context)
 
 
-@login_required
+@login_required(redirect_field_name=None)
 def curriculum(request, subject_id, type_id):
     curriculum_objects = Curriculum.objects.filter(subject_id=subject_id, type_id=type_id) \
         .order_by("created_date").all()
@@ -46,7 +46,7 @@ def curriculum(request, subject_id, type_id):
     return render(request, "student/list/list_layout.html", context)
 
 
-@login_required
+@login_required(redirect_field_name=None)
 def curriculum_detail(request, subject_id, type_id, curriculum_id):
     if request.method == "POST":
         assignment_create(request, subject_id, type_id, curriculum_id)
@@ -61,7 +61,7 @@ def curriculum_detail(request, subject_id, type_id, curriculum_id):
         return render(request, html_return(type_id, method), context)
 
 
-@login_required
+@login_required(redirect_field_name=None)
 def enrollment(request, subject_id):
     Enrollment.objects.create(subject_id=subject_id, student=request.user)
     return redirect("common:index")

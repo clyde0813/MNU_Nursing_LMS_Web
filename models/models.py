@@ -30,6 +30,11 @@ class Curriculum(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
 
 
+class CurriculumFile(models.Model):
+    curriculum = models.ForeignKey(Curriculum, on_delete=models.CASCADE)
+    file = models.FileField()
+
+
 class Evaluation(models.Model):
     curriculum = models.ForeignKey(Curriculum, on_delete=models.CASCADE)
     status = models.BooleanField(default=True)
@@ -64,6 +69,11 @@ class Assignment(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)
+
+
+class AssignmentFile(models.Model):
+    assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
+    file = models.FileField()
 
 
 class AssignmentPeriod(models.Model):

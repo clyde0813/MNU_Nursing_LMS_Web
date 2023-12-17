@@ -64,6 +64,7 @@ def curriculum_modify_func(request, type_id, curriculum_id):
 
 def curriculum_context(subject_id, type_id, curriculum_id, method):
     curriculum_object = None
+    subject_name = Subject.objects.get(id=subject_id).name
     if curriculum_id is not None:
         curriculum_object = Curriculum.objects.get(id=curriculum_id)
 
@@ -84,8 +85,8 @@ def curriculum_context(subject_id, type_id, curriculum_id, method):
             })
         type_name = CurriculumType.objects.get(id=type_id).name
         context = {
-            "subject_id": subject_id, "type_id": type_id, "curriculum_id": curriculum_id, "type_name": type_name,
-            "object": curriculum_object, "objects": student_objects
+            "subject_id": subject_id, "type_id": type_id, "curriculum_id": curriculum_id, "subject_name": subject_name,
+            "type_name": type_name, "object": curriculum_object, "objects": student_objects
         }
         return context
 
@@ -94,32 +95,34 @@ def curriculum_context(subject_id, type_id, curriculum_id, method):
         if method == "detail":
             type_name = CurriculumType.objects.get(id=type_id).name
             context = {
-                "subject_id": subject_id, "type_id": type_id, "type_name": type_name,
+                "subject_id": subject_id, "type_id": type_id, "type_name": type_name, "subject_name": subject_name,
                 "object": curriculum_object
             }
         elif method == "create":
             context = {
-                "subject_id": subject_id, "type_id": type_id
+                "subject_id": subject_id, "type_id": type_id, "subject_name": subject_name,
             }
         elif method == "modify":
             context = {
-                "subject_id": subject_id, "type_id": type_id, "object": curriculum_object, "method": method
+                "subject_id": subject_id, "type_id": type_id, "subject_name": subject_name, "object": curriculum_object,
+                "method": method
             }
     # 지침서
     elif type_id == 2:
         if method == "create":
             context = {
-                "subject_id": subject_id, "type_id": type_id
+                "subject_id": subject_id, "type_id": type_id, "subject_name": subject_name,
             }
         elif method == "modify":
             context = {
-                "subject_id": subject_id, "type_id": type_id, "object": curriculum_object, "method": method
+                "subject_id": subject_id, "type_id": type_id, "subject_name": subject_name, "object": curriculum_object,
+                "method": method
             }
     elif type_id == 3:
         if method == "create":
             checklist_objects = ChecklistSet.objects.all()
             context = {
-                "subject_id": subject_id, "type_id": type_id,
+                "subject_id": subject_id, "type_id": type_id, "subject_name": subject_name,
                 "checklist_objects": checklist_objects, "method": method
             }
         elif method == "modify":
@@ -128,31 +131,32 @@ def curriculum_context(subject_id, type_id, curriculum_id, method):
             selected_checklist_objects = ChecklistGroup.objects.filter(set=checklist_set).all()
             evaluation_status = Evaluation.objects.get(curriculum=curriculum_object).status
             context = {
-                "subject_id": subject_id, "type_id": type_id, "object": curriculum_object, "method": method,
-                "selected_checklist_objects": selected_checklist_objects, "checklist_objects": checklist_objects,
-                "checklist_set_id": checklist_set.id, "evaluation_status": evaluation_status
+                "subject_id": subject_id, "type_id": type_id, "subject_name": subject_name, "object": curriculum_object,
+                "method": method, "selected_checklist_objects": selected_checklist_objects,
+                "checklist_objects": checklist_objects, "checklist_set_id": checklist_set.id,
+                "evaluation_status": evaluation_status
             }
     elif type_id == 4:
         if method == "create":
             context = {
-                "subject_id": subject_id, "type_id": type_id
+                "subject_id": subject_id, "type_id": type_id, "subject_name": subject_name,
             }
         elif method == "modify":
             evaluation_status = Evaluation.objects.get(curriculum=curriculum_object).status
             context = {
-                "subject_id": subject_id, "type_id": type_id, "object": curriculum_object, "method": method,
-                "evaluation_status": evaluation_status
+                "subject_id": subject_id, "type_id": type_id, "subject_name": subject_name, "object": curriculum_object,
+                "method": method, "evaluation_status": evaluation_status
             }
     elif type_id == 5:
         if method == "create":
             context = {
-                "subject_id": subject_id, "type_id": type_id
+                "subject_id": subject_id, "type_id": type_id, "subject_name": subject_name,
             }
         elif method == "modify":
             evaluation_status = Evaluation.objects.get(curriculum=curriculum_object).status
             context = {
-                "subject_id": subject_id, "type_id": type_id, "object": curriculum_object, "method": method,
-                "evaluation_status": evaluation_status
+                "subject_id": subject_id, "type_id": type_id, "subject_name": subject_name, "object": curriculum_object,
+                "method": method, "evaluation_status": evaluation_status
             }
     return context
 
