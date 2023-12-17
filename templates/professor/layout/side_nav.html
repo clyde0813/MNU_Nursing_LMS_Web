@@ -1,0 +1,23 @@
+{% load static %}
+<!--sidenav-->
+<div class="side-nav">
+    <div class="title">
+        <div onclick="location.href='{% url 'common:index' %}'">
+            <i class="fa-solid fa-chevron-left"></i>
+            <h2>{{ subject_name }}</h2>
+        </div>
+        <div class="menu" id="menuBtn">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </div>
+    <ul class="menu" id="pc-menu">
+        {% include 'professor/layout/side_nav_items.html' %}
+    </ul>
+    <ul class="menu" id="mo-menu">
+        {% include 'professor/layout/side_nav_items.html' %}
+    </ul>
+    <div class="logo-box">
+        <img src="{% static 'img/logo.svg' %}" alt="로고 이미지" width="100%"/>
+    </div>
+</div>
+<!--sidenav 끝-->

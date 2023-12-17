@@ -1,0 +1,191 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/3bafd42962.js" crossorigin="anonymous"></script>
+    <script src="{% static 'js/jquery-3.4.1.js' %}"></script>
+    <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+    <!--bootstrap-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"
+            integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS"
+            crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+            integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+            integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+            crossorigin="anonymous"></script>
+
+
+    <link rel="stylesheet" href="{% static 'css/common/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'css/common/nav.css' %}">
+    <link rel="stylesheet" href="{% static 'css/common/common.css' %}">
+    <link rel="stylesheet" href="{% static 'css/common/component.css' %}">
+    <link rel="stylesheet" href="{% static 'css/account/account.css' %}">
+
+    <title>회원가입</title>
+</head>
+
+<script>
+    $(document).ready(function () {
+        $('.dropdown-toggle').dropdown()
+
+        $('#profileBtn').click(function () {
+            $('.dropDownMenu').slideToggle(300, 'linear');
+        })
+        $('#menuBtn').click(function () {
+            $('#mo-menu').slideToggle(300, 'linear');
+        })
+    });
+</script>
+<body>
+<!--nav-->
+<section class="mobileNav">
+    <article class="mobileNavWrap1">
+        <div class="logoBox" onclick="location.href='{% url 'common:index' %}'">
+            <h1>Electronic Nursing Education Book</h1>
+        </div>
+        <div id="profileBtn">
+            <i class="fa-solid fa-user"></i>
+        </div>
+    </article>
+    <article class="mobileNavWrap2">
+        <div class="dropDownMenu">
+            <ul class="mobileMenu">
+                <li class="profile">
+                    <div>
+                        <a href="{% url 'common:index' %}">로그인</a>
+                        <h3>|</h3>
+                        <a href="">회원가입</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </article>
+</section>
+<section class="top-nav">
+    <h1 onclick="location.href='{% url 'common:index' %}'">Electronic Nursing Education Book</h1>
+    <div class="right-box">
+        <a href="{% url 'common:index' %}">로그인</a>
+        <h3>|</h3>
+        <a href="">회원가입</a>
+    </div>
+</section>
+<!--nav 끝-->
+
+<section class="join-sec">
+    <div class="join-box">
+        <div class="padding">
+            <h1>회원가입</h1>
+            <div class="radio-button-wrap">
+                <input type="radio" name="join" id="professor" checked>
+                <label for="professor" onclick="location.href='{% url 'common:register' 'professor' %}'">교수</label>
+                <input type="radio" name="join" id="student">
+                <label for="student" onclick="location.href='{% url 'common:register' 'student' %}'">학생</label>
+            </div>
+            <form method="post" action="{% url 'common:register' 'professor' %}">
+                {% csrf_token %}
+                <div class="check-box-wrap">
+                    <h2>약관동의</h2>
+                    {#                    <ul>#}
+                    {#                        <li>#}
+                    {#                            <div>#}
+                    {#                                <input type="checkbox" id="check1" name="check">#}
+                    {#                                <label for="check1">이용약관 및 개인정보 수집 및 이용에 모두 동의 (선택포함)</label>#}
+                    {#                            </div>#}
+                    {#                        </li>#}
+                    {#                        <li>#}
+                    {#                            <div>#}
+                    {#                                <input type="checkbox" id="check2" name="check">#}
+                    {#                                <label for="check2">[필수] 이용약관 동의</label>#}
+                    {#                            </div>#}
+                    {#                            <a href="">약관보기</a>#}
+                    {#                        </li>#}
+                    {#                        <li>#}
+                    {#                            <div>#}
+                    {#                                <input type="checkbox" id="check3" name="check">#}
+                    {#                                <label for="check3">[필수] 개인정보 수집 및 이용 동의</label>#}
+                    {#                            </div>#}
+                    {#                            <a href="">약관보기</a>#}
+                    {#                        </li>#}
+                    {#                        <li>#}
+                    {#                            <div>#}
+                    {#                                <input type="checkbox" id="check4" name="check">#}
+                    {#                                <label for="check4">[선택] 개인정보 제3자 제공 및 위탁 동의</label>#}
+                    {#                            </div>#}
+                    {#                            <a href="">약관보기</a>#}
+                    {#                        </li>#}
+                    {#                    </ul>#}
+                </div>
+                <div class="input-wrap">
+                    <div class="under-title">
+                        <h2>정보입력</h2>
+                        <span>* 항목은 필수입력 항목입니다.</span>
+                    </div>
+                    <ul>
+                        <li>
+                            <h3>이름<strong> *</strong></h3>
+                            <input type="text" id="name" name="name">
+                        </li>
+                        <li class="mb-10">
+                            <h3>아이디<strong> *</strong></h3>
+                            <div class="input-dp-wrap">
+                                <input type="text" id="id" name="username">
+                                {#                                <button type="button" class="btn btn-success medium-btn">중복확인</button>#}
+                            </div>
+                        </li>
+                        <div class="small-text-wrap">
+                            {#                            <span class="success">사용가능한 아이디 입니다.</span>#}
+                        </div>
+                        <li class="mb-10">
+                            <h3>비밀번호<strong> *</strong></h3>
+                            <input type="password" id="password" name="password" autocomplete="new-password">
+                        </li>
+                        <div class="small-text-wrap">
+                            <span class="default">비밀번호는 6~15자 이내, 영문/숫자 조합</span>
+                        </div>
+                        <li class="mb-10">
+                            <h3>비밀번호 확인<strong> *</strong></h3>
+                            <input type="password" id="password" name="password2" autocomplete="new-password">
+                        </li>
+                        <div class="small-text-wrap">
+                            <span class="default">비밀번호 확인을 위해 한번 더 입력</span>
+                        </div>
+                        <li>
+                            <h3>휴대폰 번호<strong> *</strong></h3>
+                            <div class="input-dp-wrap">
+                                <input type="number" id="num" name="mobile">
+                            </div>
+                        </li>
+                        <li>
+                            <h3>이메일 주소<strong> *</strong></h3>
+                            <div class="input-dp-wrap">
+                                <input type="email" id="email" name="email">
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="join-btn-wrap">
+                        <button type="button" class="btn btn-secondary" onclick="location.href='{% url 'common:index' %}'">취소
+                        </button>
+                        <button type="submit" class="btn btn-success">회원가입</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+</body>

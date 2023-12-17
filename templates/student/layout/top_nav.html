@@ -1,0 +1,34 @@
+<section class="mobileNav">
+    <article class="mobileNavWrap1">
+        <div class="logoBox">
+            <h1>Electronic Nursing Education Book</h1>
+        </div>
+        <div id="profileBtn">
+            <i class="fa-solid fa-user"></i>
+        </div>
+    </article>
+    <article class="mobileNavWrap2">
+        <div class="dropDownMenu">
+            <ul class="mobileMenu">
+                <li class="profile">
+                    <a href="">{{ user.studentprofile.name }}</a>
+                    <div>
+                        <a href="">내정보</a>
+                        <h3>|</h3>
+                        <a href="{% url 'common:logout' %}">로그아웃</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </article>
+</section>
+
+<section class="top-nav">
+    <h1>Electronic Nursing Education Book</h1>
+    <div class="right-box">
+        <a href="" class="name">{{ user.studentprofile.name }}</a>
+        <a href="">내정보</a>
+        <h3>|</h3>
+        <a href="{% url 'common:logout' %}">로그아웃</a>
+    </div>
+</section>

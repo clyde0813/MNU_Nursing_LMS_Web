@@ -1,0 +1,127 @@
+{% load static %}
+{% include 'professor/layout/layout.html' %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/drm.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="content">
+        <div class="main-title">
+            <h1>실습일지 {% if method == "modify" %}수정{% else %}등록{% endif %}</h1>
+        </div>
+        {% if method == "modify" %}
+            <form action="{% url 'professor:curriculum_modify' subject_id type_id object.id %}" method="post"
+                  enctype="multipart/form-data">
+        {% else %}
+            <form action="{% url 'professor:curriculum_create' subject_id type_id %}" method="post"
+                  enctype="multipart/form-data">
+        {% endif %}
+        {% csrf_token %}
+        <div class="background h-auto">
+            {% if method == "modify" %}
+                <div class="rigist-wrap">
+                    <ul>
+                        <li>
+                            <h3>실습기간</h3>
+                            <div class="date-wrap">
+                                <div class="container">
+                                    <div class="row">
+                                        <input type="date" name="period"
+                                               value="{{ object.period_set.last.date|date:"Y-m-d" }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <h3>제목</h3>
+                            <input class="form-control form-control-lg" type="text" placeholder="제목을 입력하세요."
+                                   aria-label=".form-control-lg example" name="title" value="{{ object.title }}">
+                        </li>
+                        <li>
+                            <h3>설명</h3>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="11"
+                                      placeholder="설명을 입력하세요."
+                                      name="content">{{ object.content|linebreaksbr }}</textarea>
+                        </li>
+                    </ul>
+                </div>
+            {% else %}
+                <div class="rigist-wrap">
+                    <ul>
+                        <li>
+                            <h3>실습기간</h3>
+                            <div class="date-wrap">
+                                <div class="container">
+                                    <div class="row">
+                                        <input type="date" name="period" value="">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <h3>제목</h3>
+                            <input class="form-control form-control-lg" type="text" placeholder="제목을 입력하세요."
+                                   aria-label=".form-control-lg example" name="title">
+                        </li>
+                        <li>
+                            <h3>설명</h3>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="11"
+                                      placeholder="설명을 입력하세요." name="content"></textarea>
+                        </li>
+                    </ul>
+                </div>
+            {% endif %}
+            <div class="dp-flex align-center space-between">
+                <div class="evaluation-box">
+                    <h2>평가여부</h2>
+                    <ul class="radio-wrap">
+                        {% if method == "modify" %}
+                            <li>
+                                <input type="radio" name="eval" value="True" id="eva1"
+                                       {% if evaluation_status %}checked{% endif %}>
+                                <label for="eva1">적용</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="eval" value="False" id="eva2"
+                                       {% if evaluation_status %}{% else %}checked{% endif %}>
+                                <label for="eva2">미적용</label>
+                            </li>
+                        {% else %}
+                            <li>
+                                <input type="radio" name="eval" value="True" id="eva1" checked>
+                                <label for="eva1">적용</label>
+                            </li>
+                            <li>
+                                <input type="radio" name="eval" value="False" id="eva2">
+                                <label for="eva2">미적용</label>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <div class="file-btn">
+                    <label for="file-btn">
+                        <i class="fa-solid fa-upload"></i>
+                        첨부파일 업로드
+                    </label>
+                    <input type="file" id="file-btn" name="file" hidden/>
+                </div>
+            </div>
+            <div class="bottom-btn-wrap">
+                <button type="button" class="btn btn-secondary medium-btn solid-btn"
+                        onclick="location.href='{% url 'professor:curriculum' subject_id type_id %}'">
+                    목록
+                </button>
+                <div>
+                    <button type="button" class="btn btn-secondary medium-btn"
+                            onclick="location.href='{% url 'professor:curriculum' subject_id type_id %}'">
+                        취소
+                    </button>
+                    <button type="submit" class="btn btn-success medium-btn">
+                        <i class="fa-solid fa-plus"></i>
+                        등록
+                    </button>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+{% endblock %}

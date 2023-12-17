@@ -1,0 +1,46 @@
+{% load static %}
+{% include 'professor/layout/layout.html' %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/drm.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="content">
+        <div class="main-title">
+            <h1>공지사항 상세</h1>
+        </div>
+        <div class="background one-page">
+            <div class="detail-wrap">
+                <div class="detail-title">
+                    <h1>{{ object.title }}</h1>
+                    <p class="date">{{ object.created_date }}</p>
+                </div>
+                <div class="detail-content">
+                    <p>
+                        {{ object.content|linebreaksbr }}
+                    </p>
+                </div>
+            </div>
+            <div class="dp-flex dp-end file-download-wrap">
+                <div class="dp-flex dp-end border-bottom">
+                    <a href="">
+                        <div class="file file-delete mb-0">
+                            <h2>참고자료. hwp</h2>
+                            <button><i class="fa-solid fa-download"></i></button>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="bottom-btn-wrap">
+                <button type="button" class="btn btn-secondary medium-btn solid-btn"
+                        onclick="location.href='{% url 'professor:curriculum' subject_id type_id %}'">
+                    목록
+                </button>
+                <button type="button" class="btn btn-success medium-btn"
+                        onclick="location.href='{% url 'professor:curriculum_modify' subject_id type_id object.id %}'">
+                    수정
+                </button>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

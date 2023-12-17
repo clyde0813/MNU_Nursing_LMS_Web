@@ -1,0 +1,82 @@
+.no-subject{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+.no-subject h3{
+    font-size: 20px;
+    text-align: center;
+    line-height: 140%;
+    color: #AFAFAF;
+    margin-bottom: 30px;
+}
+.up-down-btn-wrap{
+    display: flex;
+    align-items: center;
+}
+.up-down-btn-wrap button{
+    background-color: #fff;
+    padding: 5px;
+    border: 1px solid rgba(0,0,0,.1);
+    border-radius: 4px;
+}
+.up-down-btn-wrap button i {
+    font-size: 16px;
+    color: #3b3b3b;
+}
+.up-down-btn-wrap button:first-child{
+    margin-right: 10px;
+}
+.up-down-btn-wrap button:hover{
+    background-color: #AFAFAF;
+    border-color: #AFAFAF;
+}
+.up-down-btn-wrap button:hover i{
+    color: #fff;
+}
+.content-left-box{
+    width: 49%;
+    height: 67vh;
+    overflow-y: scroll;
+}
+.content-right-box{
+    width: 49%;
+    padding: 30px;
+    border: 1px solid rgba(0,0,0,.1);
+    border-radius: 10px;
+}
+.student-num-icon{
+    display: flex;
+    align-items: center;
+}
+
+
+
+
+@media (max-width: 1200px) {
+    .content-left-box{
+        width: 100%;
+    }
+    .content-right-box{
+        width: 100%;
+        margin-top: 30px;
+    }
+    .content-right-box{
+        border: none;
+        padding: 0;
+    }
+    .content-left-box{
+        height: 100%;
+    }
+}
+
+
+
+@media (max-width: 768px) {
+    .no-subject{
+        height: 50vh;
+    }
+
+}

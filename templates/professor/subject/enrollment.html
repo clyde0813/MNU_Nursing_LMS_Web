@@ -1,0 +1,53 @@
+{% load static %}
+{% include 'professor/layout/layout.html' %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/subject.css' %}">
+    <link rel="stylesheet" href="{% static 'css/table.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="content">
+        <div class="sub-title">
+            <h1>{{ subject_name }}</h1>
+            <h5 class="student-num">수강 신청 : <strong>{{ objects|length }}명</strong></h5>
+        </div>
+        <div class="table-wrap">
+            <div class="table" id="fullWidth-table">
+                <ul class="th-list">
+                    <li class="th w-2">
+                        <h2>번호</h2>
+                    </li>
+                    <li class="th w-4">
+                        <h2>학생이름</h2>
+                    </li>
+                    <li class="th w-4">
+                        <h2>수락</h2>
+                    </li>
+                </ul>
+                {% for data in enrollment_objects %}
+                    <ul class="tb-list">
+                        <li class="tb w-2">
+                            <h2>{{ forloop.counter }}</h2>
+                        </li>
+                        <li class="tb w-4">
+                            <h2>{{ data.student.profile.name }}</h2>
+                        </li>
+                        <li class="tb w-4">
+                            {% if data.status %}
+                                <button type="button" class="btn btn-secondary small-btn" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal2" disabled>
+                                    수락 완료
+                                </button>
+                            {% else %}
+                                <button type="button" class="btn btn-success small-btn" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal2"
+                                        onclick="location.href='{% url 'professor:enrollment_confirm' subject_id data.id %}'">
+                                    수락
+                                </button>
+                            {% endif %}
+                        </li>
+                    </ul>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

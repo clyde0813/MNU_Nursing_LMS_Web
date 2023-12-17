@@ -1,0 +1,35 @@
+{% load static %}
+{% include 'student/layout/layout.html' %}
+{% block stylesheet %}
+{% endblock %}
+{% block content %}
+    <div class="content">
+        <div class="main-title">
+            <h1>{{ type_name }}</h1>
+        </div>
+        <div class="background one-page padding-none">
+            <ul class="list">
+                {% for data in objects %}
+                    <li class="list-li"
+                        onclick="location.href='{% url 'student:curriculum_detail' subject_id type_id data.id %}'">
+                        <div class="check-submit-wrap">
+                            {% if type_id != 1 %}
+                                {% if data.status %}
+                                    <h3 class="check-submit done">제출완료</h3>
+                                {% else %}
+                                    <h3 class="check-submit do-not">미제출</h3>
+                                {% endif %}
+                            {% endif %}
+                            <h2>{{ data.title }}</h2>
+                        </div>
+                        <div class="info-box">
+                            <a href="#">
+                                <i class="fa-solid fa-chevron-right" style="font-size: 14px;"></i>
+                            </a>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

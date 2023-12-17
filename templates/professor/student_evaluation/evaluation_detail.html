@@ -1,0 +1,68 @@
+{% load static %}
+{% include 'professor/layout/layout.html' %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/table.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="content">
+        <div class="main-title">
+            <h1>학생 평가</h1>
+        </div>
+        <div class="background h-auto">
+            <div class="sub-title border-bottom-color">
+                <h1>자기평가</h1>
+            </div>
+            <h4 class="student-num mb-10">
+                <strong>{{ student_name }}</strong>
+                자기평가
+            </h4>
+            <div class="table-wrap">
+                <div class="table" id="check-table">
+                    <ul class="th-list">
+                        <li class="th w-1">
+                            <h2>번호</h2>
+                        </li>
+                        <li class="th w-7">
+                            <h2>체크 항목</h2>
+                        </li>
+                        <li class="th w-1">
+                            <h2>상</h2>
+                        </li>
+                        <li class="th w-1">
+                            <h2>중</h2>
+                        </li>
+                        <li class="th w-1">
+                            <h2>하</h2>
+                        </li>
+                    </ul>
+                    {% for data in objects %}
+                        <ul class="tb-list">
+                            <li class="tb w-1">
+                                <h2>{{ forloop.counter }}</h2>
+                            </li>
+                            <li class="tb w-7">
+                                <h2>{{ data.content }}</h2>
+                            </li>
+                            <li class="tb w-1">
+                                <input type="radio" name="checklist{{ data.id }}" id="check1" value="1" onClick="return false"
+                                       {% if data.grade == 1 %}checked{% endif %}>
+                            </li>
+                            <li class="tb w-1">
+                                <input type="radio" name="checklist{{ data.id }}" id="check2" value="2" onClick="return false"
+                                       {% if data.grade == 2 %}checked{% endif %}>
+                            </li>
+                            <li class="tb w-1">
+                                <input type="radio" name="checklist{{ data.id }}" id="check3" value="3" onClick="return false"
+                                       {% if data.grade == 3 %}checked{% endif %}>
+                            </li>
+                        </ul>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="bottom-btn-wrap pagination-wrap">
+                <button type="button" class="btn btn-secondary medium-btn solid-btn"
+                        onclick="location.href='{% url 'professor_student_evaluation_student_list' subject_id student_evaluation_id %}'">
+                    이전
+                </button>
+            </div>
+{% endblock %}

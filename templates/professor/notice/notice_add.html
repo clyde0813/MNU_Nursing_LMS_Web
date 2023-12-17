@@ -1,0 +1,57 @@
+{% load static %}
+{% include 'professor/layout/layout.html' %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/drm.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="content">
+        <div class="main-title">
+            <h1>공지사항 등록</h1>
+        </div>
+        <form action="{% url 'professor:curriculum_create' subject_id type_id %}" method="post"
+              enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="background one-page">
+                <div class="rigist-wrap">
+                    <ul>
+                        <li>
+                            <h3>제목</h3>
+                            <input class="form-control form-control-lg" type="text" placeholder="제목을 입력하세요."
+                                   aria-label=".form-control-lg example" name="title">
+                        </li>
+                        <li>
+                            <h3>내용</h3>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="11"
+                                      placeholder="내용을 입력하세요." name="content"></textarea>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dp-flex dp-end">
+                    <div class="file-btn">
+                        <label for="file-btn">
+                            <i class="fa-solid fa-upload"></i>
+                            첨부파일 업로드
+                        </label>
+                        <input type="file" id="file-btn" name="file" hidden/>
+                    </div>
+                </div>
+                <div class="bottom-btn-wrap">
+                    <button type="button" class="btn btn-secondary medium-btn solid-btn"
+                            onclick="location.href='{% url 'professor:curriculum' subject_id type_id %}'">
+                        목록
+                    </button>
+                    <div>
+                        <button type="button" class="btn btn-secondary medium-btn"
+                                onclick="location.href='{% url 'professor:curriculum' subject_id type_id %}'">
+                            취소
+                        </button>
+                        <button type="submit" class="btn btn-success medium-btn">
+                            <i class="fa-solid fa-plus"></i>
+                            등록
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

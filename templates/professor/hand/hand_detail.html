@@ -1,0 +1,91 @@
+{% load static %}
+{% include "professor/layout/layout.html" %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/drm.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="content">
+        <div class="main-title">
+            <h1>핵심 수기술 제출 상세</h1>
+        </div>
+        <div class="background h-auto">
+            <div class="sub-title">
+                <h1>{{ object.title }}</h1>
+            </div>
+            <div class="detail-wrap">
+                <div class="detail-title">
+                    <h1>{{ assignment_object.title }}</h1>
+                    <p class="date">{{ assignment_object.created_date }}</p>
+                </div>
+                <div class="detail-content h-auto">
+                    <!--비디오영상-->
+                    <video height="auto" controls class="mb-10">
+                        <source src="img/sampleVideo.mp4" type="video/ogg">
+                    </video>
+                    <p class="h-20vh scroll-y">
+                        {{ assignment_object.content|linebreaksbr }}
+                    </p>
+                </div>
+            </div>
+            <div class="table-wrap mt-20">
+                <div class="table" id="check-table1">
+                    <ul class="th-list">
+                        <li class="th w-1">
+                            <h2>번호</h2>
+                        </li>
+                        <li class="th w-7">
+                            <h2>체크 항목</h2>
+                        </li>
+                        <li class="th w-1">
+                            <h2>상</h2>
+                        </li>
+                        <li class="th w-1">
+                            <h2>중</h2>
+                        </li>
+                        <li class="th w-1">
+                            <h2>하</h2>
+                        </li>
+                    </ul>
+                    {% for data in checklist_objects %}
+                        <ul class="tb-list">
+                            <li class="tb w-1">
+                                <h2>{{ forloop.counter }}</h2>
+                            </li>
+                            <li class="tb w-7">
+                                <h2>{{ data.content }}</h2>
+                            </li>
+                            <li class="tb w-1">
+                                <input type="radio" name="check_{{ data.id }}" id="check1" value="3"
+                                       {% if data.record == 3 %} checked{% else %} disabled{% endif %}>
+                            </li>
+                            <li class="tb w-1">
+                                <input type="radio" name="check_{{ data.id }}" id="check2" value="2"
+                                       {% if data.record == 2 %} checked{% else %} disabled{% endif %}>
+
+                            </li>
+                            <li class="tb w-1">
+                                <input type="radio" name="check_{{ data.id }}" id="check3" value="1"
+                                       {% if data.record == 1 %} checked{% else %} disabled{% endif %}>
+                            </li>
+                        </ul>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="dp-flex flex-start border-top">
+                <a href="">
+                    <div class="file file-delete mb-0">
+                        <h2>김○○ 학생 체크리스트. xlsx</h2>
+                        <button><i class="fa-solid fa-download"></i></button>
+                    </div>
+                </a>
+            </div>
+            <div class="bottom-btn-wrap">
+                <button type="button" class="btn btn-secondary medium-btn solid-btn"
+                        onclick="location.href='{% url 'student:curriculum' subject_id type_id %}'">
+                    목록
+                </button>
+            </div>
+            {% include "student/layout/comment_block.html" %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% load static %}
+{% include "professor/layout/layout.html" %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/drm.css' %}">
+    <link rel="stylesheet" href="{% static 'css/table.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="content">
+        <div class="main-title">
+            <h1>핵심 수기술 제출</h1>
+        </div>
+        <form method="post" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="background h-auto">
+                <div class="sub-title border-bottom-color">
+                    <h1>{{ hand_object.title }}</h1>
+                </div>
+
+                <div class="table-wrap mt-20">
+                    <div class="table" id="check-table">
+                        <ul class="th-list">
+                            <li class="th w-1">
+                                <h2>번호</h2>
+                            </li>
+                            <li class="th w-7">
+                                <h2>체크 항목</h2>
+                            </li>
+                            <li class="th w-1">
+                                <h2>상</h2>
+                            </li>
+                            <li class="th w-1">
+                                <h2>중</h2>
+                            </li>
+                            <li class="th w-1">
+                                <h2>하</h2>
+                            </li>
+                        </ul>
+                        {% for data in checklist_objects %}
+                            <ul class="tb-list">
+                                <li class="tb w-1">
+                                    <h2>{{ forloop.counter }}</h2>
+                                </li>
+                                <li class="tb w-7">
+                                    <h2>{{ data.content }}</h2>
+                                </li>
+                                <li class="tb w-1">
+                                    <input type="radio" name="check_{{ data.id }}" id="check1" value="3"
+                                            {% if data.record == 3 %} checked{% endif %}>
+                                </li>
+                                <li class="tb w-1">
+                                    <input type="radio" name="check_{{ data.id }}" id="check2" value="2"
+                                            {% if data.record == 2 %} checked{% endif %}>
+
+                                </li>
+                                <li class="tb w-1">
+                                    <input type="radio" name="check_{{ data.id }}" id="check3" value="1"
+                                            {% if data.record == 1 %} checked{% endif %}>
+                                </li>
+                            </ul>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="bottom-btn-wrap">
+                    <button type="button" class="btn btn-secondary medium-btn solid-btn"
+                            onclick="location.href='{% url 'student:curriculum' subject_id type_id %}'">
+                        목록
+                    </button>
+                    <div>
+                        <button type="button" class="btn btn-secondary medium-btn"
+                                onclick="location.href='{% url 'student:curriculum' subject_id type_id %}'">
+                            취소
+                        </button>
+                        <button type="submit" class="btn btn-success medium-btn">
+                            <i class="fa-solid fa-plus"></i>
+                            등록
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        document.getElementById("file-btn").addEventListener("change", function () {
+            const media = URL.createObjectURL(this.files[0]);
+            const video = document.getElementById("video");
+            video.src = media;
+            video.play();
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% load static %}
+{% include 'professor/layout/layout.html' %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/drm.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="content">
+        <div class="main-title">
+            <h1>{{ type_name }}</h1>
+            <button type="button" class="btn btn-success medium-btn"
+                    onclick="location.href='{% url 'professor:curriculum_create' subject_id type_id %}'">
+                <i class="fa-solid fa-plus"></i>
+                등록
+            </button>
+        </div>
+        <div class="background one-page padding-none">
+            <ul class="list">
+                {% for data in objects %}
+                    <li class="list-li" onclick="location.href='{% url 'professor:curriculum_detail' subject_id type_id data.id %}'">
+                        <h2>{{ data.title }}</h2>
+                        <div class="info-box">
+                            <span>{{ data.created_date }}</span>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

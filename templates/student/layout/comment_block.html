@@ -1,0 +1,37 @@
+            <div class="comment-wrap mt-30">
+                <div class="sub-title">
+                    <h1>댓글</h1>
+                </div>
+                <div class="comment-box-wrap">
+                    {% for data in assignment_object.comment_set.all %}
+                        <div class="comment-box" id="comment">
+                            <div class="comment-user">
+                                <h2>{% if data.author.profile.group.name == "student" %}
+                                    {{ data.author.profile.name }} 학생
+                                    {% else %}{{ data.author.profile.name }} 교수님{% endif %}</h2>
+                                <div class="date-icon-wrap">
+                                    <p class="date">{{ data.created_date }}</p>
+                                </div>
+                            </div>
+                            <div class="comment-detail">
+                                <p>{{ data.content }}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <form method="post" action="{% url 'api:comment_web' assignment_object.id %}"
+                          enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="comment-input">
+                        <textarea class="form-control border-none" id="exampleFormControlTextarea1" rows="5"
+                                  placeholder="댓글을 입력하세요." name="content"></textarea>
+                            <div class="comment-button-wrap">
+                                <div class="dp-flex dp-end">
+                                    <div class="dp-flex dp-center">
+                                    </div>
+                                </div>
+                                <button class="comment-btn" type="submit">등록</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>

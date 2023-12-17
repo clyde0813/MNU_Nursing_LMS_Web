@@ -1,0 +1,72 @@
+{% load static %}
+{% include 'professor/layout/layout.html' %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/table.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="content">
+        <div class="main-title">
+            <h1>학생 평가</h1>
+        </div>
+        <div class="background h-auto">
+            <div class="sub-title border-bottom-color">
+                <h1>자기평가</h1>
+            </div>
+            <h4 class="student-num mb-10">
+                평가 학생
+                <strong>{{ objects|length }}명</strong>
+            </h4>
+            <div class="table-wrap">
+                <div class="table" id="detail-table3">
+                    <ul class="th-list">
+                        <li class="th w-1">
+                            <h2>번호</h2>
+                        </li>
+                        <li class="th w-3">
+                            <h2>학생 이름</h2>
+                        </li>
+                        <li class="th w-5">
+                            <h2>평가 일시</h2>
+                        </li>
+                        <li class="th w-5">
+                            <h2>평가 여부</h2>
+                        </li>
+                    </ul>
+                    {% for data in objects %}
+                        <ul class="tb-list">
+                            <li class="tb w-1">
+                                <h2>{{ forloop.counter }}</h2>
+                            </li>
+                            <li class="tb w-3">
+                                <h2>{{ data.name }}</h2>
+                            </li>
+                            <div class="tb  w-5">
+                                <h2>{{ data.created_date }}</h2>
+                            </div>
+                            <div class="tb w-5">
+                                {% if data.evaluation_status %}
+                                    <button type="button" class="btn btn-success small-btn" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal2"
+                                            onclick="location.href='{% url 'professor_student_evaluation_detail' subject_id student_evaluation_id data.id %}'">
+                                        평가보기
+                                    </button>
+                                {% else %}
+                                    <button type="button" class="btn btn-secondary small-btn" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal2">
+                                        미평가
+                                    </button>
+                                {% endif %}
+                            </div>
+                        </ul>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="bottom-btn-wrap pagination-wrap">
+                <button type="button" class="btn btn-secondary medium-btn solid-btn"
+                        onclick="location.href='{% url 'professor_student_evaluation' subject_id %}'">
+                    이전
+                </button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

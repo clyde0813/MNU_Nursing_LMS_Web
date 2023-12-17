@@ -1,0 +1,164 @@
+{% load static %}
+{% include 'professor/layout/layout.html' %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/table.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="content">
+        <div class="main-title">
+            <h1>교수 평가</h1>
+        </div>
+        <div class="background h-auto">
+            <div class="sub-title border-bottom-color student-num">
+                <h1>
+                    전체 학생
+                    <strong> 35명</strong>
+                </h1>
+                <button type="button" class="btn btn-success small-btn" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal2">
+                    평가 반영율 관리
+                </button>
+            </div>
+            <div class="table-wrap">
+                <div class="table" id="fullWidth-table">
+                    <ul class="th-list">
+                        <li class="th w-1">
+                            <h2>번호</h2>
+                        </li>
+                        <li class="th w-3">
+                            <h2>학생 이름</h2>
+                        </li>
+                        <li class="th w-5">
+                            <h2>학생 번호</h2>
+                        </li>
+                        <li class="th w-5">
+                            <h2>관리</h2>
+                        </li>
+                    </ul>
+                    {% for data in objects %}
+                        <ul class="tb-list">
+                            <li class="tb w-1">
+                                <h2>{{ forloop.counter }}</h2>
+                            </li>
+                            <li class="tb w-3">
+                                <h2>{{ data.student.name }}</h2>
+                            </li>
+                            <div class="tb  w-5">
+                                <h2>{{ data.student.studentID }}</h2>
+                            </div>
+                            <div class="tb w-5">
+                                <a href="">
+                                    <button type="button" class="btn btn-success small-btn" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal2">
+                                        상세보기
+                                    </button>
+                                </a>
+                            </div>
+                        </ul>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="dp-center dp-flex">
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block modal %}
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered medium-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">평가 반영율 관리</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-table">
+                        <div class="subject-title">
+                            <h2>{{ subject_name }}</h2>
+                        </div>
+                        <div class="table-wrap">
+                            <div class="table m-0 scroll-table">
+                                <ul class="th-list">
+                                    <li class="th w-5">
+                                        <h2>평가 항목</h2>
+                                    </li>
+                                    <li class="th w-5">
+                                        <h2>반영율</h2>
+                                    </li>
+                                </ul>
+                                <ul class="tb-list">
+                                    <li class="tb w-5">
+                                        <h2>지침서</h2>
+                                    </li>
+                                    <li class="tb w-5">
+                                        <input type="number" id="percent" class="small-input" value="20">
+                                    </li>
+                                </ul>
+                                <ul class="tb-list">
+                                    <li class="tb w-5">
+                                        <h2>핵심 수기술</h2>
+                                    </li>
+                                    <li class="tb w-5">
+                                        <input type="number" id="percent" class="small-input" value="20">
+                                    </li>
+                                </ul>
+                                <ul class="tb-list">
+                                    <li class="tb w-5">
+                                        <h2>과제</h2>
+                                    </li>
+                                    <li class="tb w-5">
+                                        <input type="number" id="percent" class="small-input" value="30">
+                                    </li>
+                                </ul>
+                                <ul class="tb-list">
+                                    <li class="tb w-5">
+                                        <h2>실습일지</h2>
+                                    </li>
+                                    <li class="tb w-5">
+                                        <input type="number" id="percent" class="small-input" value="30">
+                                    </li>
+                                </ul>
+                                <ul class="tb-list" id="add-list">
+                                    <li class="tb w-5">
+                                        <h2>실습일지</h2>
+                                    </li>
+                                    <li class="tb w-5">
+                                        <input type="number" id="percent" class="small-input" value="30">
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="add-list" id="add-list-btn">
+                            <div class="add-list-btn">
+                                <i class="fa-solid fa-plus"></i>
+                                항목 추가하기
+                            </div>
+                        </div>
+                        <div class="add-list-input-wrap" id="add-list-input-wrap">
+                            <div class="add-list-input">
+                                <input type="text" id="add-list" placeholder="평가항목을 입력하세요."/>
+                                <button type="button" class="btn btn-success small-btn" id="addBtn">저장</button>
+                            </div>
+                        </div>
+                        <div class="table-wrap mt-20">
+                            <div class="table" id="table1">
+                                <ul class="th-list">
+                                    <li class="th w-3">
+                                        <h2>총 점수</h2>
+                                    </li>
+                                    <li class="tb w-7">
+                                        <h2>100%</h2>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary modal-btn" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-success modal-btn" data-bs-dismiss="modal">적용</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

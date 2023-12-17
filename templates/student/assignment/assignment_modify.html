@@ -1,0 +1,81 @@
+{% load static %}
+{% include 'student/layout/layout.html' %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/drm.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="content">
+        <div class="main-title">
+            <h1>과제 제출 수정</h1>
+        </div>
+        <form method="post" action="{% url 'student_assignment_modify' subject_id assignment_id %}"
+              enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="background h-auto">
+                <div class="sub-title">
+                    <h1>과제 정보</h1>
+                </div>
+                <div class="detail-wrap">
+                    <div class="detail-title">
+                        <h1>{{ assignment_object.title }}</h1>
+                        <p class="date">{{ assignment_object.created_date }}</p>
+                    </div>
+                    <div class="detail-content h-20vh">
+                        <p>
+                            {{ assignment_object.content|linebreaksbr }}
+                        </p>
+                    </div>
+                </div>
+                <div class="dp-flex align-center space-between border-bottom file-download-wrap ">
+                    <a href="">
+                        <div class="file file-delete mb-0">
+                            <h2>시뮬레이션 실습 과제. hwp</h2>
+                            <button><i class="fa-solid fa-download"></i></button>
+                        </div>
+                    </a>
+                </div>
+                <div class="sub-title border-bottom-color mt-30">
+                    <h1>과제 제출</h1>
+                </div>
+                <div class="rigist-wrap">
+                    <ul>
+                        <li>
+                            <h3>제목</h3>
+                            <input class="form-control form-control-lg" type="text" placeholder="제목을 입력하세요."
+                                   aria-label=".form-control-lg example" value="{{ a_assignment_object.title }}"
+                                   name="title">
+                        </li>
+                        <li>
+                            <h3>설명</h3>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="6"
+                                      placeholder="설명을 입력하세요."
+                                      name="content">{{ a_assignment_object.content }}</textarea>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dp-flex align-center space-between">
+                    <div class="file file-delete mr-10">
+                        <h2>4652 – 황혜리 - 시뮬레이션 실습 과제제출 - 20230723. hwp</h2>
+                        <button><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                    <div class="file-btn">
+                        <label for="file-btn">
+                            <i class="fa-solid fa-upload"></i>
+                            첨부파일 업로드
+                        </label>
+                        <input type="file" id="file-btn" name="file" hidden/>
+                    </div>
+                </div>
+                <div class="bottom-btn-wrap">
+                    <button type="button" class="btn btn-secondary medium-btn solid-btn"
+                            onclick="location.href='{% url 'student_assignment_list' subject_id %}'">
+                        목록
+                    </button>
+                    <button type="submit" class="btn btn-success medium-btn">
+                        적용
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

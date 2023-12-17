@@ -1,0 +1,116 @@
+{% load static %}
+{% include "student/layout/layout.html" %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/drm.css' %}">
+    <link rel="stylesheet" href="{% static 'css/table.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="content">
+        <div class="main-title">
+            <h1>핵심 수기술 제출</h1>
+        </div>
+        <form method="post" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="background h-auto">
+                <div class="sub-title border-bottom-color">
+                    <h1>{{ hand_object.title }}</h1>
+                </div>
+                <div class="notice-text">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <p>영상 파일을 업로드해주세요.</p>
+                </div>
+                <!--비디오영상-->
+                <video id="video" height="auto" controls class="mb-10 mt-20"></video>
+                <div class="video-upload-wrap  border-bottom" id="video-file">
+                    <div class="file-btn">
+                        <label for="file-btn">
+                            <i class="fa-solid fa-upload"></i>
+                            영상 업로드
+                        </label>
+                        <input type="file" id="file-btn" name="video-file" accept="video/mp4" hidden/>
+                    </div>
+                    <p>용량은 최대 5MB로 이하로 권장</p>
+                </div>
+
+                <div class="rigist-wrap mt-20">
+                    <ul>
+                        <li>
+                            <h3>제목</h3>
+                            <input class="form-control form-control-lg" type="text" placeholder="제목을 입력하세요."
+                                   aria-label=".form-control-lg example" aria-placeholder="제목을 입력하세요." name="title">
+                        </li>
+                        <li>
+                            <h3>설명</h3>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="6"
+                                      placeholder="설명을 입력하세요." name="content"></textarea>
+                        </li>
+                    </ul>
+                </div>
+                <div class="table-wrap mt-20">
+                    <div class="table" id="check-table">
+                        <ul class="th-list">
+                            <li class="th w-1">
+                                <h2>번호</h2>
+                            </li>
+                            <li class="th w-7">
+                                <h2>체크 항목</h2>
+                            </li>
+                            <li class="th w-1">
+                                <h2>상</h2>
+                            </li>
+                            <li class="th w-1">
+                                <h2>중</h2>
+                            </li>
+                            <li class="th w-1">
+                                <h2>하</h2>
+                            </li>
+                        </ul>
+                        {% for data in checklist_objects %}
+                            <ul class="tb-list">
+                                <li class="tb w-1">
+                                    <h2>{{ forloop.counter }}</h2>
+                                </li>
+                                <li class="tb w-7">
+                                    <h2>{{ data.checklist.content }}</h2>
+                                </li>
+                                <li class="tb w-1">
+                                    <input type="radio" name="check_{{ data.id }}" id="check1" value="3">
+                                </li>
+                                <li class="tb w-1">
+                                    <input type="radio" name="check_{{ data.id }}" id="check2" value="2">
+                                </li>
+                                <li class="tb w-1">
+                                    <input type="radio" name="check_{{ data.id }}" id="check3" value="1">
+                                </li>
+                            </ul>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="bottom-btn-wrap">
+                    <button type="button" class="btn btn-secondary medium-btn solid-btn"
+                            onclick="location.href='{% url 'student:curriculum' subject_id type_id %}'">
+                        목록
+                    </button>
+                    <div>
+                        <button type="button" class="btn btn-secondary medium-btn"
+                                onclick="location.href='{% url 'student:curriculum' subject_id type_id %}'">
+                            취소
+                        </button>
+                        <button type="submit" class="btn btn-success medium-btn">
+                            <i class="fa-solid fa-plus"></i>
+                            등록
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        document.getElementById("file-btn").addEventListener("change", function () {
+            const media = URL.createObjectURL(this.files[0]);
+            const video = document.getElementById("video");
+            video.src = media;
+            video.play();
+        });
+    </script>
+{% endblock %}

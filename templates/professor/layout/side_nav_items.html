@@ -1,0 +1,109 @@
+{% load static %}
+<a href="{% url 'professor:curriculum' subject_id 1 %}">
+    {% if type_id == 1 %}
+        <li class="menu-li  select">
+            {% else %}
+        <li class="menu-li">
+    {% endif %}
+    <div>
+        <img src="{% static 'img/icon/icon1-1.svg' %}" alt="지침서 아이콘"/>
+        <h3>공지사항</h3>
+    </div>
+    </li>
+</a>
+<a href="{% url 'professor:curriculum' subject_id 2 %}">
+    {% if type_id == 2 %}
+        <li class="menu-li  select">
+            {% else %}
+        <li class="menu-li">
+    {% endif %}
+    <div>
+        <img src="{% static 'img/icon/icon1.svg' %}" alt="지침서 아이콘"/>
+        <h3>지침서</h3>
+    </div>
+    </li>
+</a>
+<a href="{% url 'professor:curriculum' subject_id 3 %}">
+    {% if type_id == 3 %}
+        <li class="menu-li select">
+            {% else %}
+        <li class="menu-li">
+    {% endif %}
+    <div>
+        <img src="{% static 'img/icon/icon2.svg' %}" alt="지침서 아이콘"/>
+        <h3>핵심수 기술</h3>
+    </div>
+    </li>
+</a>
+<a href="{% url 'professor:curriculum' subject_id 4 %}">
+    {% if type_id == 4 %}
+        <li class="menu-li select">
+            {% else %}
+        <li class="menu-li">
+    {% endif %}
+    <div>
+        <img src="{% static 'img/icon/icon3.svg' %}" alt="지침서 아이콘"/>
+        <h3>과제</h3>
+    </div>
+    </li>
+</a>
+<a href="{% url 'professor:curriculum' subject_id 5 %}">
+    {% if type_id == 5 %}
+        <li class="menu-li select">
+            {% else %}
+        <li class="menu-li">
+    {% endif %}
+    <div>
+        <img src="{% static 'img/icon/icon4.svg' %}" alt="지침서 아이콘"/>
+        <h3>실습 일지</h3>
+    </div>
+    </li>
+</a>
+<a href="{% url 'professor:journal' subject_id %}">
+    {% if type_id == 6 %}
+        <li class="menu-li select">
+            {% else %}
+        <li class="menu-li">
+    {% endif %}
+    <div>
+        <img src="{% static 'img/icon/icon5.svg' %}" alt="지침서 아이콘"/>
+        <h3>교수 일지</h3>
+    </div>
+    </li>
+</a>
+<a href="">
+    {% if side_nav == "student_evaluation" %}
+        <li class="menu-li select">
+            {% else %}
+        <li class="menu-li">
+    {% endif %}
+    <div>
+        <img src="{% static 'img/icon/icon6.svg' %}" alt="지침서 아이콘"/>
+        <h3>학생 평가</h3>
+    </div>
+    </li>
+</a>
+<a href="">
+    {% if side_nav == "professor_evaluation" %}
+        <li class="menu-li select">
+            {% else %}
+        <li class="menu-li">
+    {% endif %}
+    <div>
+        <img src="{% static 'img/icon/icon7.svg' %}" alt="지침서 아이콘"/>
+        <h3>교수 평가</h3>
+    </div>
+    </li>
+</a>
+<a href="{% url 'professor:enrollment' subject_id %}">
+    {% if side_nav == "enrollment" %}
+        <li class="menu-li select">
+            {% else %}
+        <li class="menu-li">
+    {% endif %}
+    <div>
+        <img src="{% static 'img/icon/icon7.svg' %}" alt="지침서 아이콘"/>
+        <h3>수강신청 확인</h3>
+    </div>
+    </li>
+</a>

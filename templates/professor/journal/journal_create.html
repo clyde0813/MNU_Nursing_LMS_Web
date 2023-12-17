@@ -1,0 +1,256 @@
+{% load static %}
+{% include 'professor/layout/layout.html' %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/drm.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="content">
+        <div class="main-title">
+            <h1>교수일지 작성 등록</h1>
+        </div>
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="background h-auto">
+                <div class="sub-title">
+                    <h1>지도 학생 선택</h1>
+                    <button class="btn btn-success small-btn" id="professor_student_search" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal2">
+                        지도 학생 검색
+                    </button>
+                </div>
+                <div class="student-list">
+                    <div class="student-name">
+                        <h2>학생 이름</h2>
+                    </div>
+                    <div class="student-name-list">
+                        <h2></h2>
+                    </div>
+                </div>
+
+                <div class="sub-title border-bottom-color">
+                    <h1>교수일지 등록</h1>
+                    <button class="btn btn-success small-btn" id="professor_record_search" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal3">
+                        교수일지 검색
+                    </button>
+                </div>
+                <div class="rigist-wrap">
+                    <ul>
+                        <li>
+                            <h3>날짜</h3>
+                            <div class="date-wrap">
+                                <div class="container">
+                                    <div class="row">
+                                        <input type="date" name="created_date" value="{{ today|date:"Y-m-d" }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <h3>제목</h3>
+                            <input class="form-control form-control-lg" type="text" placeholder="제목을 입력하세요."
+                                   aria-label=".form-control-lg example" name="title">
+                            <div id="hidden-student-input-list" hidden>
+                            </div>
+                        </li>
+                        <li>
+                            <h3>설명</h3>
+                            <textarea class="form-control" id="professor_record_content" rows="5"
+                                      placeholder="설명을 입력하세요." name="content"></textarea>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dp-flex dp-end space-between">
+                    <div class="file-btn">
+                        <label for="file-btn">
+                            <i class="fa-solid fa-upload"></i>
+                            첨부파일 업로드
+                        </label>
+                        <input type="file" id="file-btn" name="file" hidden/>
+                    </div>
+                </div>
+                <div class="bottom-btn-wrap">
+                    <button type="button" class="btn btn-secondary medium-btn solid-btn"
+                            onclick="">
+                        이전
+                    </button>
+                    <div>
+                        <button type="button" class="btn btn-secondary medium-btn"
+                                onclick="location.href=''">
+                            취소
+                        </button>
+                        <button type="submit" class="btn btn-success medium-btn">
+                            <i class="fa-solid fa-plus"></i>
+                            등록
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+{% block modal %}
+    <!-- Modal -->
+    <!--지도학생검색-->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">지도학생 검색</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-wrap">
+                        <div class="table">
+                            <ul class="th-list">
+                                <li class="th w-3">
+                                    <h2>선택</h2>
+                                </li>
+                                <li class="th w-2">
+                                    <h2>번호</h2>
+                                </li>
+                                <li class="th w-6">
+                                    <h2>학생이름</h2>
+                                </li>
+                            </ul>
+                            {% for data in student_objects %}
+                                <ul class="tb-list" id="student_check">
+                                    <li class="tb w-3">
+                                        <input type="checkbox" id="student1" name="student"
+                                               data-student-id="{{ data.student.id }}"
+                                               data-student-name="{{ data.student.profile.name }}"/>
+                                    </li>
+                                    <li class="tb w-2">
+                                        <h2>{{ data.student.profile.userID }}</h2>
+                                    </li>
+                                    <li class="tb w-6">
+                                        <h2>{{ data.student.profile.name }}</h2>
+                                    </li>
+                                </ul>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary modal-btn" data-bs-dismiss="modal">닫기</button>
+                        <button type="button" class="btn btn-success modal-btn" data-bs-dismiss="modal">적용</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <!--교수일지 검색-->
+    <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered large-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">교수일지 검색</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-wrap">
+                        <div class="table" id="fullWidth-table">
+                            <ul class="th-list">
+                                <li class="th w-1">
+                                    <h2>선택</h2>
+                                </li>
+                                <li class="th w-1">
+                                    <h2>번호</h2>
+                                </li>
+                                <li class="th w-3">
+                                    <h2>교수일지날짜</h2>
+                                </li>
+                                <li class="th w-5">
+                                    <h2>교수일지 제목</h2>
+                                </li>
+                            </ul>
+                            {% for data in professor_record_objects %}
+                                <ul class="tb-list">
+                                    <li class="tb w-1">
+                                        <input type="checkbox" id="professor_record_load" name="list"
+                                               data-content="{{ data.content }}"/>
+                                    </li>
+                                    <li class="tb w-1">
+                                        <h2>{{ forloop.counter }}</h2>
+                                    </li>
+                                    <li class="tb w-3">
+                                        <h2>{{ data.created_date }}</h2>
+                                    </li>
+                                    <li class="tb w-5">
+                                        <h2>{{ data.title }}</h2>
+                                    </li>
+                                </ul>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary modal-btn" data-bs-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-success modal-btn" data-bs-dismiss="modal">적용</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        $(document).ready(function () {
+            var selectedStudents = [];
+
+            $('#professor_student_search').click(function (e) {
+                e.preventDefault();
+            });
+
+            // 모달에서 체크박스 선택 시 학생 정보를 배열에 추가
+            $('#student_check input[type="checkbox"]').change(function () {
+                var studentId = $(this).data('student-id');
+                var studentName = $(this).data('student-name');
+                if ($(this).is(':checked')) {
+                    // 선택한 학생 정보를 배열에 추가
+                    selectedStudents.push({id: studentId, name: studentName});
+                } else {
+                    // 선택을 취소한 학생 정보를 배열에서 제거
+                    selectedStudents = selectedStudents.filter(function (student) {
+                        return student.id !== studentId;
+                    });
+                }
+                // 선택한 학생 정보를 화면에 표시
+                var selectedStudentNames = selectedStudents.map(function (student) {
+                    return student.name;
+                });
+                $('.student-name-list h2').text(selectedStudentNames.join(', '));
+                updateHiddenInputs();
+            });
+
+            // selectedStudents 배열이 변경될 때마다 hidden input을 새로 생성합니다.
+            function updateHiddenInputs() {
+                // 기존 hidden input 요소를 모두 삭제합니다.
+                $('#hidden-student-input-list').empty();
+
+                // selectedStudents 배열을 순회하면서 hidden input을 생성합니다.
+                selectedStudents.forEach(function (student) {
+                    var hiddenInput = $('<input>')
+                        .attr('type', 'hidden')
+                        .attr('name', 'selected-student-id') // 배열 형태로 값을 전달할 경우
+                        .val(student.id);
+
+                    // hidden input을 컨테이너에 추가합니다.
+                    $('#hidden-student-input-list').append(hiddenInput);
+                });
+            }
+
+            $('#professor_record_search').click(function (e) {
+                e.preventDefault();
+            });
+
+            $('#professor_record_load[type="checkbox"]').change(function () {
+                var content = $(this).data('content');
+                if ($(this).is(':checked')) {
+                    $('#professor_record_content').val(content);
+                }
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,347 @@
+body{
+    background-color: #FAFCFB;
+}
+/*회원가입*/
+.join-sec{
+    margin-top: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.join-box{
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 3px 3px rgba(0,0,0,.03);
+    width: 800px;
+    margin-bottom: 100px;
+}
+.join-sec .join-box h1{
+    font-size: 25px;
+    color: #3b3b3b;
+    font-family: 'Pretendard-Bold';
+    text-align: center;
+    margin-bottom: 50px;
+}
+.join-sec .join-box h2{
+    font-size: 20px;
+    color: #3b3b3b;
+    font-family: 'Pretendard-Bold';
+    line-height: 150%;
+    margin-bottom: 10px;
+}
+.padding{
+    padding: 50px;
+}
+.radio-button-wrap{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.radio-button-wrap input{
+    display: none;
+}
+.radio-button-wrap label{
+    padding: 15px 20px;
+    width: 49%;
+    text-align: center;
+    font-size: 18px;
+    color: #828282;
+    border: 1px solid #D9D9D9;
+    border-radius: 4px;
+}
+.radio-button-wrap input:checked + label{
+    background-color: #F2FAFA;
+    color: #009992;
+    border-color: #009992;
+    font-family: 'Pretendard-Bold';
+}
+.check-box-wrap{
+    margin: 30px 0;
+}
+.check-box-wrap ul li{
+    padding: 12px 20px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.check-box-wrap ul li>div{
+    display: flex;
+    align-items: center;
+}
+.check-box-wrap ul li input[type="checkbox"]{
+    margin-right: 10px;
+}
+.check-box-wrap ul li label{
+    font-size: 18px;
+    color: #3b3b3b;
+    line-height: 130%;
+}
+.check-box-wrap ul li a{
+    font-size: 14px;
+    color: #009992;
+    text-decoration: underline !important;
+}
+.check-box-wrap ul li:first-child{
+    background-color: #009992;
+}
+.check-box-wrap ul li:first-child label{
+    color: #fff;
+}
+.input-wrap .under-title{
+    padding-bottom: 10px;
+    border-bottom: 2px solid #009992;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.input-wrap .under-title span{
+    font-size: 14px;
+    color: #808080;
+    line-height: 130%;
+}
+.input-wrap  ul{
+    margin-bottom: 50px;
+}
+.input-wrap  ul li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.input-wrap  ul li h3{
+    font-size: 18px;
+    color: #3b3b3b;
+    line-height: 130%;
+    min-width: 150px;
+}
+.input-wrap  ul li h3 strong{
+    color: #FD023E;
+    font-weight: bold;
+}
+.input-dp-wrap{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.input-dp-wrap input{
+    margin-right: 10px;
+}
+.input-dp-wrap input:last-child{
+    margin: 0;
+}
+.input-dp-wrap span{
+    font-size: 20px;
+    color: #3b3b3b;
+    margin-right: 10px;
+}
+.small-text-wrap{
+    width: 100%;
+    margin-bottom: 20px;
+}
+.small-text-wrap i{
+    margin-right: 5px;
+}
+.small-text-wrap span{
+    font-size: 14px;
+    line-height: 130%;
+    display: inline-block;
+    padding-left: 150px;
+    color: #808080;
+}
+.small-text-wrap .success{
+    color: #009992;
+}
+.small-text-wrap .error{
+    color: #FD023E;
+}
+#num1{
+    width: 50%;
+}
+.join-btn-wrap{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+.join-btn-wrap button{
+    width: 49%;
+}
+
+
+/*아이디/비밀번호 찾기*/
+.id-sec{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+.id-box{
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 3px 3px rgba(0,0,0,.03);
+    width: 600px;
+}
+.id-sec .id-box h1{
+    font-size: 25px;
+    color: #3b3b3b;
+    font-family: 'Pretendard-Bold';
+    text-align: center;
+    margin-bottom: 50px;
+}
+.tab-button-wrap{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+.tab-button-wrap input{
+    display: none;
+}
+.tab-button-wrap label{
+    padding: 15px 20px;
+    width: 50%;
+    text-align: center;
+    font-size: 18px;
+    color: #009992;
+    border-bottom: 1px solid #009992;
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+}
+.tab-button-wrap input:checked + label{
+    background-color: #F2FAFA;
+    color: #009992;
+    border-color: #009992;
+    border:1px solid #009992;
+    font-family: 'Pretendard-Bold';
+}
+.result-wrap{
+    margin-bottom: 30px;
+}
+.pw-result{
+    padding: 50px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.pw-result h2{
+    font-size: 20px;
+    color: #3b3b3b;
+    line-height: 150%;
+    font-family: 'Pretendard-Bold';
+}
+.pw-result h3{
+    font-size: 20px;
+    color: #3b3b3b;
+    line-height: 150%;
+}
+.pw-result h3 strong{
+    color: #009992;
+}
+.result-wrap ul{
+    border-top: 2px solid rgba(0,0,0,.1);
+    border-bottom: 2px solid rgba(0,0,0,.1);
+}
+.result-wrap ul li{
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+}
+.result-wrap ul li:last-child{
+    border-bottom: none;
+}
+.result-wrap ul li .th{
+    background-color: #F5F5F5;
+    width: 130px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0;
+    margin-right: 20px;
+}
+.result-wrap ul li h3{
+    font-size: 18px;
+    color: #3b3b3b;
+}
+.result-wrap ul li h4{
+    font-size: 18px;
+    color: #3b3b3b;
+}
+
+/*반응형*/
+@media (max-width: 800px) {
+    .join-box{
+        width: 100%;
+        box-shadow: none;
+        border-radius: 0;
+    }
+    .join-sec{
+        margin-top: 70px;
+    }
+    .padding{
+        padding: 50px 20px 50px 20px;
+    }
+    .input-wrap ul li h3{
+        min-width: 80px;
+        font-size: 16px;
+    }
+    .check-box-wrap ul li label{
+        font-size: 14px;
+    }
+    .input-dp-wrap button{
+        width: 80px;
+        padding: 10px 5px;
+        font-size: 14px;
+    }
+    .small-text-wrap span{
+        padding-left: 80px;
+    }
+    .check-box-wrap ul li a{
+        font-size: 12px;
+    }
+    .radio-button-wrap label{
+        font-size: 16px;
+    }
+    .id-sec{
+        height: auto;
+        margin-top: 70px;
+    }
+    .id-box{
+        box-shadow: none;
+        border-radius: 0;
+        width: 100%;
+    }
+    .tab-button-wrap label{
+        font-size: 16px;
+    }
+    .result-wrap ul li h4{
+        font-size: 16px;
+    }
+    .result-wrap ul li h3{
+        font-size: 16px;
+    }
+    .pw-result h2{
+        font-size: 18px;
+    }
+    .pw-result h3{
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 568px) {
+    .input-wrap ul li{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .input-wrap ul li h3{
+        margin-bottom: 10px;
+        width: auto;
+    }
+    .small-text-wrap span{
+        padding: 0;
+    }
+}

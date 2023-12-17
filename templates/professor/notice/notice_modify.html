@@ -1,0 +1,64 @@
+{% load static %}
+{% include 'professor/layout/layout.html' %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/drm.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="content">
+        <div class="main-title">
+            <h1>공지사항 수정</h1>
+        </div>
+        <form method="post" action="{% url 'professor:curriculum_modify' subject_id type_id object.id %}">
+            {% csrf_token %}
+            <div class="background one-page">
+                <div class="rigist-wrap">
+                    <ul>
+                        <li>
+                            <div class="dp-flex space-between">
+                                <h3>제목</h3>
+                                <p class="date">{{ object.created_date }}</p>
+                            </div>
+                            <input class="form-control form-control-lg" type="text" placeholder="제목을 입력하세요."
+                                   aria-label=".form-control-lg example" value="{{ object.title }}" name="title">
+                        </li>
+                        <li>
+                            <h3>내용</h3>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="11"
+                                      name="content">{{ object.content }}</textarea>
+                        </li>
+                    </ul>
+                </div>
+                <div class="dp-flex dp-end">
+                    <div class="dp-flex dp-center">
+                        <div class="file file-delete mr-10">
+                            <h2>참고자료. hwp</h2>
+                            <button><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                        <div class="file-btn">
+                            <label for="file-btn">
+                                <i class="fa-solid fa-upload"></i>
+                                첨부파일 업로드
+                            </label>
+                            <input type="file" id="file-btn" name="file" hidden/>
+                        </div>
+                    </div>
+                </div>
+                <div class="bottom-btn-wrap">
+                    <button type="button" class="btn btn-secondary medium-btn solid-btn"
+                            onclick="location.href='{% url 'professor:curriculum' subject_id type_id %}'">
+                        목록
+                    </button>
+                    <div>
+                        <button type="button" class="btn btn-secondary medium-btn"
+                                onclick="location.href='{% url 'professor:curriculum_detail' subject_id type_id object.id %}'">
+                            취소
+                        </button>
+                        <button type="submit" class="btn btn-success medium-btn">
+                            적용
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
