@@ -71,8 +71,8 @@
     </div>
     </li>
 </a>
-<a href="">
-    {% if side_nav == "student_evaluation" %}
+<a href="{% url 'professor:student_evaluate' subject_id %}">
+    {% if type_id == 7 %}
         <li class="menu-li select">
             {% else %}
         <li class="menu-li">
@@ -83,8 +83,8 @@
     </div>
     </li>
 </a>
-<a href="">
-    {% if side_nav == "professor_evaluation" %}
+<a href="{% url 'professor:professor_evaluate' subject_id %}">
+    {% if type_id == 8 %}
         <li class="menu-li select">
             {% else %}
         <li class="menu-li">

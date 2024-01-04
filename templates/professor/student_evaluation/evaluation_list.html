@@ -47,7 +47,7 @@
                                 {% if data.evaluation_status %}
                                     <button type="button" class="btn btn-success small-btn" data-bs-toggle="modal"
                                             data-bs-target="#exampleModal2"
-                                            onclick="location.href='{% url 'professor_student_evaluation_detail' subject_id student_evaluation_id data.id %}'">
+                                            onclick="location.href=''">
                                         평가보기
                                     </button>
                                 {% else %}
@@ -63,7 +63,7 @@
             </div>
             <div class="bottom-btn-wrap pagination-wrap">
                 <button type="button" class="btn btn-secondary medium-btn solid-btn"
-                        onclick="location.href='{% url 'professor_student_evaluation' subject_id %}'">
+                        onclick="location.href=''">
                     이전
                 </button>
             </div>

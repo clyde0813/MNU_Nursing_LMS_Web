@@ -5,36 +5,6 @@ from function.professor.html import *
 
 
 @login_required(redirect_field_name=None)
-# Create your views here.
-def index(request):
-    subject_objects = Subject.objects.filter(professor=request.user).all()
-    context = {"subject_objects": subject_objects}
-    return render(request, "professor/subject/list.html", context)
-
-
-@login_required(redirect_field_name=None)
-def subject_create(request):
-    name = request.POST.get("name")
-    Subject.objects.create(professor=request.user, name=name)
-    return redirect("common:index")
-
-
-@login_required(redirect_field_name=None)
-def subject_delete(request, subject_id):
-    Subject.objects.get(professor=request.user, id=subject_id).delete()
-    return redirect("common:index")
-
-
-@login_required(redirect_field_name=None)
-def subject_modify(request):
-    subject_id = request.POST.get("subject_id")
-    subject_object = Subject.objects.get(professor=request.user, id=int(subject_id))
-    subject_object.name = request.POST.get("name")
-    subject_object.save()
-    return redirect("common:index")
-
-
-@login_required(redirect_field_name=None)
 def curriculum(request, subject_id, type_id):
     curriculum_objects = Curriculum.objects.filter(subject_id=subject_id, type_id=type_id) \
         .order_by("created_date").all()
@@ -104,32 +74,3 @@ def assignment_evaluate(request, subject_id, type_id, curriculum_id, assignment_
         context = evaluation_context(request=request, subject_id=subject_id, curriculum_id=curriculum_id,
                                      type_id=type_id, assignment_id=assignment_id)
         return render(request, html_return(type_id, "evaluate"), context)
-
-
-def journal(request, subject_id):
-    context = {"subject_id": subject_id, "type_id": 6}
-    return render(request, "professor/journal/journal_list.html", context)
-
-
-def journal_create(request, subject_id):
-    student_objects = Enrollment.objects.filter(subject_id=subject_id, status=True)
-
-    context = {"subject_id": subject_id, "student_objects": student_objects, "type_id": 6}
-    return render(request, "professor/journal/journal_create.html", context)
-
-
-@login_required(redirect_field_name=None)
-def enrollment(request, subject_id):
-    subject_name = Subject.objects.get(id=subject_id).name
-    enrollment_objects = Enrollment.objects.filter(subject_id=subject_id).all()
-    context = {"subject_id": subject_id, "side_nav": "enrollment", "subject_name": subject_name,
-               "enrollment_objects": enrollment_objects}
-    return render(request, "professor/subject/enrollment.html", context)
-
-
-@login_required(redirect_field_name=None)
-def enrollment_confirm(request, subject_id, enrollment_id):
-    enrollment_object = Enrollment.objects.get(id=enrollment_id)
-    enrollment_object.status = True
-    enrollment_object.save()
-    return redirect("professor:enrollment", subject_id)

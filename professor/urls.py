@@ -24,6 +24,12 @@ urlpatterns = [
     path("<int:subject_id>/journal", views.journal, name="journal"),
     path("<int:subject_id>/journal/create", views.journal_create, name="journal_create"),
 
+    # 학생 평가
+    path("<int:subject_id>/student/evaluate", views.student_evaluate, name="student_evaluate"),
+
+    # 교수 평가
+    path("<int:subject_id>/professor/evaluate", views.professor_evaluate, name="professor_evaluate"),
+
     path("<int:subject_id>/enroll", views.enrollment, name="enrollment"),
     path("<int:subject_id>/enroll/<int:enrollment_id>", views.enrollment_confirm, name="enrollment_confirm")
 ]
