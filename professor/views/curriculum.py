@@ -10,16 +10,39 @@ def curriculum(request, subject_id, type_id):
         .order_by("created_date").all()
     type_name = CurriculumType.objects.get(id=type_id).name
     subject_name = Subject.objects.get(id=subject_id).name
-    context = {"subject_id": subject_id, "type_id": type_id, "subject_name": subject_name, "type_name": type_name,
-               "objects": curriculum_objects}
+    context = {
+        "subject_id": subject_id,
+        "type_id": type_id,
+        "subject_name": subject_name,
+        "type_name": type_name,
+        "objects": curriculum_objects
+    }
     return render(request, "professor/list/list_layout.html", context)
 
 
+# 커리큘럼 생성
 @login_required(redirect_field_name=None)
 def curriculum_create(request, subject_id, type_id):
     if request.method == "POST":
-        curriculum_create_func(request, subject_id, type_id)
+        # default
+        title = request.POST.get("title")
+        content = request.POST.get("content")
+        curriculum_object = Curriculum.objects.create(subject_id=subject_id, type_id=type_id, title=title,
+                                                      content=content)
+        # 평가 여부
+        if request.POST.get("eval"):
+            evaluation = True if request.POST.get("eval") == "True" else False
+            Evaluation.objects.create(curriculum=curriculum_object, status=evaluation)
+        # 체크리스트
+        if request.POST.get("checklist_set_id", default=None):
+            checklist_set_id = int(request.POST.get("checklist_set_id", default=None))
+            ChecklistCurriculum.objects.create(curriculum=curriculum_object, checklist_set_id=checklist_set_id)
+        # 기간
+        if request.POST.get("period"):
+            period = request.POST.get("period")
+            Period.objects.create(curriculum=curriculum_object, date=period)
         return redirect("professor:curriculum", subject_id, type_id)
+
     context = curriculum_context(subject_id, type_id, None, "create")
     return render(request, html_return(type_id, "create"), context)
 

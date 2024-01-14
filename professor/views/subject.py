@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from function.professor.curriculum import *
 from function.professor.html import *
 
+
 @login_required(redirect_field_name=None)
 def subject_create(request):
     name = request.POST.get("name")

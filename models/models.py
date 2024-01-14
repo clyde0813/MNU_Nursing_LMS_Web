@@ -38,6 +38,7 @@ class CurriculumFile(models.Model):
 class Evaluation(models.Model):
     curriculum = models.ForeignKey(Curriculum, on_delete=models.CASCADE)
     status = models.BooleanField(default=True)
+    percentage = models.IntegerField(default=0)
 
 
 class Period(models.Model):

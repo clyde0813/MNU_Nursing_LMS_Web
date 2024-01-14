@@ -5,20 +5,25 @@ def curriculum_create_func(request, subject_id, type_id):
     title = request.POST.get("title")
     content = request.POST.get("content")
     curriculum_object = Curriculum.objects.create(subject_id=subject_id, type_id=type_id, title=title, content=content)
+    # 공지사항
     if type_id == 1:
         pass
-    if type_id == 2:
+    # 지침서
+    elif type_id == 2:
         evaluation = True if request.POST.get("eval") == "True" else False
         Evaluation.objects.create(curriculum=curriculum_object, status=evaluation)
-    if type_id == 3:
+    # 핵심수기술
+    elif type_id == 3:
         evaluation = True if request.POST.get("eval") == "True" else False
         checklist_set_id = int(request.POST.get("checklist_set_id", default=None))
         Evaluation.objects.create(curriculum=curriculum_object, status=evaluation)
         ChecklistCurriculum.objects.create(curriculum=curriculum_object, checklist_set_id=checklist_set_id)
-    if type_id == 4:
+    # 과제
+    elif type_id == 4:
         evaluation = True if request.POST.get("eval") == "True" else False
         Evaluation.objects.create(curriculum=curriculum_object, status=evaluation)
-    if type_id == 5:
+    # 실습일지
+    elif type_id == 5:
         evaluation = True if request.POST.get("eval") == "True" else False
         period = request.POST.get("period")
         Evaluation.objects.create(curriculum=curriculum_object, status=evaluation)

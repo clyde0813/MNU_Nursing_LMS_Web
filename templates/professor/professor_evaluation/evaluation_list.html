@@ -12,7 +12,7 @@
             <div class="sub-title border-bottom-color student-num">
                 <h1>
                     전체 학생
-                    <strong> 35명</strong>
+                    <strong> {{ student_objects.count }}명</strong>
                 </h1>
                 <button type="button" class="btn btn-success small-btn" data-bs-toggle="modal"
                         data-bs-target="#exampleModal2">
@@ -35,16 +35,16 @@
                             <h2>관리</h2>
                         </li>
                     </ul>
-                    {% for data in objects %}
+                    {% for data in student_objects %}
                         <ul class="tb-list">
                             <li class="tb w-1">
                                 <h2>{{ forloop.counter }}</h2>
                             </li>
                             <li class="tb w-3">
-                                <h2>{{ data.student.name }}</h2>
+                                <h2>{{ data.profile.name }}</h2>
                             </li>
                             <div class="tb  w-5">
-                                <h2>{{ data.student.studentID }}</h2>
+                                <h2>{{ data.profile.userID }}</h2>
                             </div>
                             <div class="tb w-5">
                                 <a href="">
@@ -86,46 +86,17 @@
                                         <h2>반영율</h2>
                                     </li>
                                 </ul>
-                                <ul class="tb-list">
-                                    <li class="tb w-5">
-                                        <h2>지침서</h2>
-                                    </li>
-                                    <li class="tb w-5">
-                                        <input type="number" id="percent" class="small-input" value="20">
-                                    </li>
-                                </ul>
-                                <ul class="tb-list">
-                                    <li class="tb w-5">
-                                        <h2>핵심 수기술</h2>
-                                    </li>
-                                    <li class="tb w-5">
-                                        <input type="number" id="percent" class="small-input" value="20">
-                                    </li>
-                                </ul>
-                                <ul class="tb-list">
-                                    <li class="tb w-5">
-                                        <h2>과제</h2>
-                                    </li>
-                                    <li class="tb w-5">
-                                        <input type="number" id="percent" class="small-input" value="30">
-                                    </li>
-                                </ul>
-                                <ul class="tb-list">
-                                    <li class="tb w-5">
-                                        <h2>실습일지</h2>
-                                    </li>
-                                    <li class="tb w-5">
-                                        <input type="number" id="percent" class="small-input" value="30">
-                                    </li>
-                                </ul>
-                                <ul class="tb-list" id="add-list">
-                                    <li class="tb w-5">
-                                        <h2>실습일지</h2>
-                                    </li>
-                                    <li class="tb w-5">
-                                        <input type="number" id="percent" class="small-input" value="30">
-                                    </li>
-                                </ul>
+                                {% for data in evaluation_objects %}
+                                    <ul class="tb-list">
+                                        <li class="tb w-5">
+                                            <h2>{{ data.curriculum.title }}</h2>
+                                        </li>
+                                        <li class="tb w-5">
+                                            <input type="number" id="percent" class="small-input"
+                                                   value="{{ data.percentage }}">
+                                        </li>
+                                    </ul>
+                                {% endfor %}
                             </div>
                         </div>
                         <div class="add-list" id="add-list-btn">
@@ -161,4 +132,7 @@
             </div>
         </div>
     </div>
+    <script>
+
+    </script>
 {% endblock %}
