@@ -106,7 +106,7 @@
                                             <h2>{{ forloop.counter }}</h2>
                                         </li>
                                         <li class="tb w-3"
-                                            onclick="location.href='{% url 'student:curriculum' data.id 1 %}'">
+                                            onclick="location.href='{% url 'student:curriculum' data.subject.id 1 %}'">
                                             <h2>{{ data.subject.name }}</h2>
                                         </li>
                                         <li class="tb w-4">

@@ -29,10 +29,11 @@ def curriculum_create(request, subject_id, type_id):
         content = request.POST.get("content")
         curriculum_object = Curriculum.objects.create(subject_id=subject_id, type_id=type_id, title=title,
                                                       content=content)
+
         # 평가 여부
         if request.POST.get("eval"):
             evaluation = True if request.POST.get("eval") == "True" else False
-            Evaluation.objects.create(curriculum=curriculum_object, status=evaluation)
+            curriculum_object.eval_status = evaluation
         # 체크리스트
         if request.POST.get("checklist_set_id", default=None):
             checklist_set_id = int(request.POST.get("checklist_set_id", default=None))
@@ -41,10 +42,62 @@ def curriculum_create(request, subject_id, type_id):
         if request.POST.get("period"):
             period = request.POST.get("period")
             Period.objects.create(curriculum=curriculum_object, date=period)
+        # 파일
+        if request.FILES.getlist("files"):
+            for file in request.FILES.getlist("files"):
+                file_object = CurriculumFile.objects.create(curriculum=curriculum_object)
+                file_object.file = file
+                file_object.filename = file.name
+                file_object.save()
+
+        curriculum_object.save()
         return redirect("professor:curriculum", subject_id, type_id)
 
-    context = curriculum_context(subject_id, type_id, None, "create")
-    return render(request, html_return(type_id, "create"), context)
+    deadline_input_status = False
+    evaluation_input_status = False
+    checklist_input_status = False
+    period_input_status = False
+    checklist_objects = None
+
+    # 공지사항
+    if type_id == 1:
+        pass
+    # 지침서
+    elif type_id == 2:
+        deadline_input_status = True
+        evaluation_input_status = True
+    # 핵심수기술
+    elif type_id == 3:
+        deadline_input_status = True
+        evaluation_input_status = True
+        checklist_input_status = True
+        checklist_objects = ChecklistSet.objects.all()
+    # 과제
+    elif type_id == 4:
+        deadline_input_status = True
+        evaluation_input_status = True
+    # 실습일지
+    elif type_id == 5:
+        deadline_input_status = True
+        evaluation_input_status = True
+        period_input_status = True
+
+    context = {
+        "subject_id": subject_id,
+        "type_id": type_id,
+        "subject_name": Subject.objects.get(id=subject_id).name,
+        "type_name": CurriculumType.objects.get(id=type_id).name,
+        "checklist_objects": checklist_objects,
+        "input_list": {
+            "title": True,
+            "content": True,
+            "deadline": deadline_input_status,
+            "evaluation": evaluation_input_status,
+            "checklist": checklist_input_status,
+            "period": period_input_status
+        }
+    }
+    return render(request, "professor/layout/curriculum_submit.html", context)
 
 
 @login_required(redirect_field_name=None)

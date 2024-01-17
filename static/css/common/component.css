@@ -315,7 +315,6 @@ textarea{
     padding: 13px 20px;
     border: 1px solid rgba(0,0,0,.1);
     border-top: none;
-    display: none;
 }
 .modal-table .add-list-input-wrap .add-list-input{
     display: flex;

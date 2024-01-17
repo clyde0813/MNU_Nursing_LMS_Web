@@ -1,0 +1,281 @@
+{% extends 'professor/layout/layout.html' %}
+{% load static %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/drm.css' %}">
+    <script type="text/javascript" src="{% static 'js/curriculum-submit.js' %}"></script>
+{% endblock %}
+{% block content %}
+    <div class="content">
+        <div class="main-title">
+            <h1>{{ type_name }}</h1>
+        </div>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="background one-page">
+                <div class="rigist-wrap">
+                    <ul>
+                        <!-- 실습일지 -->
+                        {% if input_list.period %}
+                            <li>
+                                <h3>실습기간</h3>
+                                <div class="date-wrap">
+                                    <div class="container">
+                                        <div class="row">
+                                            <input type="date" name="period"
+                                                   value="{{ object.period_set.last.date|date:"Y-m-d" }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endif %}
+                        <li>
+                            <h3>제목</h3>
+                            <input class="form-control form-control-lg" type="text" placeholder="제목을 입력하세요."
+                                   aria-label=".form-control-lg example" name="title">
+                        </li>
+                        <li>
+                            <h3>설명</h3>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="11"
+                                      placeholder="설명을 입력하세요." name="content"></textarea>
+                        </li>
+                        <!-- 제출 마감 -->
+                        {% if input_list.deadline %}
+                            <li>
+                                <div class="deadline-selectable-button" style="height:40px; vertical-align: middle">
+                                    <h3 style="height: 25px; display: inline-block; vertical-align: middle; text-align: center; margin: auto">
+                                        제출기한</h3>
+                                    <img src="{% static 'img/icon/plus-button.png' %}" alt=""
+                                         style="height:20px; width: 20px; vertical-align: middle; margin-left: 3px"/>
+                                </div>
+                                <input class="form-control form-control-lg" type="date" id="deadline-date"
+                                       aria-label=".form-control-lg example" name="deadline-date"
+                                       style="vertical-align: middle"
+                                       hidden>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% if input_list.checklist %}
+                    <div class="check-list-wrap mb-3">
+                        <div class="sub-title check-list-downUp border-bottom-color">
+                            <h1>체크리스트</h1>
+                            <button id="upDownBtn"><i class="fa-solid fa-caret-up" id="upDown-icon"></i></button>
+                        </div>
+                        <div class="table-wrap">
+                            <div class="table" id="check-table">
+                                <ul class="th-list">
+                                    <li class="th w-2">
+                                        <h2>번호</h2>
+                                    </li>
+                                    <li class="th w-8">
+                                        <h2>체크 항목</h2>
+                                    </li>
+                                </ul>
+                                {% if method == "modify" %}
+                                    {% for i in selected_checklist_objects %}
+                                        <ul class="tb-list">
+                                            <li class="tb w-2">
+                                                <h2>{{ forloop.counter }}</h2>
+                                            </li>
+                                            <li class="tb w-8">
+                                                <h2>{{ i.checklist.content }}</h2>
+                                            </li>
+                                        </ul>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="dp-flex align-center space-between">
+                            <div class="dp-flex dp-end">
+                                <div class="dp-flex dp-center">
+                                    <div class="check-list-upload">
+                                        <button class="check-list-upload-btn" data-bs-toggle="modal"
+                                                data-bs-target="#checkList-modal">
+                                            체크리스트 선택
+                                            <i class="fa-solid fa-chevron-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="text" id="checklist_set_id" name="checklist_set_id" hidden>
+                {% endif %}
+                <div class="dp-flex align-center space-between">
+                    {% if input_list.evaluation %}
+                        <div class="evaluation-box">
+                            <h2>평가여부</h2>
+                            <ul class="radio-wrap">
+                                {% if method == "modify" %}
+                                    <li>
+                                        <input type="radio" name="eval" value="True" id="eva1"
+                                               {% if evaluation_status %}checked{% endif %}>
+                                        <label for="eva1">적용</label>
+                                    </li>
+                                    <li>
+                                        <input type="radio" name="eval" value="False" id="eva2"
+                                               {% if evaluation_status %}{% else %}checked{% endif %}>
+                                        <label for="eva2">미적용</label>
+                                    </li>
+                                {% else %}
+                                    <li>
+                                        <input type="radio" name="eval" value="True" id="eva1" checked>
+                                        <label for="eva1">적용</label>
+                                    </li>
+                                    <li>
+                                        <input type="radio" name="eval" value="False" id="eva2">
+                                        <label for="eva2">미적용</label>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                    <div class="dp-flex dp-end">
+                        <div class="dp-flex dp-center">
+                            <div class="file-btn">
+                                <label for="file-btn">
+                                    <i class="fa-solid fa-upload"></i>
+                                    첨부파일 업로드
+                                </label>
+                                <input type="file" id="file-btn" name="files" multiple hidden/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bottom-btn-wrap">
+                    <button type="button" class="btn btn-secondary medium-btn solid-btn"
+                            onclick="location.href='{% url 'professor:curriculum' subject_id type_id %}'">
+                        목록
+                    </button>
+                    <div>
+                        {% if method == "modify" %}
+                            <button type="button" class="btn btn-danger medium-btn"
+                                    onclick="location.href='{% url 'professor:curriculum_delete' subject_id type_id object.id %}'">
+                                삭제
+                            </button>
+                        {% endif %}
+                        <button type="button" class="btn btn-secondary medium-btn"
+                                onclick="location.href='{% url 'professor:curriculum' subject_id type_id %}'">
+                            취소
+                        </button>
+                        <button type="submit" class="btn btn-success medium-btn">
+                            적용
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+{% if input_list.checklist %}
+    {% block modal %}
+        <div class="modal fade" id="checkList-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered  large-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">체크리스트 선택</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-wrap">
+                            <div class="table h-50vh" id="check-table">
+                                <ul class="th-list">
+                                    <li class="th w-1">
+                                        <h2>번호</h2>
+                                    </li>
+                                    <li class="th w-7">
+                                        <h2>제목</h2>
+                                    </li>
+                                    <li class="th w-2">
+                                        <h2>수락</h2>
+                                    </li>
+                                </ul>
+                                {% for data in checklist_objects %}
+                                    <ul class="tb-list">
+                                        <li class="tb w-1">
+                                            <h2>{{ forloop.counter }}</h2>
+                                        </li>
+                                        <li class="tb w-7">
+                                            <h2>{{ data.name }}</h2>
+                                        </li>
+                                        <li class="tb w-2">
+                                            <button type="button" class="btn btn-success small-btn"
+                                                    onclick="checklistSelect({{ data.id }})">
+                                                적용
+                                            </button>
+                                        </li>
+                                    </ul>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success modal-btn" id="modal-close"
+                                data-bs-dismiss="modal">
+                            닫기
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+    {% block script %}
+        <script>
+            $(document).ready(function () {
+                // "체크리스트 선택" 버튼 클릭 이벤트 처리
+                $('.check-list-upload-btn').click(function (e) {
+                    e.preventDefault(); // 버튼의 기본 동작(폼 제출)을 방지
+
+                    // 모달 열기
+                    $('#checkList-modal').modal('show');
+                });
+
+            });
+
+
+            function checklistSelect(checklistId) {
+                document.getElementById("checklist_set_id").value = checklistId;
+                document.getElementById("modal-close").click();
+
+                // AJAX 요청을 보냅니다.
+                $.ajax({
+                    url: '/api/3/checklist',  // 서버에서 데이터를 가져올 URL을 지정하세요.
+                    type: 'GET',
+                    data: {checklist_set_id: checklistId},
+                    dataType: 'json',  // 반환되는 데이터 유형 (JSON 예상)
+                    success: function (data) {
+                        // 서버에서 반환된 데이터를 사용하여 테이블 업데이트
+                        if (data) {
+                            // 예시: 서버에서 JSON 형식의 데이터를 반환하는 경우
+                            updateTableWithData(data);
+                        }
+                    },
+                    error: function (error) {
+                        console.error('에러 발생:', error);
+                    }
+                });
+
+                // 모달 닫기
+                $('#checkList-modal').modal('hide');
+            }
+
+            // 서버에서 반환된 데이터로 테이블 업데이트
+            function updateTableWithData(data) {
+                // 데이터를 사용하여 테이블 업데이트 로직을 구현
+                // 예시: data를 반복하면서 테이블 열 추가
+                var table = $('#check-table');
+                table.empty();  // 테이블 내용 지우기
+                table.append('<ul class="th-list"><li class="th w-2"><h2>번호</h2></li><li class="th w-8"><h2>체크 항목</h2></li></li></ul>')
+                // 데이터를 사용하여 테이블 열 추가
+                for (var i = 0; i < data.length; i++) {
+                    var row = '<ul class="tb-list">';
+                    row += '<li class="tb w-2"><h2>' + (i + 1) + '</h2></li>';
+                    row += '<li class="tb w-8"><h2>' + data[i].content + '</h2></li>';
+                    row += '</ul>';
+                    table.append(row);
+                }
+            }
+        </script>
+    {% endblock %}
+{% endif %}

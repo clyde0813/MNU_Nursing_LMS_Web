@@ -1,0 +1,66 @@
+{% load static %}
+{% include 'professor/layout/layout.html' %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="{% static 'css/drm.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="content">
+        <div class="main-title">
+            <h1>교수일지 작성보기</h1>
+        </div>
+        <div class="background h-auto">
+            <div class="sub-title">
+                <h1>지도 학생</h1>
+            </div>
+            <div class="student-list">
+                <div class="student-name">
+                    <h2>학생 이름</h2>
+                </div>
+                <div class="student-name-list">
+                    <h2>{% for data in selected_student_objects %}{{ data.name }}, {% endfor %}</h2>
+                </div>
+            </div>
+
+            <div class="sub-title">
+                <h1>교수일지</h1>
+            </div>
+            <div class="detail-wrap">
+                <div class="detail-title mb-10">
+                    <h1>{{ object.title }}</h1>
+                    <p class="date">{{ object.created_date }}</p>
+                </div>
+                <div class="border-bottom-color">
+                    <div class="date-view-wrap">
+                        <h1>날짜</h1>
+                        <h2>{{ object.created_date }}</h2>
+                    </div>
+                </div>
+                <div class="detail-content">
+                    <p>
+                        {{ object.content|linebreaksbr }}
+                    </p>
+                </div>
+            </div>
+            <div class="dp-flex dp-end space-between border-bottom file-download-wrap ">
+                <a href="">
+                    <div class="file file-delete mb-0">
+                        <h2>시뮬레이션 실습 과제. hwp</h2>
+                        <button><i class="fa-solid fa-download"></i></button>
+                    </div>
+                </a>
+            </div>
+            <div class="bottom-btn-wrap">
+                <button type="button" class="btn btn-secondary medium-btn solid-btn"
+                        onclick="location.href='{% url 'professor_professor' subject_id %}'">
+                    이전
+                </button>
+                <div>
+                    <button type="button" class="btn btn-success medium-btn"
+                            onclick="location.href='{% url 'professor_professor_modify' subject_id object.id %}'">
+                        수정
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

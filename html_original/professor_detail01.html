@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/3bafd42962.js" crossorigin="anonymous"></script>
+    <script src="js/jquery-3.4.1.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+    <!--bootstrap-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+    
+    <link rel="stylesheet" href="css/common/reset.css">
+    <link rel="stylesheet" href="css/common/nav.css">
+    <link rel="stylesheet" href="css/common/common.css">
+    <link rel="stylesheet" href="css/common/component.css">
+    <link rel="stylesheet" href="css/drm.css">
+
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.2/dist/umd/popper.min.js"
+              crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/gh/Eonasdan/tempus-dominus@master/dist/js/tempus-dominus.js"
+              crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/gh/Eonasdan/tempus-dominus@master/dist/css/tempus-dominus.css"
+              rel="stylesheet" crossorigin="anonymous">
+
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        rel="stylesheet">
+
+    <title>홈 | 과목 | 교수일지  리스트 | 교수일지 상세 페이지 | 교수일지 작성보기 페이지</title>
+</head>
+
+<script>
+   $(document).ready(function() {
+    $('.dropdown-toggle').dropdown()
+
+    $('#profileBtn').click(function(){
+        $('.dropDownMenu').slideToggle(300, 'linear');
+    })
+    $('#menuBtn').click(function(){
+        $('#mo-menu').slideToggle(300, 'linear');
+    })
+});
+</script>
+<body>
+    <!--nav-->
+    <section class="mobileNav">
+        <article class="mobileNavWrap1">
+            <div class="logoBox">
+                <h1>Electronic Nursing Education Book</h1>
+            </div>
+            <div id="profileBtn">
+                <i class="fa-solid fa-user"></i>
+            </div>
+        </article>
+        <article class="mobileNavWrap2">
+            <div class="dropDownMenu">
+                <ul class="mobileMenu">
+                    <li class="profile">
+                        <a href="">김지영 교수</a>
+                        <div>
+                            <a href="">내정보</a>
+                            <h3>|</h3>
+                            <a href="">로그아웃</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </article>
+    </section>
+
+   <section class="top-nav">
+        <h1>Electronic Nursing Education Book</h1>
+        <div class="right-box">
+            <a href="" class="name">김지영 교수</a>
+            <a href="">내정보</a>
+            <h3>|</h3>
+            <a href="">로그아웃</a>
+        </div>
+   </section>
+     <!--nav 끝-->
+   <section class="container-wrap">
+        <!--sidenav-->
+        <div class="side-nav">
+            <div class="title">
+                <div>
+                    <a href=""><i class="fa-solid fa-chevron-left"></i></a>
+                    <h2>일반 간호학</h2>
+                </div>
+                <div class="menu" id="menuBtn">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </div>
+            <ul class="menu" id="pc-menu">
+                <a href="#1">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon1-1.svg" alt="지침서 아이콘" />
+                            <h3>공지사항</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#2">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon1.svg" alt="지침서 아이콘" />
+                            <h3>지침서</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#3">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon2.svg" alt="지침서 아이콘" />
+                            <h3>핵심수 기술</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#4">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon3.svg" alt="지침서 아이콘" />
+                            <h3>과제</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#5">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon4.svg" alt="지침서 아이콘" />
+                            <h3>실습 일지</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#6">
+                    <li class="menu-li select">
+                        <div> 
+                            <img src="img/icon/icon5.svg" alt="지침서 아이콘" />
+                            <h3>교수 일지</h3>
+                        </div>
+                        <button  data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                    </li>
+                </a>
+                <a href="#7">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon6.svg" alt="지침서 아이콘" />
+                            <h3>학생 평가</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#8">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon7.svg" alt="지침서 아이콘" />
+                            <h3>교수 평가</h3>
+                        </div>
+                    </li>
+                </a>
+            </ul>
+            <ul class="menu" id="mo-menu">
+                <a href="#1">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon1-1.svg" alt="지침서 아이콘" />
+                            <h3>공지사항</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#2">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon1.svg" alt="지침서 아이콘" />
+                            <h3>지침서</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#3">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon2.svg" alt="지침서 아이콘" />
+                            <h3>핵심수 기술</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#4">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon3.svg" alt="지침서 아이콘" />
+                            <h3>과제</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#5">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon4.svg" alt="지침서 아이콘" />
+                            <h3>실습 일지</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#6">
+                    <li class="menu-li select">
+                        <div> 
+                            <img src="img/icon/icon5.svg" alt="지침서 아이콘" />
+                            <h3>교수 일지</h3>
+                        </div>
+                        <button  data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                    </li>
+                </a>
+                <a href="#7">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon6.svg" alt="지침서 아이콘" />
+                            <h3>학생 평가</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#8">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon7.svg" alt="지침서 아이콘" />
+                            <h3>교수 평가</h3>
+                        </div>
+                    </li>
+                </a>
+            </ul>
+            <div class="logo-box">
+                <img src="img/logo.svg" alt="로고 이미지" width="100%" />
+            </div>
+        </div>
+        <!--sidenav 끝-->
+        <div class="content">
+            <div class="main-title">
+                <h1>교수일지 작성보기</h1>
+            </div>
+            <div class="background h-auto">
+                <div class="sub-title">
+                    <h1>지도 학생 선택</h1>  
+                </div>
+                <div class="student-list">
+                    <div class="student-name">
+                        <h2>학생 이름</h2>
+                    </div>
+                    <div class="student-name-list">
+                        <h2>김00, 장00</h2>
+                    </div>
+                </div>
+
+                <div class="sub-title">
+                    <h1>교수일지 등록</h1>  
+                </div>
+                <div class="detail-wrap">
+                    <div class="detail-title mb-10">
+                        <h1>블라블라 교수일지 제목입니다.</h1>
+                        <p class="date">오후 6: 51 에 게시됨</p>
+                    </div>
+                    <div class="border-bottom-color">
+                        <div class="date-view-wrap">
+                            <h1>날짜</h1>
+                            <h2>2023-07-10 <span>~</span>2023-07-10 </h2>
+                        </div>
+                    </div>
+                    <div class="detail-content">
+                        <p>
+                            블라블라 교수일지 내용입니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="dp-flex dp-end space-between border-bottom file-download-wrap ">
+                    <a href="">
+                        <div class="file file-delete mb-0">
+                            <h2>시뮬레이션 실습 과제. hwp</h2>
+                            <button><i class="fa-solid fa-download"></i></button>
+                        </div>
+                    </a>
+               </div>
+               <div class="bottom-btn-wrap">
+                    <button type="button" class="btn btn-secondary medium-btn solid-btn">
+                        이전
+                    </button>
+                    <div>
+                        <button type="button" class="btn btn-success medium-btn">
+                            수정
+                        </button>
+                    </div>
+               </div>
+            </div>
+        </div>
+
+    </section>  
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">메뉴명 편집</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="menu-edit">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary modal-btn" data-bs-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-success modal-btn" data-bs-dismiss="modal">적용</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <!--지도학생검색-->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">지도학생 검색</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-wrap">
+                    <div class="table">
+                        <ul class="th-list">
+                            <li class="th w-3">
+                                <h2>선택</h2>
+                            </li>
+                            <li class="th w-2">
+                                <h2>번호</h2>
+                            </li>
+                            <li class="th w-6">
+                                <h2>학생이름</h2>
+                            </li>
+                        </ul>
+                        <ul class="tb-list">
+                            <li class="tb w-3">
+                                <input type="checkbox" id="student1" name="student"/>
+                            </li>
+                            <li class="tb w-2">
+                                <h2>1</h2>
+                            </li>
+                            <li class="tb w-6">
+                                <h2>김 00</h2>
+                            </li>
+                        </ul>
+                        <ul class="tb-list">
+                            <li class="tb w-3">
+                                <input type="checkbox" id="student2" name="student"/>
+                            </li>
+                            <li class="tb w-2">
+                                <h2>1</h2>
+                            </li>
+                            <li class="tb w-6">
+                                <h2>김 00</h2>
+                            </li>
+                        </ul>
+                        <ul class="tb-list">
+                            <li class="tb w-3">
+                                <input type="checkbox" id="student3" name="student"/>
+                            </li>
+                            <li class="tb w-2">
+                                <h2>1</h2>
+                            </li>
+                            <li class="tb w-6">
+                                <h2>김 00</h2>
+                            </li>
+                        </ul>
+                        <ul class="tb-list">
+                            <li class="tb w-3">
+                                <input type="checkbox" id="student4" name="student"/>
+                            </li>
+                            <li class="tb w-2">
+                                <h2>1</h2>
+                            </li>
+                            <li class="tb w-6">
+                                <h2>김 00</h2>
+                            </li>
+                        </ul>
+                        <ul class="tb-list">
+                            <li class="tb w-3">
+                                <input type="checkbox" id="student5" name="student"/>
+                            </li>
+                            <li class="tb w-2">
+                                <h2>1</h2>
+                            </li>
+                            <li class="tb w-6">
+                                <h2>김 00</h2>
+                            </li>
+                        </ul>
+                        <ul class="tb-list">
+                            <li class="tb w-3">
+                                <input type="checkbox" id="student6" name="student"/>
+                            </li>
+                            <li class="tb w-2">
+                                <h2>1</h2>
+                            </li>
+                            <li class="tb w-6">
+                                <h2>김 00</h2>
+                            </li>
+                        </ul>
+                        <ul class="tb-list">
+                            <li class="tb w-3">
+                                <input type="checkbox" id="student7" name="student"/>
+                            </li>
+                            <li class="tb w-2">
+                                <h2>1</h2>
+                            </li>
+                            <li class="tb w-6">
+                                <h2>김 00</h2>
+                            </li>
+                        </ul>
+                        <ul class="tb-list">
+                            <li class="tb w-3">
+                                <input type="checkbox" id="student8" name="student"/>
+                            </li>
+                            <li class="tb w-2">
+                                <h2>1</h2>
+                            </li>
+                            <li class="tb w-6">
+                                <h2>김 00</h2>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="dp-flex dp-center">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination pagination-lg">
+                      <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                          <span aria-hidden="true">&laquo;</span>
+                        </a>
+                      </li>
+                      <li class="page-item active" aria-current="page">
+                        <span class="page-link">1</span>
+                      </li>
+                      <li class="page-item"><a class="page-link" href="#">2</a></li>
+                      <li class="page-item"><a class="page-link" href="#">3</a></li>
+                      <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                          <span aria-hidden="true">&raquo;</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary modal-btn" data-bs-dismiss="modal">닫기</button>
+                <button type="button" class="btn btn-success modal-btn" data-bs-dismiss="modal" >적용</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <!--교수일지 검색-->
+    <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered large-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">교수일지 검색</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="rigist-wrap">
+                    <ul>
+                        <li class="dp-input-wrap">
+                            <h3 class="w-100px">날짜</h3>
+                            <div class="date-wrap">
+                              <div
+                                    class='input-group'
+                                    id='datetimepicker1'
+                                    data-td-target-input='nearest'
+                                    data-td-target-toggle='nearest'
+                                >
+                                    <input
+                                        id='datetimepicker1Input'
+                                        type='text'
+                                        class='form-control'
+                                        data-td-target='#datetimepicker1'
+                                    />
+                                    <span
+                                        class='input-group-text'
+                                        data-td-target='#datetimepicker1'
+                                        data-td-toggle='datetimepicker'
+                                    >
+                                        <span class='fa-solid fa-calendar'></span>
+                                    </span>
+                                </div>
+                                <div
+                                    class='input-group'
+                                    id='datetimepicker2'
+                                    data-td-target-input='nearest'
+                                    data-td-target-toggle='nearest'
+                                >
+                                    <input
+                                        id='datetimepicker1Input'
+                                        type='text'
+                                        class='form-control'
+                                        data-td-target='#datetimepicker1'
+                                    />
+                                    <span
+                                        class='input-group-text'
+                                        data-td-target='#datetimepicker1'
+                                        data-td-toggle='datetimepicker'
+                                    >
+                                        <span class='fa-solid fa-calendar'></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="dp-input-wrap">
+                            <h3 class="w-100px">내용검색</h3>
+                            <div class="dp-flex align-center search-input-wrap">
+                                <input class="form-control form-control-lg mr-10" type="text" placeholder="교수일지 제목 ,내용 검색" aria-label=".form-control-lg example">
+                                <div class="search-btn-wrap">
+                                    <button type="button" class="btn btn-secondary modal-btn mr-5">초기화</button>    
+                                    <button type="button" class="btn btn-success modal-btn">검색</button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="table-wrap">
+                    <div class="table"  id="table1">
+                        <ul class="th-list">
+                            <li class="th w-2">
+                                <h2>선택</h2>
+                            </li>
+                            <li class="th w-1">
+                                <h2>번호</h2>
+                            </li>
+                            <li class="th w-3">
+                                <h2>교수일지날짜</h2>
+                            </li>
+                            <li class="th w-3">
+                                <h2>교수일지 제목</h2>
+                            </li>
+                            <li class="th w-4">
+                                <h2>교수일지 내용</h2>
+                            </li>
+                        </ul>
+                        <ul class="tb-list">
+                            <li class="tb w-2">
+                                <input type="checkbox" id="list1" name="list"/>
+                            </li>
+                            <li class="tb w-1">
+                                <h2>35</h2>
+                            </li>
+                            <li class="tb w-3">
+                                <h2>2022-12-04 14:07:56</h2>
+                            </li>
+                            <li class="tb w-3">
+                                <h2>일지제목출력</h2>
+                            </li>
+                            <li class="tb w-4">
+                                <h2>일지내용출력</h2>
+                            </li>
+                        </ul>
+                        <ul class="tb-list">
+                            <li class="tb w-2">
+                                <input type="checkbox" id="list2" name="list"/>
+                            </li>
+                            <li class="tb w-1">
+                                <h2>35</h2>
+                            </li>
+                            <li class="tb w-3">
+                                <h2>2022-12-04 14:07:56</h2>
+                            </li>
+                            <li class="tb w-3">
+                                <h2>일지제목출력</h2>
+                            </li>
+                            <li class="tb w-4">
+                                <h2>일지내용출력</h2>
+                            </li>
+                        </ul>
+                        <ul class="tb-list">
+                            <li class="tb w-2">
+                                <input type="checkbox" id="list3" name="list"/>
+                            </li>
+                            <li class="tb w-1">
+                                <h2>35</h2>
+                            </li>
+                            <li class="tb w-3">
+                                <h2>2022-12-04 14:07:56</h2>
+                            </li>
+                            <li class="tb w-3">
+                                <h2>일지제목출력</h2>
+                            </li>
+                            <li class="tb w-4">
+                                <h2>일지내용출력</h2>
+                            </li>
+                        </ul>
+                        <ul class="tb-list">
+                            <li class="tb w-2">
+                                <input type="checkbox" id="list4" name="list"/>
+                            </li>
+                            <li class="tb w-1">
+                                <h2>35</h2>
+                            </li>
+                            <li class="tb w-3">
+                                <h2>2022-12-04 14:07:56</h2>
+                            </li>
+                            <li class="tb w-3">
+                                <h2>일지제목출력</h2>
+                            </li>
+                            <li class="tb w-4">
+                                <h2>일지내용출력</h2>
+                            </li>
+                        </ul>
+                        <ul class="tb-list">
+                            <li class="tb w-2">
+                                <input type="checkbox" id="list5" name="list"/>
+                            </li>
+                            <li class="tb w-1">
+                                <h2>35</h2>
+                            </li>
+                            <li class="tb w-3">
+                                <h2>2022-12-04 14:07:56</h2>
+                            </li>
+                            <li class="tb w-3">
+                                <h2>일지제목출력</h2>
+                            </li>
+                            <li class="tb w-4">
+                                <h2>일지내용출력</h2>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="dp-flex dp-center">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination pagination-lg">
+                          <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                              <span aria-hidden="true">&laquo;</span>
+                            </a>
+                          </li>
+                          <li class="page-item active" aria-current="page">
+                            <span class="page-link">1</span>
+                          </li>
+                          <li class="page-item"><a class="page-link" href="#">2</a></li>
+                          <li class="page-item"><a class="page-link" href="#">3</a></li>
+                          <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                              <span aria-hidden="true">&raquo;</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </nav>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary modal-btn" data-bs-dismiss="modal">닫기</button>
+                <button type="button" class="btn btn-success modal-btn" data-bs-dismiss="modal">적용</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+</body>
+<script>
+new tempusDominus.TempusDominus(document.getElementById('datetimepicker1'), {
+    display: { 
+        components: {
+            seconds: false,
+            useTwentyfourHour: false,
+        },
+        icons: {
+            type: 'icons',
+            time: 'fa fa-solid fa-clock',
+            date: 'fa fa-solid fa-calendar',
+            up: 'fa fa-solid fa-arrow-up',
+            down: 'fa fa-solid fa-arrow-down',
+            previous: 'fa fa-solid fa-chevron-left',
+            next: 'fa fa-solid fa-chevron-right',
+            today: 'fa fa-solid fa-calendar-check',
+            clear: 'fa fa-solid fa-trash',
+            close: 'fas fa-solid fa-xmark'
+        },
+    },
+});
+new tempusDominus.TempusDominus(document.getElementById('datetimepicker2'), {
+    display: { 
+        components: {
+            seconds: false,
+            useTwentyfourHour: false,
+        },
+        icons: {
+            type: 'icons',
+            time: 'fa fa-solid fa-clock',
+            date: 'fa fa-solid fa-calendar',
+            up: 'fa fa-solid fa-arrow-up',
+            down: 'fa fa-solid fa-arrow-down',
+            previous: 'fa fa-solid fa-chevron-left',
+            next: 'fa fa-solid fa-chevron-right',
+            today: 'fa fa-solid fa-calendar-check',
+            clear: 'fa fa-solid fa-trash',
+            close: 'fas fa-solid fa-xmark'
+        },
+    },
+});
+</script>
+</html>
+

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/3bafd42962.js" crossorigin="anonymous"></script>
+    <script src="js/jquery-3.4.1.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+    <!--bootstrap-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+    
+    <link rel="stylesheet" href="css/common/reset.css">
+    <link rel="stylesheet" href="css/common/nav.css">
+    <link rel="stylesheet" href="css/common/common.css">
+    <link rel="stylesheet" href="css/common/component.css">
+    <link rel="stylesheet" href="css/drm.css">
+    
+
+    <title>학생용 홈 | 학생용 실습일지 리스트 | 학생 실습일지 상세 페이지</title>
+</head>
+
+<script>
+   $(document).ready(function() {
+    $('.dropdown-toggle').dropdown()
+
+    $('#profileBtn').click(function(){
+        $('.dropDownMenu').slideToggle(300, 'linear');
+    })
+    $('#menuBtn').click(function(){
+        $('#mo-menu').slideToggle(300, 'linear');
+    })
+
+    /*댓글 수정*/
+    $("#modify-comment-input").hide();
+
+    $("#comment-modify-btn").click(function(){
+        $("#comment").hide();
+        $("#modify-comment-input").show();
+    })
+
+    $("#close-btn").click(function(){
+        $("#comment").show();
+        $("#modify-comment-input").hide();
+    })
+});
+</script>
+<body>
+    <!--nav-->
+    <section class="mobileNav">
+        <article class="mobileNavWrap1">
+            <div class="logoBox">
+                <h1>Electronic Nursing Education Book</h1>
+            </div>
+            <div id="profileBtn">
+                <i class="fa-solid fa-user"></i>
+            </div>
+        </article>
+        <article class="mobileNavWrap2">
+            <div class="dropDownMenu">
+                <ul class="mobileMenu">
+                    <li class="profile">
+                        <a href="">학생용</a>
+                        <div>
+                            <a href="">내정보</a>
+                            <h3>|</h3>
+                            <a href="">로그아웃</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </article>
+    </section>
+
+   <section class="top-nav">
+        <h1>Electronic Nursing Education Book</h1>
+        <div class="right-box">
+            <a href="" class="name">학생용</a>
+            <a href="">내정보</a>
+            <h3>|</h3>
+            <a href="">로그아웃</a>
+        </div>
+   </section>
+     <!--nav 끝-->
+   <section class="container-wrap">
+        <!--sidenav-->
+        <div class="side-nav">
+            <div class="title">
+                <div>
+                    <a href=""><i class="fa-solid fa-chevron-left"></i></a>
+                    <h2>일반 간호학</h2>
+                </div>
+                <div class="menu" id="menuBtn">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </div>
+            <ul class="menu" id="pc-menu">
+                <a href="#1">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon1-1.svg" alt="지침서 아이콘" />
+                            <h3>공지사항</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#2">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon1.svg" alt="지침서 아이콘" />
+                            <h3>지침서</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#3">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon2.svg" alt="지침서 아이콘" />
+                            <h3>핵심수 기술</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#4">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon3.svg" alt="지침서 아이콘" />
+                            <h3>과제</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#5">
+                    <li class="menu-li select">
+                        <div>
+                            <img src="img/icon/icon4.svg" alt="지침서 아이콘" />
+                            <h3>실습 일지</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#6">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon6.svg" alt="지침서 아이콘" />
+                            <h3>학생 평가</h3>
+                        </div>
+                    </li>
+                </a>
+            </ul>
+            <ul class="menu" id="mo-menu">
+                <a href="#1">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon1-1.svg" alt="지침서 아이콘" />
+                            <h3>공지사항</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#2">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon1.svg" alt="지침서 아이콘" />
+                            <h3>지침서</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#3">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon2.svg" alt="지침서 아이콘" />
+                            <h3>핵심수 기술</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#4">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon3.svg" alt="지침서 아이콘" />
+                            <h3>과제</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#5">
+                    <li class="menu-li select">
+                        <div>
+                            <img src="img/icon/icon4.svg" alt="지침서 아이콘" />
+                            <h3>실습 일지</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#6">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon6.svg" alt="지침서 아이콘" />
+                            <h3>학생 평가</h3>
+                        </div>
+                    </li>
+                </a>
+            </ul>
+            <div class="logo-box">
+                <img src="img/logo.svg" alt="로고 이미지" width="100%" />
+            </div>
+        </div>
+        <!--sidenav 끝-->
+        <div class="content">
+            <div class="main-title">
+                <h1>실습 일지 제출 상세</h1>
+            </div>
+            <div class="background h-auto">
+                <div class="sub-title">
+                    <h1>실습 정보</h1>
+               </div>
+                <div class="detail-wrap">
+                    <div class="detail-title mb-10">
+                        <h1>블라블라 지침서</h1>
+                        <p class="date">오후 6: 51 에 게시됨</p>
+                    </div>
+                    <div class="border-bottom-color">
+                        <div class="date-view-wrap">
+                            <h1>실습기간</h1>
+                            <h2>2023-07-10 <span>~</span>2023-07-10 </h2>
+                        </div>
+                    </div>
+                    <div class="detail-content h-20vh">
+                        <p>
+                            블라블라 지침서 내용입니다.
+                        </p>
+                    </div>
+                </div>
+                <div class="dp-flex align-center space-between border-bottom file-download-wrap ">
+                    <a href="">
+                        <div class="file file-delete mb-0">
+                            <h2>시뮬레이션 실습 과제. hwp</h2>
+                            <button><i class="fa-solid fa-download"></i></button>
+                        </div>
+                    </a>
+               </div>
+               <div class="sub-title mt-30">
+                    <h1>실습일지 제출</h1>
+               </div>
+               <div class="detail-wrap">
+                    <div class="detail-title mb-10">
+                        <h1>시뮬레이션 실습지침서 6 과제제출합니다.</h1>
+                        <p class="date">오후 6: 51 에 게시됨</p>
+                    </div>
+                    <div class="border-bottom-color">
+                        <div class="date-view-wrap">
+                            <h1>실습기간</h1>
+                            <h2>2023-07-10 <span>~</span>2023-07-10 </h2>
+                        </div>
+                    </div>
+                    <div class="detail-content h-20vh">
+                        <p>
+                            블라블라 시뮬레이션 실습지침서 6 과제제출합니다.
+                        </p>
+                    </div>
+                 </div>
+               <div class="bottom-btn-wrap">
+                <button type="button" class="btn btn-secondary medium-btn solid-btn">
+                    목록
+                </button>
+                <div>
+                    <button type="button" class="btn btn-success medium-btn">
+                        수정
+                    </button>
+                </div>
+            </div>
+            <div class="comment-wrap mt-30">
+                   <div class="sub-title">
+                       <h1>댓글</h1>
+                   </div>
+                    <div class="comment-box-wrap">
+                        <div class="comment-box" id="comment">
+                            <div class="comment-user">
+                                <h2>황혜리 학생</h2>
+                                <div class="date-icon-wrap">
+                                    <p class="date">2023.07.10 오전 09:55</p>    
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa-solid fa-ellipsis-vertical"></i> 
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start" aria-labelledby="dropdownMenuLink">
+                                        <li id="comment-modify-btn">
+                                            <a class="dropdown-item" href="#1">수정</a>
+                                        </li>
+                                        <li>
+                                            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#alert">
+                                                삭제
+                                            </button>
+                                        </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comment-detail">
+                                <p>네 알겠습니다. 교수님.</p>
+                            </div>
+                        </div>
+
+                        <div class="comment-input border-bottom mb-20" id="modify-comment-input">
+                            <h3>황혜리 학생</h3>
+                             <textarea class="form-control border-none" id="exampleFormControlTextarea1" rows="5" placeholder="댓글을 입력하세요.">네 알겠습니다. 교수님.</textarea>
+                             <div class="comment-button-wrap">
+                                   <div class="dp-flex dp-end">
+                                         <div class="dp-flex dp-center">
+                                             <div class="file-btn">
+                                                 <label for="file-btn">
+                                                     <i class="fa-solid fa-upload"></i>
+                                                     첨부파일 업로드
+                                                 </label>
+                                                 <input type="file" id="file-btn" name="file" hidden/>
+                                             </div>
+                                         </div>
+                                     </div>
+                                <div class="comment-modify-button-wrap">
+                                    <button class="close-btn" id="close-btn">취소</button>
+                                    <button class="comment-btn">등록</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="comment-input">
+                            <textarea class="form-control border-none" id="exampleFormControlTextarea1" rows="5" placeholder="댓글을 입력하세요."></textarea>
+                            <div class="comment-button-wrap">
+                                <div class="dp-flex dp-end">
+                                        <div class="dp-flex dp-center">
+                                            <div class="file-btn">
+                                                <label for="file-btn">
+                                                    <i class="fa-solid fa-upload"></i>
+                                                    첨부파일 업로드
+                                                </label>
+                                                <input type="file" id="file-btn" name="file" hidden/>
+                                            </div>
+                                        </div>
+                                </div>
+                                <button class="comment-btn">등록</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>  
+
+    <!-- Modal -->
+    <div class="modal fade" id="alert" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-none">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">댓글을 삭제하시겠습니까?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary modal-btn" data-bs-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-success modal-btn" data-bs-dismiss="modal">확인</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+</body>
+</html>
+

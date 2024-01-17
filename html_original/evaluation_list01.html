@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/3bafd42962.js" crossorigin="anonymous"></script>
+    <script src="js/jquery-3.4.1.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+    <!--bootstrap-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-fbbOQedDUMZZ5KreZpsbe1LCZPVmfTnH7ois6mU1QK+m14rQ1l2bGBq41eYeM/fS" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+    
+    <link rel="stylesheet" href="css/common/reset.css">
+    <link rel="stylesheet" href="css/common/nav.css">
+    <link rel="stylesheet" href="css/common/common.css">
+    <link rel="stylesheet" href="css/common/component.css">
+    <link rel="stylesheet" href="css/table.css">
+    
+    <title>홈 | 과목 | 교수평가 리스트</title>
+</head>
+
+<script>
+   $(document).ready(function() {
+    $('.dropdown-toggle').dropdown()
+    $("#add-list").hide();
+
+    $('#profileBtn').click(function(){
+        $('.dropDownMenu').slideToggle(300, 'linear');
+    })
+    $('#menuBtn').click(function(){
+        $('#mo-menu').slideToggle(300, 'linear');
+    })
+    $('#add-list-btn').click(function(){
+        $('#add-list-input-wrap').show();
+    })
+    $("#addBtn").click(function(){
+        $("#add-list").show();
+    })
+});
+</script>
+<body>
+    <!--nav-->
+    <section class="mobileNav">
+        <article class="mobileNavWrap1">
+            <div class="logoBox">
+                <h1>Electronic Nursing Education Book</h1>
+            </div>
+            <div id="profileBtn">
+                <i class="fa-solid fa-user"></i>
+            </div>
+        </article>
+        <article class="mobileNavWrap2">
+            <div class="dropDownMenu">
+                <ul class="mobileMenu">
+                    <li class="profile">
+                        <a href="">김지영 교수</a>
+                        <div>
+                            <a href="">내정보</a>
+                            <h3>|</h3>
+                            <a href="">로그아웃</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </article>
+    </section>
+
+   <section class="top-nav">
+        <h1>Electronic Nursing Education Book</h1>
+        <div class="right-box">
+            <a href="" class="name">김지영 교수</a>
+            <a href="">내정보</a>
+            <h3>|</h3>
+            <a href="">로그아웃</a>
+        </div>
+   </section>
+     <!--nav 끝-->
+   <section class="container-wrap">
+        <!--sidenav-->
+        <div class="side-nav">
+            <div class="title">
+                <div>
+                    <a href=""><i class="fa-solid fa-chevron-left"></i></a>
+                    <h2>일반 간호학</h2>
+                </div>
+                <div class="menu" id="menuBtn">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </div>
+            <ul class="menu" id="pc-menu">
+                <a href="#1">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon1-1.svg" alt="지침서 아이콘" />
+                            <h3>공지사항</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#2">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon1.svg" alt="지침서 아이콘" />
+                            <h3>지침서</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#3">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon2.svg" alt="지침서 아이콘" />
+                            <h3>핵심수 기술</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#4">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon3.svg" alt="지침서 아이콘" />
+                            <h3>과제</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#5">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon4.svg" alt="지침서 아이콘" />
+                            <h3>실습 일지</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#6">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon5.svg" alt="지침서 아이콘" />
+                            <h3>교수 일지</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#7">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon6.svg" alt="지침서 아이콘" />
+                            <h3>학생 평가</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#8">
+                    <li class="menu-li select">
+                        <div>
+                            <img src="img/icon/icon7.svg" alt="지침서 아이콘" />
+                            <h3>교수 평가</h3>
+                        </div>
+                        <button  data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                    </li>
+                </a>
+            </ul>
+            <ul class="menu" id="mo-menu">
+                <a href="#1">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon1-1.svg" alt="지침서 아이콘" />
+                            <h3>공지사항</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#2">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon1.svg" alt="지침서 아이콘" />
+                            <h3>지침서</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#3">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon2.svg" alt="지침서 아이콘" />
+                            <h3>핵심수 기술</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#4">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon3.svg" alt="지침서 아이콘" />
+                            <h3>과제</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#5">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon4.svg" alt="지침서 아이콘" />
+                            <h3>실습 일지</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#6">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon5.svg" alt="지침서 아이콘" />
+                            <h3>교수 일지</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#7">
+                    <li class="menu-li">
+                        <div>
+                            <img src="img/icon/icon6.svg" alt="지침서 아이콘" />
+                            <h3>학생 평가</h3>
+                        </div>
+                    </li>
+                </a>
+                <a href="#8">
+                    <li class="menu-li select">
+                        <div>
+                            <img src="img/icon/icon7.svg" alt="지침서 아이콘" />
+                            <h3>교수 평가</h3>
+                        </div>
+                        <button  data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                    </li>
+                </a>
+            </ul>
+            <div class="logo-box">
+                <img src="img/logo.svg" alt="로고 이미지" width="100%" />
+            </div>
+        </div>
+        <!--sidenav 끝-->
+        <div class="content">
+            <div class="main-title">
+                <h1>교수 평가</h1>
+            </div>
+            <div class="background h-auto">
+               <div class="sub-title border-bottom-color student-num">
+                    <h1>
+                        전체 학생
+                        <strong> 35명</strong>
+                    </h1>
+                    <button type="button" class="btn btn-success small-btn" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                        평가 반영율 관리
+                    </button>
+               </div>
+               <div class="table-wrap">
+                    <div class="table" id="fullWidth-table">
+                        <ul class="th-list">
+                            <li class="th w-1">
+                                <h2>번호</h2>
+                            </li>
+                            <li class="th w-3">
+                                <h2>학생 이름</h2>
+                            </li>
+                            <li class="th w-5">
+                                <h2>학생 번호</h2>
+                            </li>
+                            <li class="th w-5">
+                                <h2>관리</h2>
+                            </li>
+                        </ul>
+                        <ul class="tb-list">
+                            <li class="tb w-1">
+                                <h2>35</h2>
+                            </li>
+                            <li class="tb w-3">
+                                <h2>김00</h2>
+                            </li>
+                            <div class="tb  w-5">
+                                <h2>465213</h2>
+                            </div>
+                            <div class="tb w-5">
+                                <a href="">
+                                    <button type="button" class="btn btn-success small-btn" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                                        상세보기
+                                    </button>
+                                </a>
+                            </div>
+                        </ul>
+                        <ul class="tb-list">
+                            <li class="tb w-1">
+                                <h2>35</h2>
+                            </li>
+                            <li class="tb w-3">
+                                <h2>김00</h2>
+                            </li>
+                            <div class="tb  w-5">
+                                <h2>465213</h2>
+                            </div>
+                            <div class="tb w-5">
+                                <a href="">
+                                    <button type="button" class="btn btn-success small-btn" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                                        상세보기
+                                    </button>
+                                </a>
+                            </div>
+                        </ul>
+                        <ul class="tb-list">
+                            <li class="tb w-1">
+                                <h2>35</h2>
+                            </li>
+                            <li class="tb w-3">
+                                <h2>김00</h2>
+                            </li>
+                            <div class="tb  w-5">
+                                <h2>465213</h2>
+                            </div>
+                            <div class="tb w-5">
+                                <a href="">
+                                    <button type="button" class="btn btn-success small-btn" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                                        상세보기
+                                    </button>
+                                </a>
+                            </div>
+                        </ul>
+                        <ul class="tb-list">
+                            <li class="tb w-1">
+                                <h2>35</h2>
+                            </li>
+                            <li class="tb w-3">
+                                <h2>김00</h2>
+                            </li>
+                            <div class="tb  w-5">
+                                <h2>465213</h2>
+                            </div>
+                            <div class="tb w-5">
+                                <a href="">
+                                    <button type="button" class="btn btn-success small-btn" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                                        상세보기
+                                    </button>
+                                </a>
+                            </div>
+                        </ul>
+                        <ul class="tb-list">
+                            <li class="tb w-1">
+                                <h2>35</h2>
+                            </li>
+                            <li class="tb w-3">
+                                <h2>김00</h2>
+                            </li>
+                            <div class="tb  w-5">
+                                <h2>465213</h2>
+                            </div>
+                            <div class="tb w-5">
+                                <a href="">
+                                    <button type="button" class="btn btn-success small-btn" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                                        상세보기
+                                    </button>
+                                </a>
+                            </div>
+                        </ul>
+                        <ul class="tb-list">
+                            <li class="tb w-1">
+                                <h2>35</h2>
+                            </li>
+                            <li class="tb w-3">
+                                <h2>김00</h2>
+                            </li>
+                            <div class="tb  w-5">
+                                <h2>465213</h2>
+                            </div>
+                            <div class="tb w-5">
+                                <a href="">
+                                    <button type="button" class="btn btn-success small-btn" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                                        상세보기
+                                    </button>
+                                </a>
+                            </div>
+                        </ul>
+                        <ul class="tb-list">
+                            <li class="tb w-1">
+                                <h2>35</h2>
+                            </li>
+                            <li class="tb w-3">
+                                <h2>김00</h2>
+                            </li>
+                            <div class="tb  w-5">
+                                <h2>465213</h2>
+                            </div>
+                            <div class="tb w-5">
+                                <a href="">
+                                    <button type="button" class="btn btn-success small-btn" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                                        상세보기
+                                    </button>
+                                </a>
+                            </div>
+                        </ul>
+                        <ul class="tb-list">
+                            <li class="tb w-1">
+                                <h2>35</h2>
+                            </li>
+                            <li class="tb w-3">
+                                <h2>김00</h2>
+                            </li>
+                            <div class="tb  w-5">
+                                <h2>465213</h2>
+                            </div>
+                            <div class="tb w-5">
+                                <a href="">
+                                    <button type="button" class="btn btn-success small-btn" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                                        상세보기
+                                    </button>
+                                </a>
+                            </div>
+                        </ul>
+                        <ul class="tb-list">
+                            <li class="tb w-1">
+                                <h2>35</h2>
+                            </li>
+                            <li class="tb w-3">
+                                <h2>김00</h2>
+                            </li>
+                            <div class="tb  w-5">
+                                <h2>465213</h2>
+                            </div>
+                            <div class="tb w-5">
+                                <a href="">
+                                    <button type="button" class="btn btn-success small-btn" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                                        상세보기
+                                    </button>
+                                </a>
+                            </div>
+                        </ul>
+                        <ul class="tb-list">
+                            <li class="tb w-1">
+                                <h2>35</h2>
+                            </li>
+                            <li class="tb w-3">
+                                <h2>김00</h2>
+                            </li>
+                            <div class="tb  w-5">
+                                <h2>465213</h2>
+                            </div>
+                            <div class="tb w-5">
+                                <a href="">
+                                    <button type="button" class="btn btn-success small-btn" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                                        상세보기
+                                    </button>
+                                </a>
+                            </div>
+                        </ul>
+                      
+                      
+                    <div>
+                </div>
+            </div>
+        </div>
+        <div class="dp-center dp-flex">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination pagination-lg ">
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  <li class="page-item active" aria-current="page">
+                    <span class="page-link">1</span>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+       </div>
+
+    </section>  
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">메뉴명 편집</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="text" id="menu-edit">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary modal-btn" data-bs-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-success modal-btn">적용</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+     <!-- Modal -->
+     <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered medium-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">평가 반영율 관리</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <select class="form-select form-select-lg" aria-label="Large select example">
+                    <option selected>과목선택</option>
+                    <option value="1">일반 간호학</option>
+                    <option value="2">성인 간호학 IV</option>
+                  </select>
+                  <div class="modal-table">
+                    <div class="subject-title">
+                        <h2>일반간호학</h2>
+                    </div>
+                        <div class="table-wrap">
+                            <div class="table m-0 scroll-table">
+                                <ul class="th-list">
+                                    <li class="th w-5">
+                                        <h2>평가 항목</h2>
+                                    </li>
+                                    <li class="th w-5">
+                                        <h2>반영율</h2>
+                                    </li>
+                                </ul>
+                                <ul class="tb-list">
+                                    <li class="tb w-5">
+                                        <h2>지침서</h2>
+                                    </li>
+                                    <li class="tb w-5">
+                                        <input type="number" id="percent" class="small-input" value="20">
+                                    </li>
+                                </ul>
+                                <ul class="tb-list">
+                                    <li class="tb w-5">
+                                        <h2>핵심 수기술</h2>
+                                    </li>
+                                    <li class="tb w-5">
+                                        <input type="number" id="percent" class="small-input" value="20">
+                                    </li>
+                                </ul>
+                                <ul class="tb-list">
+                                    <li class="tb w-5">
+                                        <h2>과제</h2>
+                                    </li>
+                                    <li class="tb w-5">
+                                        <input type="number" id="percent" class="small-input" value="30">
+                                    </li>
+                                </ul>
+                                <ul class="tb-list">
+                                    <li class="tb w-5">
+                                        <h2>실습일지</h2>
+                                    </li>
+                                    <li class="tb w-5">
+                                        <input type="number" id="percent" class="small-input" value="30">
+                                    </li>
+                                </ul>
+                                <ul class="tb-list" id="add-list">
+                                    <li class="tb w-5">
+                                        <h2>실습일지</h2>
+                                    </li>
+                                    <li class="tb w-5">
+                                        <input type="number" id="percent" class="small-input" value="30">
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="add-list" id="add-list-btn">
+                            <div class="add-list-btn">
+                                <i class="fa-solid fa-plus"></i>
+                                항목 추가하기
+                            </div>
+                        </div>
+                        <div class="add-list-input-wrap" id="add-list-input-wrap">
+                            <div class="add-list-input">
+                                <input type="text" id="add-list" placeholder="평가항목을 입력하세요." />
+                                <button type="button" class="btn btn-success small-btn" id="addBtn">저장</button>
+                            </div>
+                        </div>
+                        <div class="table-wrap mt-20">
+                            <div class="table" id="table1">
+                                <ul class="th-list">
+                                    <li class="th w-3">
+                                        <h2>총 점수</h2>
+                                    </li>
+                                    <li class="tb w-7">
+                                        <h2>100%</h2>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary modal-btn" data-bs-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-success modal-btn" data-bs-dismiss="modal">적용</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+</body>
+</html>
+

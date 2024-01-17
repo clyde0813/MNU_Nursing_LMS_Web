@@ -1,5 +1,5 @@
+{% extends 'professor/layout/layout.html' %}
 {% load static %}
-{% include 'professor/layout/layout.html' %}
 {% block stylesheet %}
     <link rel="stylesheet" href="{% static 'css/table.css' %}">
 {% endblock %}
@@ -19,7 +19,7 @@
                     평가 반영율 관리
                 </button>
             </div>
-            <div class="table-wrap">
+            <div class="">
                 <div class="table" id="fullWidth-table">
                     <ul class="th-list">
                         <li class="th w-1">
@@ -47,12 +47,10 @@
                                 <h2>{{ data.profile.userID }}</h2>
                             </div>
                             <div class="tb w-5">
-                                <a href="">
-                                    <button type="button" class="btn btn-success small-btn" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal2">
-                                        상세보기
-                                    </button>
-                                </a>
+                                <button type="button" class="btn btn-success small-btn"
+                                        onclick="location.href='{% url 'professor:professor_evaluate_detail' subject_id data.id %}'">
+                                    상세보기
+                                </button>
                             </div>
                         </ul>
                     {% endfor %}
@@ -64,75 +62,140 @@
     </div>
 {% endblock %}
 {% block modal %}
-    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered medium-modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">평가 반영율 관리</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="modal-table">
-                        <div class="subject-title">
-                            <h2>{{ subject_name }}</h2>
-                        </div>
-                        <div class="table-wrap">
-                            <div class="table m-0 scroll-table">
-                                <ul class="th-list">
-                                    <li class="th w-5">
-                                        <h2>평가 항목</h2>
-                                    </li>
-                                    <li class="th w-5">
-                                        <h2>반영율</h2>
-                                    </li>
-                                </ul>
-                                {% for data in evaluation_objects %}
-                                    <ul class="tb-list">
-                                        <li class="tb w-5">
-                                            <h2>{{ data.curriculum.title }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered medium-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">평가 반영율 관리</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-table">
+                            <div class="subject-title">
+                                <h2>{{ subject_name }}</h2>
+                            </div>
+                            <div class="">
+                                <div class="table m-0" id="eval-table">
+                                    <ul class="th-list">
+                                        <li class="th w-5">
+                                            <h2>평가 항목</h2>
                                         </li>
-                                        <li class="tb w-5">
-                                            <input type="number" id="percent" class="small-input"
-                                                   value="{{ data.percentage }}">
+                                        <li class="th w-5">
+                                            <h2>반영율</h2>
                                         </li>
                                     </ul>
-                                {% endfor %}
+                                    {% for data in evaluation_items %}
+                                        <ul class="tb-list">
+                                            <li class="tb w-5">
+                                                <h2>{{ data.name }}</h2>
+                                            </li>
+                                            <li class="tb w-5">
+                                                <input type="number" id="percent"
+                                                       name="percent{{ data.id }}" class="small-input"
+                                                       value="{{ data.percentage }}">
+                                            </li>
+                                        </ul>
+                                    {% endfor %}
+                                </div>
                             </div>
-                        </div>
-                        <div class="add-list" id="add-list-btn">
-                            <div class="add-list-btn">
-                                <i class="fa-solid fa-plus"></i>
-                                항목 추가하기
+                            {#                            <div class="add-list" id="add-list-btn">#}
+                            {#                                <div class="add-list-btn">#}
+                            {#                                    <i class="fa-solid fa-plus"></i>#}
+                            {#                                    항목 추가하기#}
+                            {#                                </div>#}
+                            {#                            </div>#}
+                            <div class="add-list-input-wrap" id="add-list-input-wrap">
+                                <div class="add-list-input">
+                                    <input type="text" id="add-list" placeholder="평가항목을 입력하세요."/>
+                                    <button type="button" class="btn btn-success small-btn" id="addBtn">저장</button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="add-list-input-wrap" id="add-list-input-wrap">
-                            <div class="add-list-input">
-                                <input type="text" id="add-list" placeholder="평가항목을 입력하세요."/>
-                                <button type="button" class="btn btn-success small-btn" id="addBtn">저장</button>
-                            </div>
-                        </div>
-                        <div class="table-wrap mt-20">
-                            <div class="table" id="table1">
-                                <ul class="th-list">
-                                    <li class="th w-3">
-                                        <h2>총 점수</h2>
-                                    </li>
-                                    <li class="tb w-7">
-                                        <h2>100%</h2>
-                                    </li>
-                                </ul>
+                            <div class="mt-20">
+                                <div class="table" id="table1">
+                                    <ul class="th-list">
+                                        <li class="th w-3">
+                                            <h2>총 점수</h2>
+                                        </li>
+                                        <li class="tb w-7">
+                                            <h2 id="total_percent_text">100%</h2>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary modal-btn" data-bs-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-success modal-btn" data-bs-dismiss="modal">적용</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary modal-btn" data-bs-dismiss="modal">취소</button>
+                        <button type="submit" class="btn btn-success modal-btn" data-bs-dismiss="modal">적용</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
     <script>
 
+    </script>
+{% endblock %}
+{% block script %}
+    <script>
+        const addBtn = document.getElementById("addBtn");
+        const addName = document.getElementById("add-list");
+        const evalTable = document.getElementById("eval-table");
+        addBtn.addEventListener("click", (e) => {
+            if (addName) {
+                // Create new ul element
+                const newUl = document.createElement("ul");
+                newUl.className = "tb-list";
+
+                // Create first li element with data.name
+                const li1 = document.createElement("li");
+                li1.className = "tb w-5";
+                const h2 = document.createElement("h2");
+                h2.textContent = addName.value.trim();
+                li1.appendChild(h2);
+                newUl.appendChild(li1);
+
+                // Create second li element with input field
+                const li2 = document.createElement("li");
+                li2.className = "tb w-5";
+                const input = document.createElement("input");
+                input.type = "number";
+                input.id = `percent`;
+                input.name = `percentNew${addName.value}`;
+                input.className = "small-input";
+                li2.appendChild(input);
+                newUl.appendChild(li2);
+
+
+                // Append the new li element to the eval-table
+                evalTable.appendChild(newUl);
+
+                // Clear the addName input field
+                addName.value = "";
+            }
+        });
+
+        const inputs = document.querySelectorAll('input[id^="percent"]');
+        var total_percent_text = document.getElementById("total_percent_text")
+
+        // 이벤트 핸들러 함수 정의
+        function handleInputChange() {
+            var total_percent = 0
+            inputs.forEach((input) => {
+                total_percent += parseInt(input.value)
+            })
+            total_percent_text.textContent = total_percent + "%"
+        }
+
+        // 각 input 요소에 이벤트 리스너 추가
+        inputs.forEach((input) => {
+            input.addEventListener("input", handleInputChange);
+        });
+
+        window.onload = function () {
+            handleInputChange()
+        }
     </script>
 {% endblock %}

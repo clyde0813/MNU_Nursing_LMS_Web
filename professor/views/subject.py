@@ -7,7 +7,14 @@ from function.professor.html import *
 @login_required(redirect_field_name=None)
 def subject_create(request):
     name = request.POST.get("name")
-    Subject.objects.create(professor=request.user, name=name)
+    subject_object = Subject.objects.create(professor=request.user, name=name)
+    for i in range(2, 6):
+        SubjectEvaluationItem.objects.create(
+            subject=subject_object,
+            curriculum_id=i,
+            name=CurriculumType.objects.get(id=i).name,
+            percentage=25
+        )
     return redirect("common:index")
 
 

@@ -31,7 +31,7 @@ body{
     padding: 50px;
 }
 .one-page{
-    min-height: 78vh;
+    min-height: 100vh;
     height: auto;
 }
 .dp-flex{

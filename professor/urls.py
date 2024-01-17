@@ -29,6 +29,8 @@ urlpatterns = [
 
     # 교수 평가
     path("<int:subject_id>/professor/evaluate", views.professor_evaluate, name="professor_evaluate"),
+    path("<int:subject_id>/professor/evaluate/<int:student_id>", views.professor_evaluate_detail,
+         name="professor_evaluate_detail"),
 
     path("<int:subject_id>/enroll", views.enrollment, name="enrollment"),
     path("<int:subject_id>/enroll/<int:enrollment_id>", views.enrollment_confirm, name="enrollment_confirm")
