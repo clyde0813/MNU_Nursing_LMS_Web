@@ -51,7 +51,6 @@ class Curriculum(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
     eval_status = models.BooleanField(default=True)
-    eval_percentage = models.IntegerField(default=0)
     created_date = models.DateTimeField(auto_now_add=True)
 
 

@@ -82,7 +82,7 @@ def professor_evaluate_detail(request, subject_id, student_id):
             score = None
             assignment_object = Assignment.objects.filter(curriculum_id=data.id, author_id=student_id)
             if assignment_object.exists():
-                score = assignment_object.score
+                score = assignment_object.get().eval_score
             if data.eval_status is False:
                 eval_status = False
                 score = None
