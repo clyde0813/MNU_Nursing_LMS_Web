@@ -10,7 +10,8 @@ def curriculum_context(request, subject_id, curriculum_id, type_id, method):
         type_name = curriculum_object.type.name
         context = {
             "subject_id": subject_id, "type_id": type_id, "type_name": type_name,
-            "object": curriculum_object, "assignment_object": assignment_object
+            "object": curriculum_object, "assignment_object": assignment_object,
+            "files": curriculum_object.curriculumfile_set.all()
         }
 
         if type_id == 3:
@@ -19,7 +20,7 @@ def curriculum_context(request, subject_id, curriculum_id, type_id, method):
             checklist_group_object = ChecklistGroup.objects.filter(set=checklist_set_object)
             for i in checklist_group_object:
                 checklist_record = ChecklistRecord.objects.filter(author=request.user, checklist=i,
-                                                                  assignment=assignment_object)
+                                                                  curriculum_id=curriculum_id, target=request.user)
                 if checklist_record.exists():
                     record = checklist_record.get().record
                 else:
@@ -37,7 +38,7 @@ def curriculum_context(request, subject_id, curriculum_id, type_id, method):
         type_name = curriculum_object.type.name
         context = {
             "subject_id": subject_id, "type_id": type_id, "type_name": type_name,
-            "object": curriculum_object
+            "object": curriculum_object, "files": curriculum_object.curriculumfile_set.all()
         }
     elif type_id in [2, 4, 5]:
         if method == "create":

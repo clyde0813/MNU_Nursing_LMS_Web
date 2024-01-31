@@ -84,6 +84,8 @@ class ChecklistCurriculum(models.Model):
     curriculum = models.ForeignKey(Curriculum, on_delete=models.CASCADE)
     checklist_set = models.ForeignKey(ChecklistSet, on_delete=models.CASCADE)
 
+# class Evaluation(models.Model):
+
 
 class Assignment(models.Model):
     curriculum = models.ForeignKey(Curriculum, on_delete=models.CASCADE)
@@ -110,9 +112,24 @@ class AssignmentPeriod(models.Model):
     date = models.DateField()
 
 
-class ChecklistRecord(models.Model):
-    assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
+class Journal(models.Model):
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+    created_date = models.DateTimeField()
+
+
+class JournalStudent(models.Model):
+    journal = models.ForeignKey(Journal, on_delete=models.CASCADE)
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class ChecklistRecord(models.Model):
+    # assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
+    curriculum = models.ForeignKey(Curriculum, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="checklist_author")
+    target = models.ForeignKey(User, on_delete=models.CASCADE, related_name="checklist_target")
     record = models.IntegerField()
     checklist = models.ForeignKey(ChecklistGroup, on_delete=models.CASCADE)
 

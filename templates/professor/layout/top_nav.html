@@ -28,7 +28,7 @@
     <h1 onclick="location.href='{% url 'common:index' %}'">Electronic Nursing Education Book</h1>
     <div class="right-box">
         <a href="" class="name">{{ user.profile.name }} 교수</a>
-        <a href="">내정보</a>
+        <a href="{% url 'common:profile' %}">내정보</a>
         <h3>|</h3>
         <a href="{% url 'common:logout' %}">로그아웃</a>
     </div>

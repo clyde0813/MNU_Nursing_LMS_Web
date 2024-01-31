@@ -17,11 +17,12 @@ urlpatterns = [
          name="curriculum_delete"),
     path("<int:subject_id>/<int:type_id>/<int:curriculum_id>/<int:assignment_id>", views.assignment_detail,
          name="assignment_detail"),
-    path("<int:subject_id>/<int:type_id>/<int:curriculum_id>/<int:assignment_id>/evaluate", views.assignment_evaluate,
+    path("<int:subject_id>/<int:type_id>/<int:curriculum_id>/<int:student_id>/evaluate", views.assignment_evaluate,
          name="assignment_evaluate"),
 
     # 교수 일지
     path("<int:subject_id>/journal", views.journal, name="journal"),
+    path("<int:subject_id>/journal/<int:journal_id>", views.journal_detail, name="journal_detail"),
     path("<int:subject_id>/journal/create", views.journal_create, name="journal_create"),
 
     # 학생 평가
@@ -33,5 +34,5 @@ urlpatterns = [
          name="professor_evaluate_detail"),
 
     path("<int:subject_id>/enroll", views.enrollment, name="enrollment"),
-    path("<int:subject_id>/enroll/<int:enrollment_id>", views.enrollment_confirm, name="enrollment_confirm")
+    path("<int:subject_id>/enroll/<int:enrollment_id>", views.enrollment_confirm, name="enrollment_confirm"),
 ]

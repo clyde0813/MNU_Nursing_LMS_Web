@@ -21,14 +21,16 @@
                 </div>
             </div>
             <div class="dp-flex dp-end file-download-wrap">
-                <div class="dp-flex dp-end border-bottom">
-                    <a href="">
-                        <div class="file file-delete mb-0">
-                            <h2>참고자료. hwp</h2>
-                            <button><i class="fa-solid fa-download"></i></button>
-                        </div>
-                    </a>
-                </div>
+                {% for file in files %}
+                    <div class="dp-flex dp-end border-bottom">
+                        <a href="{{ file.file.url }}">
+                            <div class="file file-delete mb-0">
+                                <h2>{{ file.filename }}</h2>
+                                <button><i class="fa-solid fa-download"></i></button>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
             </div>
             <div class="bottom-btn-wrap">
                 <button type="button" class="btn btn-secondary medium-btn solid-btn"

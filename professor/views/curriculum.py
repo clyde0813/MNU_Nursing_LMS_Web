@@ -129,24 +129,29 @@ def assignment_detail(request, subject_id, type_id, curriculum_id, assignment_id
 
 
 @login_required(redirect_field_name=None)
-def assignment_evaluate(request, subject_id, type_id, curriculum_id, assignment_id):
+def assignment_evaluate(request, subject_id, type_id, curriculum_id, student_id):
     if request.method == "POST":
         checklist_set_object = ChecklistCurriculum.objects.get(curriculum_id=curriculum_id).checklist_set
         checklist_group = ChecklistGroup.objects.filter(set=checklist_set_object)
         for i in checklist_group:
             checklist_record = request.POST.get("check_" + str(i.id))
             if checklist_record is not None:
-                checklist_object = ChecklistRecord.objects.filter(assignment_id=assignment_id, author=request.user,
-                                                                  checklist=i)
+                checklist_object = ChecklistRecord.objects.filter(curriculum_id=curriculum_id, author=request.user,
+                                                                  target_id=student_id, checklist=i)
                 if checklist_object.exists():
                     checklist_object = checklist_object.get()
                     checklist_object.record = int(checklist_record)
                     checklist_object.save()
                 else:
-                    ChecklistRecord.objects.create(assignment_id=assignment_id, author=request.user, checklist=i,
-                                                   record=int(checklist_record))
-        return redirect("professor:assignment_evaluate", subject_id, type_id, curriculum_id, assignment_id)
+                    ChecklistRecord.objects.create(
+                        curriculum_id=curriculum_id,
+                        author=request.user,
+                        target_id=student_id,
+                        checklist=i,
+                        record=int(checklist_record)
+                    )
+        return redirect("professor:assignment_evaluate", subject_id, type_id, curriculum_id, student_id)
     else:
         context = evaluation_context(request=request, subject_id=subject_id, curriculum_id=curriculum_id,
-                                     type_id=type_id, assignment_id=assignment_id)
+                                     type_id=type_id, student_id=student_id)
         return render(request, html_return(type_id, "evaluate"), context)

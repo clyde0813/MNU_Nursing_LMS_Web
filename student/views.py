@@ -59,8 +59,8 @@ def curriculum_detail(request, subject_id, type_id, curriculum_id):
             for i in checklist_group:
                 checklist_record = request.POST.get("check_" + str(i.id))
                 if checklist_record is not None:
-                    ChecklistRecord.objects.create(assignment=assignment, author=request.user, checklist=i,
-                                                   record=int(checklist_record))
+                    ChecklistRecord.objects.create(curriculum_id=curriculum_id, author=request.user, checklist=i,
+                                                   target=request.user, record=int(checklist_record))
             # 영상 저장
             file = request.FILES.get("video-file")
             file_object = AssignmentVideo.objects.create(assignment=assignment)

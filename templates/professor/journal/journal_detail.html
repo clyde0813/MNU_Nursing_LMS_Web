@@ -17,7 +17,7 @@
                     <h2>학생 이름</h2>
                 </div>
                 <div class="student-name-list">
-                    <h2>{% for data in selected_student_objects %}{{ data.name }}, {% endfor %}</h2>
+                    <h2>{% for data in student_list %}{{ data.student.profile.name }}, {% endfor %}</h2>
                 </div>
             </div>
 
@@ -41,22 +41,22 @@
                     </p>
                 </div>
             </div>
-            <div class="dp-flex dp-end space-between border-bottom file-download-wrap ">
-                <a href="">
-                    <div class="file file-delete mb-0">
-                        <h2>시뮬레이션 실습 과제. hwp</h2>
-                        <button><i class="fa-solid fa-download"></i></button>
-                    </div>
-                </a>
-            </div>
+{#            <div class="dp-flex dp-end space-between border-bottom file-download-wrap ">#}
+{#                <a href="">#}
+{#                    <div class="file file-delete mb-0">#}
+{#                        <h2>시뮬레이션 실습 과제. hwp</h2>#}
+{#                        <button><i class="fa-solid fa-download"></i></button>#}
+{#                    </div>#}
+{#                </a>#}
+{#            </div>#}
             <div class="bottom-btn-wrap">
                 <button type="button" class="btn btn-secondary medium-btn solid-btn"
-                        onclick="location.href='{% url 'professor_professor' subject_id %}'">
+                        onclick="location.href='{% url 'professor:journal' subject_id %}'">
                     이전
                 </button>
                 <div>
                     <button type="button" class="btn btn-success medium-btn"
-                            onclick="location.href='{% url 'professor_professor_modify' subject_id object.id %}'">
+                            onclick="location.href='{% url 'professor:journal_detail' subject_id object.id %}'">
                         수정
                     </button>
                 </div>

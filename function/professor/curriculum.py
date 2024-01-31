@@ -146,8 +146,12 @@ def assignment_context(request, subject_id, curriculum_id, type_id, assignment_i
         checklist_set_object = ChecklistCurriculum.objects.get(curriculum=curriculum_object).checklist_set
         checklist_group_object = ChecklistGroup.objects.filter(set=checklist_set_object)
         for i in checklist_group_object:
-            checklist_record = ChecklistRecord.objects.filter(checklist=i, assignment=assignment_object,
-                                                              author__profile__group__name="student")
+            checklist_record = ChecklistRecord.objects.filter(
+                checklist=i,
+                author=assignment_object.author,
+                target=assignment_object.author,
+                curriculum_id=curriculum_id,
+                author__profile__group__name="student")
             if checklist_record.exists():
                 record = checklist_record.get().record
             else:
@@ -162,13 +166,17 @@ def assignment_context(request, subject_id, curriculum_id, type_id, assignment_i
     return context
 
 
-def evaluation_context(request, subject_id, curriculum_id, type_id, assignment_id):
+def evaluation_context(request, subject_id, curriculum_id, type_id, student_id):
     checklist_objects = []
     checklist_set_object = ChecklistCurriculum.objects.get(curriculum_id=curriculum_id).checklist_set
     checklist_group_object = ChecklistGroup.objects.filter(set=checklist_set_object)
     for i in checklist_group_object:
-        checklist_record = ChecklistRecord.objects.filter(checklist=i, assignment_id=assignment_id,
-                                                          author__profile__group__name="professor")
+        checklist_record = ChecklistRecord.objects.filter(
+            checklist=i,
+            curriculum_id=curriculum_id,
+            target_id=student_id,
+            author__profile__group__name="professor")
+        print(student_id)
         if checklist_record.exists():
             record = checklist_record.get().record
         else:
@@ -179,5 +187,5 @@ def evaluation_context(request, subject_id, curriculum_id, type_id, assignment_i
             "record": record
         })
     context = {"subject_id": subject_id, "type_id": type_id, "curriculum_id": curriculum_id,
-               "assignment_id": assignment_id, "checklist_objects": checklist_objects}
+               "student_id": student_id, "checklist_objects": checklist_objects}
     return context

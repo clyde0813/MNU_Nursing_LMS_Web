@@ -1,5 +1,5 @@
+{% extends 'professor/layout/layout.html' %}
 {% load static %}
-{% include 'professor/layout/layout.html' %}
 {% block stylesheet %}
     <link rel="stylesheet" href="{% static 'css/drm.css' %}">
     <link rel="stylesheet" href="{% static 'css/table.css' %}">
@@ -65,32 +65,28 @@
                             <h2 class="do-not">미제출</h2>
                         {% endif %}
                     </li>
-                    {% if type_id == 3 %}
-                        </ul>
-                        {% if data.assignment_date %}
-                            <ul class="tb-list"
-                                onclick="location.href='{% url 'professor:assignment_evaluate' subject_id type_id curriculum_id data.id %}'">
-                        {% else %}
-                            <ul class="tb-list">
-                        {% endif %}
-                    <li class="tb w-1">
-                        <h2>{{ forloop.counter }}</h2>
-                    </li>
-                    <li class="tb w-3">
-                        <h2>{{ data.student.profile.name }} - 교수 평가</h2>
-                    </li>
-                    <li class="tb w-5">
-                        <h2 class="done">교수 평가</h2>
-                    </li>
-                    <li class="tb w-2">
-                        {% if data.assignment_date %}
-                            <h2 class="done">제출완료</h2>
-                        {% else %}
-                            <h2 class="do-not">미제출</h2>
-                        {% endif %}
-                    </li>
                     </ul>
-                    {% endif %}
+                        {% if type_id == 3 %}
+                            <ul class="tb-list"
+                                onclick="location.href='{% url 'professor:assignment_evaluate' subject_id type_id curriculum_id data.student.id %}'">
+                                <li class="tb w-1">
+                                    <h2>{{ forloop.counter }}</h2>
+                                </li>
+                                <li class="tb w-3">
+                                    <h2>{{ data.student.profile.name }} - 교수 평가</h2>
+                                </li>
+                                <li class="tb w-5">
+                                    <h2 class="done">교수 평가</h2>
+                                </li>
+                                <li class="tb w-2">
+                                    {% if data.assignment_date %}
+                                        <h2 class="done">제출완료</h2>
+                                    {% else %}
+                                        <h2 class="do-not">미제출</h2>
+                                    {% endif %}
+                                </li>
+                            </ul>
+                        {% endif %}
                     {% endfor %}
                 </div>
             </div>

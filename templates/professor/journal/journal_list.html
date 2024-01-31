@@ -1,5 +1,5 @@
+{% extends 'professor/layout/layout.html' %}
 {% load static %}
-{% include 'professor/layout/layout.html' %}
 {% block stylesheet %}
     <link rel="stylesheet" href="{% static 'css/table.css' %}">
 {% endblock %}
@@ -26,12 +26,12 @@
                         <li class="th w-3">
                             <h2>작성일시</h2>
                         </li>
-                        <li class="th w-1">
-                            <h2>편집</h2>
-                        </li>
+{#                        <li class="th w-1">#}
+{#                            <h2>편집</h2>#}
+{#                        </li>#}
                     </ul>
-                    {% for data in objects %}
-                        <ul class="tb-list">
+                    {% for data in journal_objects %}
+                        <ul class="tb-list" onclick="location.href='{% url 'professor:journal_detail' subject_id data.id %}'">
                             <li class="tb w-1"
                                 onclick="">
                                 <h2>{{ forloop.counter }}</h2>
@@ -44,23 +44,23 @@
                                 onclick="">
                                 <h2>{{ data.created_date }}</h2>
                             </li>
-                            <li class="tb w-1">
-                                <div class="dropdown">
-                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                       data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa-solid fa-ellipsis-vertical  m-0"></i>
-                                    </a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start"
-                                        aria-labelledby="dropdownMenuLink">
-                                        <li><a class="dropdown-item"
-                                               href="">수정</a>
-                                        </li>
-                                        <li><a class="dropdown-item"
-                                               href="">삭제</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
+{#                            <li class="tb w-1">#}
+{#                                <div class="dropdown">#}
+{#                                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"#}
+{#                                       data-bs-toggle="dropdown" aria-expanded="false">#}
+{#                                        <i class="fa-solid fa-ellipsis-vertical  m-0"></i>#}
+{#                                    </a>#}
+{#                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start"#}
+{#                                        aria-labelledby="dropdownMenuLink">#}
+{#                                        <li><a class="dropdown-item"#}
+{#                                               href="">수정</a>#}
+{#                                        </li>#}
+{#                                        <li><a class="dropdown-item"#}
+{#                                               href="">삭제</a>#}
+{#                                        </li>#}
+{#                                    </ul>#}
+{#                                </div>#}
+{#                            </li>#}
                         </ul>
                     {% endfor %}
                 </div>

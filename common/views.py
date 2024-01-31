@@ -83,3 +83,23 @@ def register(request, roleName):
             return render(request, "common/register/student_register.html")
         else:
             return redirect("common:index")
+
+
+def profile(request):
+    if request.method == "POST":
+        password = request.POST.get("password", default=None)
+        mobile = request.POST.get("mobile", default=None)
+        email = request.POST.get("email", default=None)
+        user_object = User.objects.get(id=request.user.id)
+        profile_object = Profile.objects.get(user_id=request.user.id)
+        if password is not None and len(password) > 8:
+            user_object.set_password(password)
+        if email is not None:
+            user_object.email = email
+        profile_object.mobile = mobile
+        user_object.save()
+        profile_object.save()
+        return redirect("common:profile")
+    profile_object = Profile.objects.get(user=request.user)
+    context = {"profile_object": profile_object}
+    return render(request, "professor/layout/profile.html", context)
