@@ -20,7 +20,7 @@
                 <div class="detail-content h-auto">
                     <!--비디오영상-->
                     <video height="auto" controls class="mb-10">
-                        <source src="img/sampleVideo.mp4" type="video/ogg">
+                        <source src="{{ assignment_object.assignmentvideo_set.last.file.url }}" type="video/mp4">
                     </video>
                     <p class="h-20vh scroll-y">
                         {{ assignment_object.content|linebreaksbr }}

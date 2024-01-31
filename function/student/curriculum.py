@@ -1,24 +1,6 @@
 from models.models import *
 
 
-def assignment_create(request, subject_id, type_id, curriculum_id):
-    title = request.POST.get("title")
-    content = request.POST.get("content")
-    assignment = Assignment.objects.create(title=title, content=content, curriculum_id=curriculum_id,
-                                           author=request.user)
-    if type_id == 3:
-        checklist_set_object = ChecklistCurriculum.objects.get(curriculum_id=curriculum_id).checklist_set
-        checklist_group = ChecklistGroup.objects.filter(set=checklist_set_object)
-        for i in checklist_group:
-            checklist_record = request.POST.get("check_" + str(i.id))
-            if checklist_record is not None:
-                ChecklistRecord.objects.create(assignment=assignment, author=request.user, checklist=i,
-                                               record=int(checklist_record))
-    elif type_id == 5:
-        print(request.POST.get("date"))
-        AssignmentPeriod.objects.create(assignment=assignment, date=request.POST.get("date"))
-
-
 def curriculum_context(request, subject_id, curriculum_id, type_id, method):
     curriculum_object = Curriculum.objects.get(id=curriculum_id)
     context = None

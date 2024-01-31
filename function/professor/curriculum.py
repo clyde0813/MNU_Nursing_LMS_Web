@@ -7,12 +7,12 @@ def curriculum_context(subject_id, type_id, curriculum_id, method):
 
     if curriculum_id is not None:
         curriculum_object = Curriculum.objects.get(id=curriculum_id)
-
+    print(curriculum_id)
     if type_id != 1 and method == "detail":
         student_objects = []
         for obj in Enrollment.objects.filter(subject_id=subject_id):
-            assignment_object = Assignment.objects.filter(curriculum=curriculum_object, author=obj.student)
-
+            assignment_object = Assignment.objects.filter(curriculum=curriculum_object)
+            print(assignment_object)
             if assignment_object.exists():
                 assignment_id = assignment_object.get().id
                 assignment_date = assignment_object.get().created_date
@@ -30,6 +30,7 @@ def curriculum_context(subject_id, type_id, curriculum_id, method):
             "subject_id": subject_id, "type_id": type_id, "curriculum_id": curriculum_id, "subject_name": subject_name,
             "type_name": type_name, "object": curriculum_object, "objects": student_objects
         }
+        print(context)
         return context
 
     context = {

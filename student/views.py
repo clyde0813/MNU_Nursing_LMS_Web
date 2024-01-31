@@ -7,7 +7,7 @@ from function.student.html import *
 
 def get_student_enrollments(student):
     all_enrollments = Enrollment.objects.filter(student=student)
-    active_enrollments = all_enrollments.order_by('-id')
+    active_enrollments = all_enrollments.filter(status=True).order_by('-id')
     pending_enrollments = all_enrollments.filter(status=False)
     return all_enrollments, active_enrollments, pending_enrollments
 
@@ -49,7 +49,26 @@ def curriculum(request, subject_id, type_id):
 @login_required(redirect_field_name=None)
 def curriculum_detail(request, subject_id, type_id, curriculum_id):
     if request.method == "POST":
-        assignment_create(request, subject_id, type_id, curriculum_id)
+        title = request.POST.get("title")
+        content = request.POST.get("content")
+        assignment = Assignment.objects.create(title=title, content=content, curriculum_id=curriculum_id,
+                                               author=request.user)
+        if type_id == 3:
+            checklist_set_object = ChecklistCurriculum.objects.get(curriculum_id=curriculum_id).checklist_set
+            checklist_group = ChecklistGroup.objects.filter(set=checklist_set_object)
+            for i in checklist_group:
+                checklist_record = request.POST.get("check_" + str(i.id))
+                if checklist_record is not None:
+                    ChecklistRecord.objects.create(assignment=assignment, author=request.user, checklist=i,
+                                                   record=int(checklist_record))
+            # 영상 저장
+            file = request.FILES.get("video-file")
+            file_object = AssignmentVideo.objects.create(assignment=assignment)
+            file_object.file = file
+            file_object.filename = file.name
+            file_object.save()
+        elif type_id == 5:
+            AssignmentPeriod.objects.create(assignment=assignment, date=request.POST.get("date"))
         return redirect("student:curriculum_detail", subject_id, type_id, curriculum_id)
     else:
         if type_id == 1 or Assignment.objects.filter(curriculum_id=curriculum_id, author=request.user).exists():
@@ -63,5 +82,6 @@ def curriculum_detail(request, subject_id, type_id, curriculum_id):
 
 @login_required(redirect_field_name=None)
 def enrollment(request, subject_id):
-    Enrollment.objects.create(subject_id=subject_id, student=request.user)
+    if not Enrollment.objects.filter(subject_id=subject_id, student=request.user).exists():
+        Enrollment.objects.create(subject_id=subject_id, student=request.user, status=False, confirmed_date=None)
     return redirect("common:index")

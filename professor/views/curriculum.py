@@ -117,7 +117,7 @@ def curriculum_delete(request, subject_id, type_id, curriculum_id):
 
 @login_required(redirect_field_name=None)
 def curriculum_detail(request, subject_id, type_id, curriculum_id):
-    context = curriculum_context(subject_id, type_id, curriculum_id, "detail")
+    context = curriculum_context(subject_id=subject_id, type_id=type_id, curriculum_id=curriculum_id, method="detail")
     return render(request, html_return(type_id, "detail"), context)
 
 

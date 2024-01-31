@@ -30,7 +30,7 @@ class Enrollment(models.Model):
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     created_date = models.DateTimeField(auto_now_add=True)
-    confirmed_date = models.DateTimeField(auto_now_add=True)
+    confirmed_date = models.DateTimeField(default=None, null=True)
     status = models.BooleanField(default=False)
 
 
@@ -66,7 +66,9 @@ class Period(models.Model):
 
 
 class Checklist(models.Model):
+    sequence = models.IntegerField()
     content = models.CharField(max_length=1000)
+    essential = models.BooleanField(default=False)
 
 
 class ChecklistSet(models.Model):
@@ -89,10 +91,15 @@ class Assignment(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)
-    eval_score = models.IntegerField(default=0)
 
 
 class AssignmentFile(models.Model):
+    assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
+    file = models.FileField(upload_to=dynamic_upload_to)
+    filename = models.CharField(max_length=100)
+
+
+class AssignmentVideo(models.Model):
     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
     file = models.FileField(upload_to=dynamic_upload_to)
     filename = models.CharField(max_length=100)
