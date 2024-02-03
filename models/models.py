@@ -84,6 +84,7 @@ class ChecklistCurriculum(models.Model):
     curriculum = models.ForeignKey(Curriculum, on_delete=models.CASCADE)
     checklist_set = models.ForeignKey(ChecklistSet, on_delete=models.CASCADE)
 
+
 # class Evaluation(models.Model):
 
 
@@ -118,6 +119,7 @@ class Journal(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
     created_date = models.DateTimeField()
+    location = models.CharField(max_length=100, default=None, null=True)
 
 
 class JournalStudent(models.Model):

@@ -164,28 +164,3 @@ def assignment_context(request, subject_id, curriculum_id, type_id, assignment_i
         context["checklist_objects"] = checklist_objects
 
     return context
-
-
-def evaluation_context(request, subject_id, curriculum_id, type_id, student_id):
-    checklist_objects = []
-    checklist_set_object = ChecklistCurriculum.objects.get(curriculum_id=curriculum_id).checklist_set
-    checklist_group_object = ChecklistGroup.objects.filter(set=checklist_set_object)
-    for i in checklist_group_object:
-        checklist_record = ChecklistRecord.objects.filter(
-            checklist=i,
-            curriculum_id=curriculum_id,
-            target_id=student_id,
-            author__profile__group__name="professor")
-        print(student_id)
-        if checklist_record.exists():
-            record = checklist_record.get().record
-        else:
-            record = None
-        checklist_objects.append({
-            "id": i.id,
-            "content": i.checklist.content,
-            "record": record
-        })
-    context = {"subject_id": subject_id, "type_id": type_id, "curriculum_id": curriculum_id,
-               "student_id": student_id, "checklist_objects": checklist_objects}
-    return context

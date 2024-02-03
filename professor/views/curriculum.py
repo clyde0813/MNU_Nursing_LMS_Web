@@ -128,6 +128,7 @@ def assignment_detail(request, subject_id, type_id, curriculum_id, assignment_id
     return render(request, html_return(type_id, "assignment"), context)
 
 
+# 핵심수기술 교수 평가
 @login_required(redirect_field_name=None)
 def assignment_evaluate(request, subject_id, type_id, curriculum_id, student_id):
     if request.method == "POST":
@@ -152,6 +153,43 @@ def assignment_evaluate(request, subject_id, type_id, curriculum_id, student_id)
                     )
         return redirect("professor:assignment_evaluate", subject_id, type_id, curriculum_id, student_id)
     else:
-        context = evaluation_context(request=request, subject_id=subject_id, curriculum_id=curriculum_id,
-                                     type_id=type_id, student_id=student_id)
+        checklist_objects = []
+        checklist_set_object = ChecklistCurriculum.objects.get(curriculum_id=curriculum_id).checklist_set
+        checklist_group_object = ChecklistGroup.objects.filter(set=checklist_set_object)
+        for i in checklist_group_object:
+            checklist_record = ChecklistRecord.objects.filter(
+                checklist=i,
+                curriculum_id=curriculum_id,
+                target_id=student_id,
+                author__profile__group__name="professor")
+            print(student_id)
+            if checklist_record.exists():
+                record = checklist_record.get().record
+            else:
+                record = None
+            checklist_objects.append({
+                "id": i.id,
+                "content": i.checklist.content,
+                "record": record
+            })
+
+        # 제출 동영상 object
+        assignment_object = Assignment.objects.filter(author_id=student_id, curriculum_id=curriculum_id)
+        video_object = None
+
+        if assignment_object.exists():
+            video_object = AssignmentVideo.objects.filter(assignment=assignment_object.get())
+
+        if video_object is not None and video_object.exists():
+            video_object = video_object.get()
+
+        context = {
+            "student_object": User.objects.get(id=student_id),
+            "subject_id": subject_id,
+            "type_id": type_id,
+            "curriculum_id": curriculum_id,
+            "student_id": student_id,
+            "checklist_objects": checklist_objects,
+            "video_object": video_object
+        }
         return render(request, html_return(type_id, "evaluate"), context)

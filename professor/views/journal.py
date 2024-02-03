@@ -15,9 +15,10 @@ def journal_create(request, subject_id):
         title = request.POST["title"]
         content = request.POST["content"]
         created_date = request.POST["created_date"]
+        location = request.POST["location"]
         student_list = request.POST.getlist("selected-student-id")
         journal_object = Journal.objects.create(title=title, content=content, created_date=created_date,
-                                                subject_id=subject_id, author=request.user)
+                                                subject_id=subject_id, author=request.user, location=location)
         for student_id in student_list:
             JournalStudent.objects.create(journal=journal_object, student_id=student_id)
         return redirect("professor:journal_detail", subject_id, journal_object.id)

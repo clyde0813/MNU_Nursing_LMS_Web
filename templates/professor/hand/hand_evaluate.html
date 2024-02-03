@@ -7,15 +7,23 @@
 {% block content %}
     <div class="content">
         <div class="main-title">
-            <h1>핵심 수기술 제출</h1>
+            <h1>핵심 수기술 교수 평가 - {{ student_object.profile.name }}</h1>
         </div>
         <form method="post" action="" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="background h-auto">
-                <div class="sub-title border-bottom-color">
-                    <h1>{{ hand_object.title }}</h1>
+                <div class="detail-wrap">
+                    <div class="detail-content h-auto">
+                        {% if video_object %}
+                            <!--비디오영상-->
+                            <video height="auto" controls class="mb-5">
+                                <source src="{{ video_object.file.url }}" type="video/mp4">
+                            </video>
+                        {% else %}
+                            <h1>영상을 제출하지 않은 학생입니다.</h1>
+                        {% endif %}
+                    </div>
                 </div>
-
                 <div class="table-wrap mt-20">
                     <div class="table" id="check-table">
                         <ul class="th-list">

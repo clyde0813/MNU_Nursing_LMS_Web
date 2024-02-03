@@ -34,11 +34,9 @@ def professor_evaluate(request, subject_id):
                         else:
                             eval_object.percentage = eval_percent
                             eval_object.save()
-
         return redirect("professor:professor_evaluate", subject_id)
     student_objects = User.objects.filter(profile__group__name="student", enrollment__subject_id=subject_id,
                                           enrollment__status=True).all()
-
     evaluation_items = SubjectEvaluationItem.objects.filter(subject_id=subject_id).all()
     context = {
         "subject_id": subject_id,
