@@ -6,9 +6,9 @@ from function.professor.html import *
 
 @login_required(redirect_field_name=None)
 def curriculum(request, subject_id, type_id):
-    curriculum_objects = Curriculum.objects.filter(subject_id=subject_id, type_id=type_id) \
+    curriculum_objects = Post.objects.filter(postsubjectmapping__subject_id=subject_id, type_id=type_id) \
         .order_by("created_date").all()
-    type_name = CurriculumType.objects.get(id=type_id).name
+    type_name = PostType.objects.get(id=type_id).name
     subject_name = Subject.objects.get(id=subject_id).name
     context = {
         "subject_id": subject_id,
@@ -27,8 +27,8 @@ def curriculum_create(request, subject_id, type_id):
         # default
         title = request.POST.get("title")
         content = request.POST.get("content")
-        curriculum_object = Curriculum.objects.create(subject_id=subject_id, type_id=type_id, title=title,
-                                                      content=content)
+        curriculum_object = Post.objects.create(title=title, content=content, author=request.user, type_id=type_id)
+        PostSubjectMapping.objects.create(post=curriculum_object, subject_id=subject_id)
 
         # 평가 여부
         if request.POST.get("eval"):
@@ -37,15 +37,16 @@ def curriculum_create(request, subject_id, type_id):
         # 체크리스트
         if request.POST.get("checklist_set_id", default=None):
             checklist_set_id = int(request.POST.get("checklist_set_id", default=None))
-            ChecklistCurriculum.objects.create(curriculum=curriculum_object, checklist_set_id=checklist_set_id)
+            PostChecklistMapping.objects.create(checklist_set_id=checklist_set_id, post=curriculum_object)
         # 기간
         if request.POST.get("period"):
-            period = request.POST.get("period")
-            Period.objects.create(curriculum=curriculum_object, date=period)
+            start_date = request.POST.get("start_date")
+            end_date = request.POST.get("end_date")
+            PostPeriod.objects.create(post=curriculum_object, start_date=start_date, end_date=end_date)
         # 파일
         if request.FILES.getlist("files"):
             for file in request.FILES.getlist("files"):
-                file_object = CurriculumFile.objects.create(curriculum=curriculum_object)
+                file_object = PostFile.objects.create(post=curriculum_object)
                 file_object.file = file
                 file_object.filename = file.name
                 file_object.save()
@@ -86,7 +87,7 @@ def curriculum_create(request, subject_id, type_id):
         "subject_id": subject_id,
         "type_id": type_id,
         "subject_name": Subject.objects.get(id=subject_id).name,
-        "type_name": CurriculumType.objects.get(id=type_id).name,
+        "type_name": PostType.objects.get(id=type_id).name,
         "checklist_objects": checklist_objects,
         "input_list": {
             "title": True,
@@ -131,9 +132,10 @@ def assignment_detail(request, subject_id, type_id, curriculum_id, assignment_id
 # 핵심수기술 교수 평가
 @login_required(redirect_field_name=None)
 def assignment_evaluate(request, subject_id, type_id, curriculum_id, student_id):
+    checklist_set_object = PostChecklistMapping.objects.get(post_id=curriculum_id).checklist_set
+    checklist_group = ChecklistGroup.objects.filter(set=checklist_set_object)
+
     if request.method == "POST":
-        checklist_set_object = ChecklistCurriculum.objects.get(curriculum_id=curriculum_id).checklist_set
-        checklist_group = ChecklistGroup.objects.filter(set=checklist_set_object)
         for i in checklist_group:
             checklist_record = request.POST.get("check_" + str(i.id))
             if checklist_record is not None:
@@ -154,12 +156,10 @@ def assignment_evaluate(request, subject_id, type_id, curriculum_id, student_id)
         return redirect("professor:assignment_evaluate", subject_id, type_id, curriculum_id, student_id)
     else:
         checklist_objects = []
-        checklist_set_object = ChecklistCurriculum.objects.get(curriculum_id=curriculum_id).checklist_set
-        checklist_group_object = ChecklistGroup.objects.filter(set=checklist_set_object)
-        for i in checklist_group_object:
+        for i in checklist_group:
             checklist_record = ChecklistRecord.objects.filter(
                 checklist=i,
-                curriculum_id=curriculum_id,
+                post_id=curriculum_id,
                 target_id=student_id,
                 author__profile__group__name="professor")
             print(student_id)
@@ -174,11 +174,11 @@ def assignment_evaluate(request, subject_id, type_id, curriculum_id, student_id)
             })
 
         # 제출 동영상 object
-        assignment_object = Assignment.objects.filter(author_id=student_id, curriculum_id=curriculum_id)
+        assignment_object = Post.objects.filter(child_post__parent_post_id=curriculum_id, author_id=student_id)
         video_object = None
 
         if assignment_object.exists():
-            video_object = AssignmentVideo.objects.filter(assignment=assignment_object.get())
+            video_object = PostFile.objects.filter(post=assignment_object.get(), file_extension="video")
 
         if video_object is not None and video_object.exists():
             video_object = video_object.get()

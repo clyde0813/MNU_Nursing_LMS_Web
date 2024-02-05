@@ -60,10 +60,10 @@ def professor_evaluate_detail(request, subject_id, student_id):
     }
 
     # 커리큘럼 오브젝트
-    guide_curriculum_objects = Curriculum.objects.filter(subject_id=subject_id, type_id=2).all()
-    hand_curriculum_objects = Curriculum.objects.filter(subject_id=subject_id, type_id=3).all()
-    assignment_curriculum_objects = Curriculum.objects.filter(subject_id=subject_id, type_id=4).all()
-    journal_curriculum_objects = Curriculum.objects.filter(subject_id=subject_id, type_id=5).all()
+    guide_curriculum_objects = Post.objects.filter(postsubjectmapping__subject_id=subject_id, type_id=2).all()
+    hand_curriculum_objects = Post.objects.filter(postsubjectmapping__subject_id=subject_id, type_id=3).all()
+    assignment_curriculum_objects = Post.objects.filter(postsubjectmapping__subject_id=subject_id, type_id=4).all()
+    journal_curriculum_objects = Post.objects.filter(postsubjectmapping__subject_id=subject_id, type_id=5).all()
 
     curriculums = [
         guide_curriculum_objects,
@@ -79,10 +79,14 @@ def professor_evaluate_detail(request, subject_id, student_id):
             file = None
             eval_status = True
             score = None
-            assignment_object = Assignment.objects.filter(curriculum_id=data.id, author_id=student_id)
+            assignment_object = Post.objects.filter(
+                id=data.id,
+                postsubjectmapping__subject_id=subject_id,
+                author_id=student_id
+            )
             if assignment_object.exists():
                 score = assignment_object.get().eval_score
-            if data.eval_status is False:
+            if not data.postevaluationstatus_set.exists() or data.postevaluationstatus_set.get().status is False:
                 eval_status = False
                 score = None
             tmp.append({
@@ -93,28 +97,28 @@ def professor_evaluate_detail(request, subject_id, student_id):
             })
         if curriculum == guide_curriculum_objects:
             curriculum_objects["guide_objects"]["objects"] = tmp
-            curriculum_objects["guide_objects"]["curriculum_name"] = CurriculumType.objects.get(id=2).name
+            curriculum_objects["guide_objects"]["curriculum_name"] = PostType.objects.get(id=2).name
         elif curriculum == hand_curriculum_objects:
             curriculum_objects["hand_objects"]["objects"] = tmp
-            curriculum_objects["hand_objects"]["curriculum_name"] = CurriculumType.objects.get(id=3).name
+            curriculum_objects["hand_objects"]["curriculum_name"] = PostType.objects.get(id=3).name
         elif curriculum == assignment_curriculum_objects:
             curriculum_objects["assignment_objects"]["objects"] = tmp
-            curriculum_objects["assignment_objects"]["curriculum_name"] = CurriculumType.objects.get(id=4).name
+            curriculum_objects["assignment_objects"]["curriculum_name"] = PostType.objects.get(id=4).name
         elif curriculum == journal_curriculum_objects:
             curriculum_objects["journal_objects"]["objects"] = tmp
-            curriculum_objects["journal_objects"]["curriculum_name"] = CurriculumType.objects.get(id=5).name
+            curriculum_objects["journal_objects"]["curriculum_name"] = PostType.objects.get(id=5).name
 
     # 평가 항목 퍼센트
     guide_eval_percentage = SubjectEvaluationItem.objects.filter(subject_id=subject_id,
-                                                                 curriculum_type_id=2).get().percentage
+                                                                 post_type=2).get().percentage
     hand_eval_percentage = SubjectEvaluationItem.objects.filter(subject_id=subject_id,
-                                                                curriculum_type_id=3).get().percentage
+                                                                post_type=3).get().percentage
     assignment_eval_percentage = SubjectEvaluationItem.objects.filter(subject_id=subject_id,
-                                                                      curriculum_type_id=4).get().percentage
+                                                                      post_type=4).get().percentage
     journal_eval_percentage = SubjectEvaluationItem.objects.filter(subject_id=subject_id,
-                                                                   curriculum_type_id=5).get().percentage
+                                                                   post_type=5).get().percentage
     # 추가 평가 항목 (커스텀)
-    additional_eval_objects = SubjectEvaluationItem.objects.filter(subject_id=subject_id, curriculum_type=None).all()
+    additional_eval_objects = SubjectEvaluationItem.objects.filter(subject_id=subject_id, post_type=None).all()
 
     context = {
         "subject_id": subject_id,

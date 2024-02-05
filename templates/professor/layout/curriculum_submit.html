@@ -17,7 +17,7 @@
                         <!-- 실습일지 -->
                         {% if input_list.period %}
                             <li>
-                                <h3>실습기간</h3>
+                                <h3>날짜</h3>
                                 <div class="date-wrap">
                                     <div class="container">
                                         <div class="row">
@@ -140,6 +140,7 @@
                                 <input type="file" id="file-btn" name="files" multiple hidden/>
                             </div>
                         </div>
+                        <div class="output" style="text-align: start; font-size: 18px"></div>
                     </div>
                 </div>
                 <div class="bottom-btn-wrap">
@@ -166,6 +167,21 @@
             </div>
         </form>
     </div>
+    <script>
+        const output = document.querySelector(".output");
+        const myFiles = document.querySelector("#file-btn");
+
+        function logFilenames() {
+            const fileInput = document.querySelector("#file-btn");
+            const files = fileInput.files;
+            const fileListLength = files.length;
+            for (let i = 0; i < fileListLength; i++) {
+                output.innerText = `${output.innerText}\n${files.item(i).name}`;
+            }
+        }
+
+        myFiles.addEventListener("change", logFilenames);
+    </script>
 {% endblock %}
 {% if input_list.checklist %}
     {% block modal %}

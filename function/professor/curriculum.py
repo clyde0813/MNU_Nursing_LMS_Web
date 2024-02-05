@@ -6,13 +6,12 @@ def curriculum_context(subject_id, type_id, curriculum_id, method):
     subject_name = Subject.objects.get(id=subject_id).name
 
     if curriculum_id is not None:
-        curriculum_object = Curriculum.objects.get(id=curriculum_id)
-    print(curriculum_id)
+        curriculum_object = Post.objects.get(id=curriculum_id)
+
     if type_id != 1 and method == "detail":
         student_objects = []
         for obj in Enrollment.objects.filter(subject_id=subject_id):
-            assignment_object = Assignment.objects.filter(curriculum=curriculum_object)
-            print(assignment_object)
+            assignment_object = Post.objects.filter(child_post__parent_post_id=curriculum_id, author=obj.student)
             if assignment_object.exists():
                 assignment_id = assignment_object.get().id
                 assignment_date = assignment_object.get().created_date
@@ -25,20 +24,19 @@ def curriculum_context(subject_id, type_id, curriculum_id, method):
                 "student": obj.student,
                 "assignment_date": assignment_date
             })
-        type_name = CurriculumType.objects.get(id=type_id).name
+        type_name = PostType.objects.get(id=type_id).name
         context = {
             "subject_id": subject_id, "type_id": type_id, "curriculum_id": curriculum_id, "subject_name": subject_name,
             "type_name": type_name, "object": curriculum_object, "objects": student_objects
         }
-        print(context)
         return context
 
     context = {
         "subject_id": subject_id,
         "type_id": type_id,
         "subject_name": subject_name,
-        "type_name": CurriculumType.objects.get(id=type_id).name,
-        "files": CurriculumFile.objects.filter(curriculum_id=curriculum_id).all(),
+        "type_name": PostType.objects.get(id=type_id).name,
+        "files": PostFile.objects.filter(post=curriculum_object).all(),
         "input_list": {
             "title": True,
             "content": True,
@@ -133,24 +131,24 @@ def curriculum_context(subject_id, type_id, curriculum_id, method):
 
 
 def assignment_context(request, subject_id, curriculum_id, type_id, assignment_id):
-    curriculum_object = Curriculum.objects.get(id=curriculum_id)
-    assignment_object = Assignment.objects.get(id=assignment_id)
+    curriculum_object = Post.objects.get(id=curriculum_id)
+    assignment_object = Post.objects.get(id=assignment_id)
     type_name = curriculum_object.type.name
     context = {
         "subject_id": subject_id, "type_id": type_id, "type_name": type_name,
-        "object": curriculum_object, "assignment_object": assignment_object
+        "object": curriculum_object, "assignment_object": assignment_object, "video" : None
     }
 
     if type_id == 3:
         checklist_objects = []
-        checklist_set_object = ChecklistCurriculum.objects.get(curriculum=curriculum_object).checklist_set
+        checklist_set_object = PostChecklistMapping.objects.get(post_id=curriculum_id).checklist_set
         checklist_group_object = ChecklistGroup.objects.filter(set=checklist_set_object)
         for i in checklist_group_object:
             checklist_record = ChecklistRecord.objects.filter(
                 checklist=i,
                 author=assignment_object.author,
                 target=assignment_object.author,
-                curriculum_id=curriculum_id,
+                post_id=curriculum_id,
                 author__profile__group__name="student")
             if checklist_record.exists():
                 record = checklist_record.get().record
@@ -161,6 +159,8 @@ def assignment_context(request, subject_id, curriculum_id, type_id, assignment_i
                 "content": i.checklist.content,
                 "record": record
             })
+        if PostFile.objects.filter(post=assignment_object, file_extension="video").exists():
+            context["video"] = PostFile.objects.filter(post=assignment_object, file_extension="video").get()
         context["checklist_objects"] = checklist_objects
 
     return context

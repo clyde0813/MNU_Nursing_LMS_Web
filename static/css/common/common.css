@@ -276,14 +276,14 @@ body{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    max-height: 60px;
+    /*max-height: 60px;*/
     width: 100%;
 }
 .table .tb-list{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    /*max-height: 60px;*/
+    max-height: 60px;
 }
 .table  .th{
     background-color: #F2FAFA;
@@ -302,8 +302,8 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-    /*min-height: 60px;*/
-    /*max-height: 60px;*/
+    min-height: 60px;
+    max-height: 60px;
 }
 .table  .th h2{
     font-family: 'Pretendard-SBold';

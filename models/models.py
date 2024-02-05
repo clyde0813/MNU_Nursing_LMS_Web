@@ -34,41 +34,99 @@ class Enrollment(models.Model):
     status = models.BooleanField(default=False)
 
 
-class CurriculumType(models.Model):
+class PostType(models.Model):
+    type = models.CharField(max_length=100)
     name = models.CharField(max_length=100)
+
+
+class Post(models.Model):
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+    created_date = models.DateTimeField(auto_now_add=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    type = models.ForeignKey(PostType, on_delete=models.CASCADE)
+
+
+class PostSubjectMapping(models.Model):
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+
+
+class PostPostMapping(models.Model):
+    parent_post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="parent_post")
+    child_post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="child_post")
+
+
+class PostFile(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    file = models.FileField(upload_to=dynamic_upload_to)
+    filename = models.CharField(max_length=100)
+    file_extension = models.CharField(max_length=100, null=True)
+
+
+class PostPeriod(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField
+
+
+class PostDeadline(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    deadline = models.DateTimeField()
+
+
+class PostLocation(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    location = models.CharField(max_length=100)
+
+
+class PostUserMapping(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
 
 class SubjectEvaluationItem(models.Model):
     name = models.CharField(max_length=100)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    curriculum_type = models.ForeignKey(CurriculumType, on_delete=models.CASCADE, blank=True, null=True)
+    post_type = models.ForeignKey(PostType, on_delete=models.CASCADE, blank=True, null=True)
     percentage = models.IntegerField(default=0)
 
 
-class Curriculum(models.Model):
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    type = models.ForeignKey(CurriculumType, on_delete=models.CASCADE)
-    title = models.CharField(max_length=100)
-    content = models.TextField()
-    eval_status = models.BooleanField(default=True)
-    created_date = models.DateTimeField(auto_now_add=True)
+class PostEvaluationStatus(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    status = models.BooleanField(default=False)
 
 
-class CurriculumFile(models.Model):
-    curriculum = models.ForeignKey(Curriculum, on_delete=models.CASCADE)
-    file = models.FileField(upload_to=dynamic_upload_to)
-    filename = models.CharField(max_length=100)
+class PostEvaluation(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    percentage = models.IntegerField(default=0)
 
 
-class Period(models.Model):
-    curriculum = models.ForeignKey(Curriculum, on_delete=models.CASCADE)
-    date = models.DateField()
+# class Curriculum(models.Model):
+#     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+#     type = models.ForeignKey(CurriculumType, on_delete=models.CASCADE)
+#     title = models.CharField(max_length=100)
+#     content = models.TextField()
+#     eval_status = models.BooleanField(default=True)
+#     created_date = models.DateTimeField(auto_now_add=True)
+#
+#
+# class CurriculumFile(models.Model):
+#     curriculum = models.ForeignKey(Curriculum, on_delete=models.CASCADE)
+#     file = models.FileField(upload_to=dynamic_upload_to)
+#     filename = models.CharField(max_length=100)
+
+
+# class Period(models.Model):
+#     curriculum = models.ForeignKey(Curriculum, on_delete=models.CASCADE)
+#     date = models.DateField()
 
 
 class Checklist(models.Model):
     sequence = models.IntegerField()
     content = models.CharField(max_length=1000)
     essential = models.BooleanField(default=False)
+    type = models.CharField(max_length=100)
 
 
 class ChecklistSet(models.Model):
@@ -80,56 +138,59 @@ class ChecklistGroup(models.Model):
     checklist = models.ForeignKey(Checklist, on_delete=models.CASCADE)
 
 
-class ChecklistCurriculum(models.Model):
-    curriculum = models.ForeignKey(Curriculum, on_delete=models.CASCADE)
+class PostChecklistMapping(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
     checklist_set = models.ForeignKey(ChecklistSet, on_delete=models.CASCADE)
 
 
 # class Evaluation(models.Model):
+#     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+#
+#     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+#     name = models.CharField(max_length=100)
+#     percentage = models.IntegerField(default=0)
+
+# class Assignment(models.Model):
+#     curriculum = models.ForeignKey(Curriculum, on_delete=models.CASCADE)
+#     author = models.ForeignKey(User, on_delete=models.CASCADE)
+#     title = models.CharField(max_length=100)
+#     content = models.TextField()
+#     created_date = models.DateTimeField(auto_now_add=True)
 
 
-class Assignment(models.Model):
-    curriculum = models.ForeignKey(Curriculum, on_delete=models.CASCADE)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=100)
-    content = models.TextField()
-    created_date = models.DateTimeField(auto_now_add=True)
+# class AssignmentFile(models.Model):
+#     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
+#     file = models.FileField(upload_to=dynamic_upload_to)
+#     filename = models.CharField(max_length=100)
 
 
-class AssignmentFile(models.Model):
-    assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
-    file = models.FileField(upload_to=dynamic_upload_to)
-    filename = models.CharField(max_length=100)
+# class AssignmentVideo(models.Model):
+#     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
+#     file = models.FileField(upload_to=dynamic_upload_to)
+#     filename = models.CharField(max_length=100)
 
 
-class AssignmentVideo(models.Model):
-    assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
-    file = models.FileField(upload_to=dynamic_upload_to)
-    filename = models.CharField(max_length=100)
+# class AssignmentPeriod(models.Model):
+#     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
+#     date = models.DateField()
 
 
-class AssignmentPeriod(models.Model):
-    assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
-    date = models.DateField()
+# class Journal(models.Model):
+#     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+#     author = models.ForeignKey(User, on_delete=models.CASCADE)
+#     title = models.CharField(max_length=100)
+#     content = models.TextField()
+#     created_date = models.DateTimeField()
+#     location = models.CharField(max_length=100, default=None, null=True)
 
 
-class Journal(models.Model):
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=100)
-    content = models.TextField()
-    created_date = models.DateTimeField()
-    location = models.CharField(max_length=100, default=None, null=True)
-
-
-class JournalStudent(models.Model):
-    journal = models.ForeignKey(Journal, on_delete=models.CASCADE)
-    student = models.ForeignKey(User, on_delete=models.CASCADE)
+# class JournalStudent(models.Model):
+#     journal = models.ForeignKey(Journal, on_delete=models.CASCADE)
+#     student = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 class ChecklistRecord(models.Model):
-    # assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
-    curriculum = models.ForeignKey(Curriculum, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, null=True, blank=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="checklist_author")
     target = models.ForeignKey(User, on_delete=models.CASCADE, related_name="checklist_target")
     record = models.IntegerField()
@@ -137,7 +198,7 @@ class ChecklistRecord(models.Model):
 
 
 class Comment(models.Model):
-    assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)

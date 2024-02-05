@@ -11,8 +11,8 @@ def subject_create(request):
     for i in range(2, 6):
         SubjectEvaluationItem.objects.create(
             subject=subject_object,
-            curriculum_type_id=i,
-            name=CurriculumType.objects.get(id=i).name,
+            post_type_id=i,
+            name=PostType.objects.get(id=i).name,
             percentage=25
         )
     return redirect("common:index")

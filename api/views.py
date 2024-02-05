@@ -7,7 +7,7 @@ from models.models import Checklist, ChecklistSet, ChecklistGroup, Comment
 def comment_web(request, assignment_id):
     if request.method == "POST":
         content = request.POST["content"]
-        Comment.objects.create(content=content, assignment_id=assignment_id, author=request.user)
+        Comment.objects.create(content=content, post_id=assignment_id, author=request.user)
     return redirect(request.META.get('HTTP_REFERER'))
 
 
