@@ -126,7 +126,7 @@ class Checklist(models.Model):
     sequence = models.IntegerField()
     content = models.CharField(max_length=1000)
     essential = models.BooleanField(default=False)
-    type = models.CharField(max_length=100)
+    type = models.CharField(max_length=100, default="hand")
 
 
 class ChecklistSet(models.Model):
