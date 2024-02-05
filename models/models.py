@@ -98,7 +98,8 @@ class PostEvaluationStatus(models.Model):
 
 
 class PostEvaluation(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, default=None, null=True)
+    target = models.ForeignKey(User, on_delete=models.CASCADE, default=None, null=True)
     percentage = models.IntegerField(default=0)
 
 

@@ -33,7 +33,7 @@ def curriculum_create(request, subject_id, type_id):
         # 평가 여부
         if request.POST.get("eval"):
             evaluation = True if request.POST.get("eval") == "True" else False
-            curriculum_object.eval_status = evaluation
+            PostEvaluationStatus.objects.create(post=curriculum_object, status=evaluation)
         # 체크리스트
         if request.POST.get("checklist_set_id", default=None):
             checklist_set_id = int(request.POST.get("checklist_set_id", default=None))
@@ -50,7 +50,9 @@ def curriculum_create(request, subject_id, type_id):
                 file_object.file = file
                 file_object.filename = file.name
                 file_object.save()
-
+        if request.POST.get("location"):
+            location = request.POST.get("location")
+            PostLocation.objects.create(post=curriculum_object, location=location)
         curriculum_object.save()
         return redirect("professor:curriculum", subject_id, type_id)
 

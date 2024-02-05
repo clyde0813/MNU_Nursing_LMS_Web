@@ -10,192 +10,195 @@
             <h1>교수 평가 상세</h1>
         </div>
         <div class="background h-auto">
-            <div class="sub-title border-bottom-color mb-0">
-                <h1>학생정보</h1>
-            </div>
-            <div class="student-info-table mb-20">
-                <ul class="th-list">
-                    <li class="th w-2">
-                        <h2>학생명</h2>
-                    </li>
-                    <li class="th w-3">
-                        <h2>학생번호</h2>
-                    </li>
-                    <li class="th w-5">
-                        <h2>휴대폰 번호</h2>
-                    </li>
-                    <li class="th w-5">
-                        <h2>이메일 주소</h2>
-                    </li>
-                </ul>
-                <ul class="tb-list">
-                    <li class="tb w-2">
-                        <h2>{{ enrollment_object.student.profile.name }}</h2>
-                    </li>
-                    <li class="tb w-3">
-                        <h2>{{ enrollment_object.student.profile.userID }}</h2>
-                    </li>
-                    <li class="tb w-5">
-                        <h2>{{ enrollment_object.student.profile.mobile }}</h2>
-                    </li>
-                    <li class="tb w-5">
-                        <h2>{{ enrollment_object.student.email }}</h2>
-                    </li>
-                </ul>
-            </div>
-            <div class="detail-wrap">
-                <div class="detail-title">
-                    <h1>{{ subject_object.name }}</h1>
+            <form method="post">
+                {% csrf_token %}
+                <div class="sub-title border-bottom-color mb-0">
+                    <h1>학생정보</h1>
                 </div>
-            </div>
-            <div class="">
-                <div class="table" id="evaluation-modify-table">
+                <div class="student-info-table mb-20">
                     <ul class="th-list">
-                        <div class="th-wrap w-5">
-                            <li class="th w-3">
-                                <h2>수강신청</h2>
-                            </li>
-                            <li class="tb w-7">
-                                <h2>{{ enrollment_object.confirmed_date }}</h2>
-                            </li>
-                        </div>
-                        <div class="th-wrap w-5">
-                            <li class="th w-3">
-                                <h2>출석</h2>
-                            </li>
-                            <li class="tb w-7">
-                                <h2>??/??</h2>
-                            </li>
-                        </div>
+                        <li class="th w-2">
+                            <h2>학생명</h2>
+                        </li>
+                        <li class="th w-3">
+                            <h2>학생번호</h2>
+                        </li>
+                        <li class="th w-5">
+                            <h2>휴대폰 번호</h2>
+                        </li>
+                        <li class="th w-5">
+                            <h2>이메일 주소</h2>
+                        </li>
                     </ul>
-                    <ul class="th-list">
-                        <div class="th-wrap w-5">
-                            <li class="th w-3">
-                                <h2>구분</h2>
-                            </li>
-                            <li class="th w-7">
-                                <h2>과정</h2>
-                            </li>
-                        </div>
-                        <div class="th-wrap w-5">
-                            <li class="th w-3">
-                                <h2>성취도</h2>
-                            </li>
-                            <div class="th-wrap w-7 p-0">
-                                <li class="th w-5">
-                                    <h2>평가</h2>
+                    <ul class="tb-list">
+                        <li class="tb w-2">
+                            <h2>{{ enrollment_object.student.profile.name }}</h2>
+                        </li>
+                        <li class="tb w-3">
+                            <h2>{{ enrollment_object.student.profile.userID }}</h2>
+                        </li>
+                        <li class="tb w-5">
+                            <h2>{{ enrollment_object.student.profile.mobile }}</h2>
+                        </li>
+                        <li class="tb w-5">
+                            <h2>{{ enrollment_object.student.email }}</h2>
+                        </li>
+                    </ul>
+                </div>
+                <div class="detail-wrap">
+                    <div class="detail-title">
+                        <h1>{{ subject_object.name }}</h1>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="table" id="evaluation-modify-table">
+                        <ul class="th-list">
+                            <div class="th-wrap w-5">
+                                <li class="th w-3">
+                                    <h2>수강신청</h2>
                                 </li>
-                                <li class="th w-5">
-                                    <h2>반영율</h2>
+                                <li class="tb w-7">
+                                    <h2>{{ enrollment_object.confirmed_date }}</h2>
                                 </li>
                             </div>
-                        </div>
-                    </ul>
-                    {% for curriculum_type, curriculum_data in curriculum_objects.items %}
-                        <ul class="th-list col-{% if curriculum_data.objects|length == 0 %}1{% else %}{{ curriculum_data.objects|length }}{% endif %}">
                             <div class="th-wrap w-5">
-                                <li class="th w-3 col-{% if curriculum_data.objects|length == 0 %}1{% else %}{{ curriculum_data.objects|length }}{% endif %}">
-                                    <h2>{{ curriculum_data.curriculum_name }}</h2>
+                                <li class="th w-3">
+                                    <h2>출석</h2>
                                 </li>
-                                <div class="col-wrap p-0 w-8">
-                                    {% for data in curriculum_data.objects %}
-                                        <li class="tb">
-                                            <h2>{{ data.title }}</h2>
-                                        </li>
-                                    {% endfor %}
+                                <li class="tb w-7">
+                                    <h2>??/??</h2>
+                                </li>
+                            </div>
+                        </ul>
+                        <ul class="th-list">
+                            <div class="th-wrap w-5">
+                                <li class="th w-3">
+                                    <h2>구분</h2>
+                                </li>
+                                <li class="th w-7">
+                                    <h2>과정</h2>
+                                </li>
+                            </div>
+                            <div class="th-wrap w-5">
+                                <li class="th w-3">
+                                    <h2>성취도</h2>
+                                </li>
+                                <div class="th-wrap w-7 p-0">
+                                    <li class="th w-5">
+                                        <h2>평가</h2>
+                                    </li>
+                                    <li class="th w-5">
+                                        <h2>반영율</h2>
+                                    </li>
                                 </div>
                             </div>
-                            <div class="th-wrap w-5">
-                                <div class="col-wrap p-0 w-3">
-                                    {% for data in curriculum_data.objects %}
+                        </ul>
+                        {% for curriculum_type, curriculum_data in curriculum_objects.items %}
+                            <ul class="th-list col-{% if curriculum_data.objects|length == 0 %}1{% else %}{{ curriculum_data.objects|length }}{% endif %}">
+                                <div class="th-wrap w-5">
+                                    <li class="th w-3 col-{% if curriculum_data.objects|length == 0 %}1{% else %}{{ curriculum_data.objects|length }}{% endif %}">
+                                        <h2>{{ curriculum_data.curriculum_name }}</h2>
+                                    </li>
+                                    <div class="col-wrap p-0 w-8">
+                                        {% for data in curriculum_data.objects %}
+                                            <li class="tb">
+                                                <h2>{{ data.title }}</h2>
+                                            </li>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="th-wrap w-5">
+                                    <div class="col-wrap p-0 w-3">
+                                        {% for data in curriculum_data.objects %}
+                                            <li class="tb">
+                                                <a href="">보기</a>
+                                            </li>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="th-wrap w-7 p-0">
+                                        <div class="col-wrap p-0 w-5">
+                                            {% for data in curriculum_data.objects %}
+                                                {% if data.eval_status %}
+                                                    <li class="tb">
+                                                        <input type="number" id="percent" class="small-input"
+                                                               name="eval-{{ data.id }}"
+                                                               value="{% if data.score %}{{ data.score }}{% else %}0{% endif %}">
+                                                        <h2 class="ml-10">/100</h2>
+                                                    </li>
+                                                {% else %}
+                                                    <li class="tb">
+                                                        <h2>평가 미적용</h2>
+                                                    </li>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                        <li class="tb w-5 col-{% if curriculum_data.objects|length == 0 %}1{% else %}{{ curriculum_data.objects|length }}{% endif %}">
+                                            <h2>{{ eval.guide_eval_percentage }}</h2>
+                                        </li>
+                                    </div>
+                                </div>
+                            </ul>
+                        {% endfor %}
+
+                        {% for data in eval.additional_eval_objects %}
+                            <ul class="th-list col-1">
+                                <div class="th-wrap w-5">
+                                    <li class="th w-3 col-1">
+                                        <h2>{{ data.name }}</h2>
+                                    </li>
+                                    <div class="col-wrap p-0 w-8">
+                                        <li class="tb">
+                                            <h2>{{ data.name }}</h2>
+                                        </li>
+                                    </div>
+                                </div>
+                                <div class="th-wrap w-5">
+                                    <div class="col-wrap p-0 w-3">
                                         <li class="tb">
                                             <a href="">보기</a>
                                         </li>
-                                    {% endfor %}
-                                </div>
-                                <div class="th-wrap w-7 p-0">
-                                    <div class="col-wrap p-0 w-5">
-                                        {% for data in curriculum_data.objects %}
-                                            {% if data.eval_status %}
-                                                <li class="tb">
-                                                    <input type="number" id="percent" class="small-input" name=""
-                                                           value="
-                                                                   {% if data.score %}{{ data.score }}{% else %}0{% endif %}">
-                                                    <h2 class="ml-10">/100</h2>
-                                                </li>
-                                            {% else %}
-                                                <li class="tb">
-                                                    <h2>평가 미적용</h2>
-                                                </li>
-                                            {% endif %}
-                                        {% endfor %}
                                     </div>
-                                    <li class="tb w-5 col-{% if curriculum_data.objects|length == 0 %}1{% else %}{{ curriculum_data.objects|length }}{% endif %}">
-                                        <h2>{{ eval.guide_eval_percentage }}</h2>
-                                    </li>
-                                </div>
-                            </div>
-                        </ul>
-                    {% endfor %}
-
-                    {% for data in eval.additional_eval_objects %}
-                        <ul class="th-list col-1">
-                            <div class="th-wrap w-5">
-                                <li class="th w-3 col-1">
-                                    <h2>{{ data.name }}</h2>
-                                </li>
-                                <div class="col-wrap p-0 w-8">
-                                    <li class="tb">
-                                        <h2>{{ data.name }}</h2>
-                                    </li>
-                                </div>
-                            </div>
-                            <div class="th-wrap w-5">
-                                <div class="col-wrap p-0 w-3">
-                                    <li class="tb">
-                                        <a href="">보기</a>
-                                    </li>
-                                </div>
-                                <div class="th-wrap w-7 p-0">
-                                    <div class="col-wrap p-0 w-5">
-                                        <li class="tb">
-                                            <input type="number" id="percent" class="small-input" value="30">
-                                            <h2 class="ml-10">/100</h2>
+                                    <div class="th-wrap w-7 p-0">
+                                        <div class="col-wrap p-0 w-5">
+                                            <li class="tb">
+                                                <input type="number" id="percent" class="small-input" value="30">
+                                                <h2 class="ml-10">/100</h2>
+                                            </li>
+                                        </div>
+                                        <li class="tb w-5 col-1">
+                                            <h2>{{ data.percentage }}</h2>
                                         </li>
                                     </div>
-                                    <li class="tb w-5 col-1">
-                                        <h2>{{ data.percentage }}</h2>
-                                    </li>
                                 </div>
+                            </ul>
+                        {% endfor %}
+
+                        <ul class="th-list">
+                            <li class="th w-65">
+                                <h2>총 점수</h2>
+                            </li>
+                            <div class="th-wrap w-35">
+                                <li class="tb w-5">
+                                    <h2>{{ total_score }}/100</h2>
+                                </li>
+                                <li class="tb w-5">
+                                    <h2>{{ eval.total_eval_percentage }}%</h2>
+                                </li>
                             </div>
                         </ul>
-                    {% endfor %}
-
-                    <ul class="th-list">
-                        <li class="th w-65">
-                            <h2>총 점수</h2>
-                        </li>
-                        <div class="th-wrap w-35">
-                            <li class="tb w-5">
-                                <h2>80/100</h2>
-                            </li>
-                            <li class="tb w-5">
-                                <h2>100%</h2>
-                            </li>
-                        </div>
-                    </ul>
+                    </div>
                 </div>
-            </div>
-            <div class="dp-end dp-flex mt-20">
-                <div>
-                    <button type="button" class="btn btn-secondary medium-btn">
-                        취소
-                    </button>
-                    <button type="button" class="btn btn-success medium-btn">
-                        적용
-                    </button>
+                <div class="dp-end dp-flex mt-20">
+                    <div>
+                        <button type="button" class="btn btn-secondary medium-btn">
+                            취소
+                        </button>
+                        <button type="submit" class="btn btn-success medium-btn">
+                            적용
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 {% endblock %}

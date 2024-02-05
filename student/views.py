@@ -91,7 +91,7 @@ def curriculum_detail(request, subject_id, type_id, curriculum_id):
     else:
         if type_id == 1 \
                 or type_id == 8 \
-                or Post.objects.filter(child_post__parent_post_id=curriculum_id, uthor=request.user).exists():
+                or Post.objects.filter(child_post__parent_post_id=curriculum_id, author=request.user).exists():
             method = "detail"
         else:
             method = "create"
