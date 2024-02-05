@@ -1,5 +1,5 @@
+{% extends 'student/layout/layout.html' %}
 {% load static %}
-{% include 'student/layout/layout.html' %}
 {% block stylesheet %}
     <link rel="stylesheet" href="{% static 'css/table.css' %}">
 {% endblock %}
@@ -8,7 +8,7 @@
         <div class="main-title">
             <h1>학생평가</h1>
         </div>
-        <form method="post" action="{% url 'student_student_evaluation_detail' subject_id eval_id %}">
+        <form method="post">
             {% csrf_token %}
             <div class="background h-auto">
                 <div class="sub-title border-bottom-color">
@@ -33,13 +33,13 @@
                                 <h2>하</h2>
                             </li>
                         </ul>
-                        {% for data in objects %}
+                        {% for data in checklist_objects %}
                             <ul class="tb-list">
                                 <li class="tb w-1">
                                     <h2>{{ forloop.counter }}</h2>
                                 </li>
                                 <li class="tb w-7">
-                                    <h2>{{ data.content }}</h2>
+                                    <h2>{{ data.checklist.content }}</h2>
                                 </li>
                                 <li class="tb w-1">
                                     <input type="radio" name="checklist{{ data.id }}" id="check1" value="1"
@@ -59,7 +59,7 @@
                 </div>
                 <div class="bottom-btn-wrap">
                     <button type="button" class="btn btn-secondary medium-btn solid-btn"
-                            onclick="location.href='{% url 'student_student_evaluation' subject_id %}'">
+                            onclick="location.href=''">
                         목록
                     </button>
                     <div>

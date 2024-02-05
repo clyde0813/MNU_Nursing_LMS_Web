@@ -24,4 +24,6 @@ def html_return(type_id, method):
             html = "student/training/training_detail.html"
         elif method == "create":
             html = "student/training/training_submit.html"
+    elif type_id == 8:
+        html = "student/evaluation/evaluation_detail.html"
     return html
