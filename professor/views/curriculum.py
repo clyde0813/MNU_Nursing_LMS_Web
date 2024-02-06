@@ -40,15 +40,17 @@ def curriculum_create(request, subject_id, type_id):
             PostChecklistMapping.objects.create(checklist_set_id=checklist_set_id, post=curriculum_object)
         # 기간
         if request.POST.get("period"):
-            start_date = request.POST.get("start_date")
-            end_date = request.POST.get("end_date")
-            PostPeriod.objects.create(post=curriculum_object, start_date=start_date, end_date=end_date)
+            start_date = request.POST.get("period")
+            # end_date = request.POST.get("end_date")
+            PostPeriod.objects.create(post=curriculum_object, start_date=start_date)
         # 파일
         if request.FILES.getlist("files"):
             for file in request.FILES.getlist("files"):
                 file_object = PostFile.objects.create(post=curriculum_object)
                 file_object.file = file
                 file_object.filename = file.name
+                if file.name.lower().endswith(('.png', '.jpg', '.jpeg', '.tiff', '.bmp', '.gif')):
+                    file_object.file_extension = "image"
                 file_object.save()
         if request.POST.get("location"):
             location = request.POST.get("location")
@@ -106,7 +108,39 @@ def curriculum_create(request, subject_id, type_id):
 @login_required(redirect_field_name=None)
 def curriculum_modify(request, subject_id, type_id, curriculum_id):
     if request.method == "POST":
-        curriculum_modify_func(request, type_id, curriculum_id)
+        title = request.POST.get("title")
+        content = request.POST.get("content")
+        curriculum_object = Post.objects.get(id=curriculum_id)
+        curriculum_object.title = title
+        curriculum_object.content = content
+        curriculum_object.save()
+
+        # 평가 여부
+        if request.POST.get("eval"):
+            evaluation = True if request.POST.get("eval") == "True" else False
+            tmp_object = PostEvaluationStatus.objects.filter(post=curriculum_object)
+            if tmp_object.exists():
+                tmp_object = tmp_object.get()
+                tmp_object.status = evaluation
+                tmp_object.save()
+        # 체크리스트
+        if request.POST.get("checklist_set_id", default=None):
+            checklist_set_id = int(request.POST.get("checklist_set_id", default=None))
+            tmp_object = PostChecklistMapping.objects.filter(post=curriculum_object)
+            if tmp_object.exists():
+                tmp_object = tmp_object.get()
+                tmp_object.checklist_set_id = checklist_set_id
+                tmp_object.save()
+        # 기간
+        if request.POST.get("period"):
+            start_date = request.POST.get("start_date")
+            end_date = request.POST.get("end_date")
+            tmp_object = PostPeriod.objects.filter(post=curriculum_object)
+            if tmp_object.exists():
+                tmp_object = tmp_object.get()
+                tmp_object.start_date = start_date
+                tmp_object.end_date = end_date
+                tmp_object.save()
         return redirect("professor:curriculum_detail", subject_id, type_id, curriculum_id)
     context = curriculum_context(subject_id, type_id, curriculum_id, "modify")
     return render(request, html_return(type_id, "modify"), context)
@@ -114,7 +148,7 @@ def curriculum_modify(request, subject_id, type_id, curriculum_id):
 
 @login_required(redirect_field_name=None)
 def curriculum_delete(request, subject_id, type_id, curriculum_id):
-    Curriculum.objects.get(id=curriculum_id).delete()
+    Post.objects.get(id=curriculum_id).delete()
     return redirect("professor:curriculum", subject_id, type_id)
 
 

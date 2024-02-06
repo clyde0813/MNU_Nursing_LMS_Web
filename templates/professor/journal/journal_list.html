@@ -32,8 +32,7 @@
                     </ul>
                     {% for data in journal_objects %}
                         <ul class="tb-list" onclick="location.href='{% url 'professor:journal_detail' subject_id data.id %}'">
-                            <li class="tb w-1"
-                                onclick="">
+                            <li class="tb w-1">
                                 <h2>{{ forloop.counter }}</h2>
                             </li>
                             <li class="tb w-7"

@@ -7,7 +7,7 @@ def curriculum_context(subject_id, type_id, curriculum_id, method):
 
     if curriculum_id is not None:
         curriculum_object = Post.objects.get(id=curriculum_id)
-
+        file_objects = PostFile.objects.filter(post_id=curriculum_id).all()
     if type_id != 1 and method == "detail":
         student_objects = []
         for obj in Enrollment.objects.filter(subject_id=subject_id):
@@ -27,7 +27,7 @@ def curriculum_context(subject_id, type_id, curriculum_id, method):
         type_name = PostType.objects.get(id=type_id).name
         context = {
             "subject_id": subject_id, "type_id": type_id, "curriculum_id": curriculum_id, "subject_name": subject_name,
-            "type_name": type_name, "object": curriculum_object, "objects": student_objects
+            "type_name": type_name, "object": curriculum_object, "objects": student_objects, "files": file_objects
         }
         return context
 
@@ -87,7 +87,7 @@ def curriculum_context(subject_id, type_id, curriculum_id, method):
             }
         elif method == "modify":
             checklist_objects = ChecklistSet.objects.all()
-            checklist_set = ChecklistCurriculum.objects.get(curriculum_id=curriculum_id).checklist_set
+            checklist_set = PostChecklistMapping.objects.get(post_id=curriculum_id).checklist_set
             selected_checklist_objects = ChecklistGroup.objects.filter(set=checklist_set).all()
             context = {
                 "subject_id": subject_id,
@@ -133,10 +133,13 @@ def curriculum_context(subject_id, type_id, curriculum_id, method):
 def assignment_context(request, subject_id, curriculum_id, type_id, assignment_id):
     curriculum_object = Post.objects.get(id=curriculum_id)
     assignment_object = Post.objects.get(id=assignment_id)
+    file_objects = PostFile.objects.filter(post_id=curriculum_id).all()
     type_name = curriculum_object.type.name
+
     context = {
         "subject_id": subject_id, "type_id": type_id, "type_name": type_name,
-        "object": curriculum_object, "assignment_object": assignment_object, "video" : None
+        "object": curriculum_object, "assignment_object": assignment_object, "video" : None,
+        "files":file_objects
     }
 
     if type_id == 3:

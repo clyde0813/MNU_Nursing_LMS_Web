@@ -67,7 +67,7 @@ class PostFile(models.Model):
 class PostPeriod(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     start_date = models.DateTimeField()
-    end_date = models.DateTimeField
+    end_date = models.DateTimeField(null=True)
 
 
 class PostDeadline(models.Model):

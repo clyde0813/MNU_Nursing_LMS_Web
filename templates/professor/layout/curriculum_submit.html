@@ -38,12 +38,12 @@
                         <li>
                             <h3>제목</h3>
                             <input class="form-control form-control-lg" type="text" placeholder="제목을 입력하세요."
-                                   aria-label=".form-control-lg example" name="title">
+                                   aria-label=".form-control-lg example" name="title" value="{%if object.title %}{{ object.title}}{%endif%}">
                         </li>
                         <li>
                             <h3>설명</h3>
                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="11"
-                                      placeholder="설명을 입력하세요." name="content"></textarea>
+                                      placeholder="설명을 입력하세요." name="content">{%if object.content %}{{ object.content }}{%endif%}</textarea>
                         </li>
                         <!-- 제출 마감 -->
                         {% if input_list.deadline %}

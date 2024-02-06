@@ -28,7 +28,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="dp-flex dp-end">
+                {% comment %} <div class="dp-flex dp-end">
                     <div class="dp-flex dp-center">
                         <div class="file file-delete mr-10">
                             <h2>참고자료. hwp</h2>
@@ -42,13 +42,17 @@
                             <input type="file" id="file-btn" name="file" hidden/>
                         </div>
                     </div>
-                </div>
+                </div> {% endcomment %}
                 <div class="bottom-btn-wrap">
                     <button type="button" class="btn btn-secondary medium-btn solid-btn"
                             onclick="location.href='{% url 'professor:curriculum' subject_id type_id %}'">
                         목록
                     </button>
                     <div>
+                        <button type="button" class="btn btn-danger medium-btn"
+                        onclick="location.href='{% url 'professor:curriculum_delete' subject_id type_id object.id %}'">
+                    삭제
+                </button>
                         <button type="button" class="btn btn-secondary medium-btn"
                                 onclick="location.href='{% url 'professor:curriculum_detail' subject_id type_id object.id %}'">
                             취소

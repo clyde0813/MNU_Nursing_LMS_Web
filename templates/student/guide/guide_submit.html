@@ -24,6 +24,11 @@
                             {{ object.content|linebreaksbr }}
                         </p>
                     </div>
+                    {% for file in files %}
+                    {%if file.file_extension == "image" %}
+                    <img src="{{file.file.url}}" class="rounded float-left" alt="...">
+                    {%endif%}
+                    {%endfor%}
                 </div>
                 <div class="dp-flex dp-end file-download-wrap">
                     {% for file in files %}

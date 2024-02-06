@@ -10,6 +10,7 @@ def journal(request, subject_id):
         postsubjectmapping__subject_id=subject_id,
         type_id=6
     ).all()
+    print(journal_objects)
     context = {"subject_id": subject_id, "journal_objects": journal_objects, "type_id": 6}
     return render(request, "professor/journal/journal_list.html", context)
 
@@ -31,6 +32,10 @@ def journal_create(request, subject_id):
         PostLocation.objects.create(
             post=journal_object,
             location=location
+        )
+        PostSubjectMapping.objects.create(
+            subject_id = subject_id,
+            post = journal_object
         )
         for student_id in student_list:
             PostUserMapping.objects.create(post=journal_object, user_id=student_id)

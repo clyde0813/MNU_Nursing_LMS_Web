@@ -22,14 +22,23 @@
                         {{ object.content|linebreaksbr }}
                     </p>
                 </div>
+                {% for file in files %}
+                {%if file.file_extension == "image" %}
+                <img src="{{file.file.url}}" class="rounded float-left" alt="...">
+                {%endif%}
+                {%endfor%}
             </div>
-            <div class="dp-flex align-center space-between border-bottom file-download-wrap ">
-                <a href="">
-                    <div class="file file-delete mb-0">
-                        <h2>과제 실습 과제. hwp</h2>
-                        <button><i class="fa-solid fa-download"></i></button>
+            <div class="dp-flex dp-end file-download-wrap">
+                {% for file in files %}
+                    <div class="dp-flex dp-end border-bottom">
+                        <a href="{{ file.file.url }}" download>
+                            <div class="file file-delete mb-0">
+                                <h2>{{ file.filename }}</h2>
+                                <button><i class="fa-solid fa-download"></i></button>
+                            </div>
+                        </a>
                     </div>
-                </a>
+                {% endfor %}
             </div>
             <div class="sub-title mt-30">
                 <h1>과제 제출</h1>
@@ -46,9 +55,9 @@
                 </div>
             </div>
             <div class="dp-flex align-center space-between border-bottom file-download-wrap ">
-                <a href="">
+                <a href="{{ assignment_object.postfile_set.first.file.url }}" download>
                     <div class="file file-delete mb-0">
-                        <h2>4652 – 황혜리 – 과제6 과제제출 - 20230723. hwp</h2>
+                        <h2>{{assignment_object.postfile_set.first.filename }}</h2>
                         <button><i class="fa-solid fa-download"></i></button>
                     </div>
                 </a>

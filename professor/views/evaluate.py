@@ -140,11 +140,12 @@ def professor_evaluate_detail(request, subject_id, student_id):
                 total_score += score_sum_tmp * (journal_eval_percentage / 100)
 
         # 추가 평가 항목 (커스텀)
-        additional_eval_objects = SubjectEvaluationItem.objects.filter(subject_id=subject_id, post_type=None).all()
+        additional_eval_objects = SubjectEvaluationItem.objects.filter(subject_id=subject_id, post_type=None)
 
         total_eval_percentage = (guide_eval_percentage + hand_eval_percentage +
-                                 assignment_eval_percentage + journal_eval_percentage +
-                                 additional_eval_objects.annotate(total=Sum('percentage')).first().total)
+                                 assignment_eval_percentage + journal_eval_percentage)
+        if additional_eval_objects.exists():
+            total_eval_percentage += additional_eval_objects.annotate(total=Sum('percentage')).first().total
 
         context = {
             "subject_id": subject_id,
@@ -158,7 +159,7 @@ def professor_evaluate_detail(request, subject_id, student_id):
                 "hand_eval_percentage": hand_eval_percentage,
                 "assignment_eval_percentage": assignment_eval_percentage,
                 "journal_eval_percentage": journal_eval_percentage,
-                "additional_eval_objects": additional_eval_objects,
+                "additional_eval_objects": additional_eval_objects.all(),
                 "total_eval_percentage": total_eval_percentage
             }
         }

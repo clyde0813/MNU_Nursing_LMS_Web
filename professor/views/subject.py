@@ -10,7 +10,8 @@ def subject_create(request):
     subject_object = Subject.objects.create(professor=request.user, name=name)
 
     # 학생 평가 !임시!
-    survey = Post.objects.create(title="학생 평가", subject=subject_object, content="None", author=request.user, type_id=8)
+    survey = Post.objects.create(title="학생 평가", content="None", author=request.user, type_id=8)
+    PostSubjectMapping.objects.create(post=survey, subject=subject_object)
     PostChecklistMapping.objects.create(post=survey, checklist_set_id=21)
 
     for i in range(2, 6):

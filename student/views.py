@@ -51,6 +51,7 @@ def curriculum_detail(request, subject_id, type_id, curriculum_id):
     if request.method == "POST":
         title = request.POST.get("title")
         content = request.POST.get("content")
+        file = request.FILES["file"]
         assignment = Post.objects.create(
             title=title,
             content=content,
@@ -62,6 +63,8 @@ def curriculum_detail(request, subject_id, type_id, curriculum_id):
             parent_post_id=curriculum_id,
             child_post=assignment
         )
+
+        PostFile.objects.create(post=assignment, file=file, filename=file.name, file_extension="assignment")
 
         if type_id == 3:
             checklist_set_object = PostChecklistMapping.objects.get(post_id=curriculum_id).checklist_set
@@ -97,6 +100,7 @@ def curriculum_detail(request, subject_id, type_id, curriculum_id):
             method = "create"
 
         curriculum_object = Post.objects.get(id=curriculum_id)
+        file_objects = curriculum_object.postfile_set.all()
         context = None
 
         if type_id not in [1, 8] and method == "detail":
@@ -105,7 +109,7 @@ def curriculum_detail(request, subject_id, type_id, curriculum_id):
             context = {
                 "subject_id": subject_id, "type_id": type_id, "type_name": type_name,
                 "object": curriculum_object, "assignment_object": assignment_object,
-                "files": curriculum_object.postfile_set.all(), "video": None
+                "files": file_objects, "video": None
             }
 
             if type_id == 3:
@@ -128,20 +132,19 @@ def curriculum_detail(request, subject_id, type_id, curriculum_id):
                     context["video"] = PostFile.objects.filter(post=assignment_object, file_extension="video").get()
                 context["checklist_objects"] = checklist_objects
 
-            return context
 
         if type_id == 1:
             type_name = curriculum_object.type.name
             context = {
                 "subject_id": subject_id, "type_id": type_id, "type_name": type_name,
-                "object": curriculum_object, "files": curriculum_object.postfile_set.all()
+                "object": curriculum_object, "files": file_objects,
             }
         elif type_id in [2, 4, 5]:
             if method == "create":
                 type_name = curriculum_object.type.name
                 context = {
                     "subject_id": subject_id, "type_id": type_id, "type_name": type_name,
-                    "object": curriculum_object
+                    "object": curriculum_object, "files": file_objects,
                 }
         elif type_id == 3:
             if method == "create":
@@ -150,7 +153,7 @@ def curriculum_detail(request, subject_id, type_id, curriculum_id):
                 type_name = curriculum_object.type.name
                 context = {
                     "subject_id": subject_id, "type_id": type_id, "type_name": type_name,
-                    "object": curriculum_object, "checklist_objects": checklist_objects
+                    "object": curriculum_object, "checklist_objects": checklist_objects, "files": file_objects
                 }
         # 학생 평가
         elif type_id == 8:
@@ -159,7 +162,7 @@ def curriculum_detail(request, subject_id, type_id, curriculum_id):
             type_name = curriculum_object.type.name
             context = {
                 "subject_id": subject_id, "type_id": type_id, "type_name": type_name,
-                "object": curriculum_object, "checklist_objects": checklist_objects
+                "object": curriculum_object, "checklist_objects": checklist_objects, "files": file_objects,
             }
 
         return render(request, html_return(type_id, method), context)
