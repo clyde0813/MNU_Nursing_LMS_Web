@@ -111,8 +111,11 @@
                                     <div class="col-wrap p-0 w-3">
                                         {% for data in curriculum_data.objects %}
                                             <li class="tb">
-                                                <a href="">보기</a>
-                                            </li>
+                                                {% if data.file %}
+                                                <a href="{{date.file.url}}" download>보기</a>
+                                                {% else %}
+                                                <p>미제출</p>
+                                                {% endif %}                                            </li>
                                         {% endfor %}
                                     </div>
                                     <div class="th-wrap w-7 p-0">
@@ -155,7 +158,11 @@
                                 <div class="th-wrap w-5">
                                     <div class="col-wrap p-0 w-3">
                                         <li class="tb">
-                                            <a href="">보기</a>
+                                            {% comment %} {% if data.file != None %}
+                                            <a href="{{date.file.url}}" download>보기</a>
+                                            {% else %}
+                                            <p>미제출</p>
+                                            {% endif %} {% endcomment %}
                                         </li>
                                     </div>
                                     <div class="th-wrap w-7 p-0">

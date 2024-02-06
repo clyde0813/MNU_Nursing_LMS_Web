@@ -104,15 +104,17 @@ def professor_evaluate_detail(request, subject_id, student_id):
                 score = None
                 assignment_object = Post.objects.filter(
                     postsubjectmapping__subject_id=subject_id,
-                    child_post__parent_post=data,
+                    child_post__child_post=data,
                     author_id=student_id
                 )
+                print(assignment_object)
                 eval_object = PostEvaluation.objects.filter(post_id=data.id, target_id=student_id)
                 if eval_object:
                     score = eval_object.get().percentage
                     score_sum_tmp += score
                 if assignment_object.exists():
                     file = PostFile.objects.get(post=assignment_object)
+                    print(file)
                 if not data.postevaluationstatus_set.exists() or data.postevaluationstatus_set.get().status is False:
                     eval_status = False
                 tmp.append({
