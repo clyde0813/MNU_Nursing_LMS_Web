@@ -15,6 +15,22 @@
             </button>
         </div>
         <div class="background h-auto">
+            <div class="sub-title">
+                <h1>{{ object.type.name }} 과제 정보</h1>
+            </div>
+            <div class="detail-wrap">
+                <div class="detail-title">
+                    <h1>{{ object.title }} {{ object.type.name }}</h1>
+                    <p class="date">{{ object.created_date }}</p>
+                </div>
+                <div class="detail-content h-20vh">
+                    <p>
+                        {{ object.content|linebreaksbr }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="background h-auto">
             <div class="sub-title border-bottom-color">
                 <h1>{{ object.title }}</h1>
             </div>

@@ -70,7 +70,7 @@ def curriculum_create(request, subject_id, type_id):
     # 지침서
     elif type_id == 2:
         deadline_input_status = True
-        evaluation_input_status = True
+        evaluation_input_status = False
     # 핵심수기술
     elif type_id == 3:
         deadline_input_status = True

@@ -1,12 +1,12 @@
+{% extends "professor/layout/layout.html" %}
 {% load static %}
-{% include "professor/layout/layout.html" %}
 {% block stylesheet %}
     <link rel="stylesheet" href="{% static 'css/drm.css' %}">
 {% endblock %}
 {% block content %}
     <div class="content">
         <div class="main-title">
-            <h1>핵심 수기술 제출 상세</h1>
+            <h1>{{ object.type.name }} 제출 상세</h1>
         </div>
         <div class="background h-auto">
             <div class="sub-title">
