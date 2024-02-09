@@ -4,6 +4,7 @@ from function.professor.curriculum import *
 from function.professor.html import *
 import filetype
 
+
 @login_required(redirect_field_name=None)
 def curriculum(request, subject_id, type_id):
     curriculum_objects = Post.objects.filter(postsubjectmapping__subject_id=subject_id, type_id=type_id) \
@@ -34,15 +35,22 @@ def curriculum_create(request, subject_id, type_id):
         if request.POST.get("eval"):
             evaluation = True if request.POST.get("eval") == "True" else False
             PostEvaluationStatus.objects.create(post=curriculum_object, status=evaluation)
+
         # 체크리스트
         if request.POST.get("checklist_set_id", default=None):
             checklist_set_id = int(request.POST.get("checklist_set_id", default=None))
             PostChecklistMapping.objects.create(checklist_set_id=checklist_set_id, post=curriculum_object)
+
         # 기간
         if request.POST.get("period"):
             start_date = request.POST.get("period")
             # end_date = request.POST.get("end_date")
             PostPeriod.objects.create(post=curriculum_object, start_date=start_date)
+
+        if request.POST.get("deadline"):
+            deadline = request.POST.get("deadline")
+            PostDeadline.objects.create(post=curriculum_object, deadline=deadline)
+
         # 파일
         if request.FILES.getlist("files"):
             for file in request.FILES.getlist("files"):
@@ -51,7 +59,10 @@ def curriculum_create(request, subject_id, type_id):
                 file_object.filename = file.name
                 if filetype.is_image(file):
                     file_object.file_extension = "image"
+                elif filetype.is_video(file):
+                    file_object.file_extension = "video"
                 file_object.save()
+
         if request.POST.get("location"):
             location = request.POST.get("location")
             PostLocation.objects.create(post=curriculum_object, location=location)

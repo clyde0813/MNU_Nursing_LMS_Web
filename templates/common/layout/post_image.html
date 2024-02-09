@@ -1,6 +1,11 @@
 {% for file in files %}
     {% if file.file_extension == "image" %}
         <img src="{{ file.file.url }}" class="rounded float-left" alt="..." width="200" height="100"
-             style="object-fit: cover">
+             style="object-fit: cover; margin: 5px 10px 5px 10px;">
+    {% endif %}
+    {% if file.file_extension == "video" %}
+        <video height="auto" controls class="mb-10" style="width: 200px; height: 100px; margin: 5px 10px 5px 10px;">
+            <source src="{{ file.file.url }}" type="video/mp4">
+        </video>
     {% endif %}
 {% endfor %}
