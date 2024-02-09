@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from function.professor.curriculum import *
 from function.professor.html import *
-
+import filetype
 
 @login_required(redirect_field_name=None)
 def curriculum(request, subject_id, type_id):
@@ -49,7 +49,7 @@ def curriculum_create(request, subject_id, type_id):
                 file_object = PostFile.objects.create(post=curriculum_object)
                 file_object.file = file
                 file_object.filename = file.name
-                if file.name.lower().endswith(('.png', '.jpg', '.jpeg', '.tiff', '.bmp', '.gif')):
+                if filetype.is_image(file):
                     file_object.file_extension = "image"
                 file_object.save()
         if request.POST.get("location"):

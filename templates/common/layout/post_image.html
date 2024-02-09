@@ -1,0 +1,6 @@
+{% for file in files %}
+    {% if file.file_extension == "image" %}
+        <img src="{{ file.file.url }}" class="rounded float-left" alt="..." width="200" height="100"
+             style="object-fit: cover">
+    {% endif %}
+{% endfor %}

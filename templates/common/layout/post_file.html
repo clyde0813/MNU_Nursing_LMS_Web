@@ -1,0 +1,12 @@
+<div class="dp-flex dp-end file-download-wrap">
+    {% for file in files %}
+        <div class="dp-flex dp-end border-bottom">
+            <a href="{{ file.file.url }}" download>
+                <div class="file file-delete mb-0">
+                    <h2>{{ file.filename }}</h2>
+                    <button><i class="fa-solid fa-download"></i></button>
+                </div>
+            </a>
+        </div>
+    {% endfor %}
+</div>
