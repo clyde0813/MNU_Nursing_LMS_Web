@@ -70,15 +70,9 @@
                         </ul>
                     {% endfor %}
                 </div>
+                {% include "common/layout/post_image.html" %}
             </div>
-{#            <div class="dp-flex flex-start border-top">#}
-{#                <a href="">#}
-{#                    <div class="file file-delete mb-0">#}
-{#                        <h2>김○○ 학생 체크리스트. xlsx</h2>#}
-{#                        <button><i class="fa-solid fa-download"></i></button>#}
-{#                    </div>#}
-{#                </a>#}
-{#            </div>#}
+            {% include "common/layout/post_file.html" %}
             <div class="bottom-btn-wrap">
                 <button type="button" class="btn btn-secondary medium-btn solid-btn"
                         onclick="location.href='{% url 'student:curriculum' subject_id type_id %}'">

@@ -186,7 +186,7 @@ def assignment_evaluate(request, subject_id, type_id, curriculum_id, student_id)
         for i in checklist_group:
             checklist_record = request.POST.get("check_" + str(i.id))
             if checklist_record is not None:
-                checklist_object = ChecklistRecord.objects.filter(curriculum_id=curriculum_id, author=request.user,
+                checklist_object = ChecklistRecord.objects.filter(post_id=curriculum_id, author=request.user,
                                                                   target_id=student_id, checklist=i)
                 if checklist_object.exists():
                     checklist_object = checklist_object.get()
@@ -194,7 +194,7 @@ def assignment_evaluate(request, subject_id, type_id, curriculum_id, student_id)
                     checklist_object.save()
                 else:
                     ChecklistRecord.objects.create(
-                        curriculum_id=curriculum_id,
+                        post_id=curriculum_id,
                         author=request.user,
                         target_id=student_id,
                         checklist=i,

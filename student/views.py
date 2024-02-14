@@ -51,7 +51,7 @@ def curriculum_detail(request, subject_id, type_id, curriculum_id):
     if request.method == "POST":
         title = request.POST.get("title")
         content = request.POST.get("content")
-        file = request.FILES["file"]
+
         assignment = Post.objects.create(
             title=title,
             content=content,
@@ -63,8 +63,9 @@ def curriculum_detail(request, subject_id, type_id, curriculum_id):
             parent_post_id=curriculum_id,
             child_post=assignment
         )
-
-        PostFile.objects.create(post=assignment, file=file, filename=file.name, file_extension="assignment")
+        if request.FILES.get("file"):
+            file = request.FILES["file"]
+            PostFile.objects.create(post=assignment, file=file, filename=file.name, file_extension="assignment")
 
         if type_id == 3:
             checklist_set_object = PostChecklistMapping.objects.get(post_id=curriculum_id).checklist_set
@@ -87,10 +88,11 @@ def curriculum_detail(request, subject_id, type_id, curriculum_id):
             file_object.file_extension = "video"
             file_object.save()
         elif type_id == 5:
-            start_date = request.POST.get("start_date")
-            end_date = request.POST.get("end_date")
-            PostPeriod.objects.create(post=assignment, start_date=start_date, end_date=end_date)
+            start_date = request.POST.get("date")
+            # end_date = request.POST.get("end_date")
+            PostPeriod.objects.create(post=assignment, start_date=start_date)
         return redirect("student:curriculum_detail", subject_id, type_id, curriculum_id)
+
     else:
         if type_id == 1 \
                 or type_id == 8 \

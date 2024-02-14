@@ -19,24 +19,9 @@
                         {{ object.content|linebreaksbr }}
                     </p>
                 </div>
-                {% for file in files %}
-                {%if file.file_extension == "image" %}
-                <img src="{{file.file.url}}" class="rounded float-left" alt="...">
-                {%endif%}
-                {%endfor%}
+                {% include "common/layout/post_image.html" %}
             </div>
-            <div class="dp-flex dp-end file-download-wrap">
-                {% for file in files %}
-                    <div class="dp-flex dp-end border-bottom">
-                        <a href="{{ file.file.url }}" download>
-                            <div class="file file-delete mb-0">
-                                <h2>{{ file.filename }}</h2>
-                                <button><i class="fa-solid fa-download"></i></button>
-                            </div>
-                        </a>
-                    </div>
-                {% endfor %}
-            </div>
+            {% include "common/layout/post_file.html" %}
             <div class="bottom-btn-wrap">
                 <button type="button" class="btn btn-secondary medium-btn solid-btn"
                         onclick="location.href='{% url 'student:curriculum' subject_id type_id %}'">
