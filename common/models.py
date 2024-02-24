@@ -18,3 +18,8 @@ class Profile(models.Model):
     userID = models.IntegerField(null=True, blank=True)
     university = models.ForeignKey(University, on_delete=models.CASCADE)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
+
+
+class Token(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    token = models.CharField(max_length=300)
