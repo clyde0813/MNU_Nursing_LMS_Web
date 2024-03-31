@@ -77,8 +77,10 @@
                         {% endif %}
                     </li>
                     <li class="tb w-2">
-                        {% if data.assignment_date %}
+                        {% if data.assignment_status == 1 %}
                             <h2 class="done">제출완료</h2>
+                        {% elif data.assignment_status == 2 %}
+                            <h2 class="do-not">지연제출</h2>
                         {% else %}
                             <h2 class="do-not">미제출</h2>
                         {% endif %}

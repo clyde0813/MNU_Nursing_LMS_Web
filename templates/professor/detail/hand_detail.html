@@ -1,4 +1,4 @@
-{% extends "professor/layout/layout.html" %}
+{% extends "professor/layout/layout_common2.html" %}
 {% load static %}
 {% block stylesheet %}
     <link rel="stylesheet" href="{% static 'css/drm.css' %}">
@@ -70,6 +70,25 @@
                         </ul>
                     {% endfor %}
                 </div>
+            </div>
+            <div class="evaluation-box mb-30">
+                {% if score == None %}
+                    <h2>평가 미실시</h2>
+                {% else %}
+                    <h2>평가</h2>
+                    <ul class="radio-wrap">
+                        <li>
+                            <input type="number" name="eval" id="eva1"
+                                   value="{{ score }}">
+                        </li>
+                        <li>
+                            <button type="submit" class="btn btn-success medium-btn"
+                                    onclick="">
+                                적용
+                            </button>
+                        </li>
+                    </ul>
+                {% endif %}
             </div>
             {% include "common/layout/post_file.html" %}
             <div class="bottom-btn-wrap">

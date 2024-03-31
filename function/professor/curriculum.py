@@ -15,14 +15,20 @@ def curriculum_context(subject_id, type_id, curriculum_id, method):
             if assignment_object.exists():
                 assignment_id = assignment_object.get().id
                 assignment_date = assignment_object.get().created_date
+                if PostDeadline.objects.filter(post=curriculum_object).exists() and \
+                        PostDeadline.objects.get(post=curriculum_object).deadline.date() <= assignment_date.date():
+                    assignment_status = 2
+                else:
+                    assignment_status = True
             else:
                 assignment_id = None
                 assignment_date = None
-
+                assignment_status = False
             student_objects.append({
                 "id": assignment_id,
                 "student": obj.student,
-                "assignment_date": assignment_date
+                "assignment_date": assignment_date,
+                "assignment_status": assignment_status
             })
         type_name = PostType.objects.get(id=type_id).name
         context = {
@@ -135,11 +141,19 @@ def assignment_context(request, subject_id, curriculum_id, type_id, assignment_i
     assignment_object = Post.objects.get(id=assignment_id)
     file_objects = PostFile.objects.filter(post_id=curriculum_id).all()
     type_name = curriculum_object.type.name
+    score_status = PostEvaluationStatus.objects.filter(post=curriculum_object)
+    score = None
+    if score_status.exists() and score_status.get().status:
+        if PostEvaluation.objects.filter(post_id=curriculum_id).exists():
+            score = PostEvaluation.objects.filter(post_id=curriculum_id).get().percentage
+        else:
+            score = 0
+    print(score)
 
     context = {
         "subject_id": subject_id, "type_id": type_id, "type_name": type_name,
-        "object": curriculum_object, "assignment_object": assignment_object, "video" : None,
-        "files":file_objects
+        "object": curriculum_object, "assignment_object": assignment_object, "video": None,
+        "files": file_objects, "score": score
     }
 
     if type_id == 3:

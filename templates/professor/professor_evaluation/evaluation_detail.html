@@ -101,7 +101,7 @@
                                     </li>
                                     <div class="col-wrap p-0 w-8">
                                         {% for data in curriculum_data.objects %}
-                                            <li class="tb">
+                                            <li class="tb" onclick="location.href='{{ data.link }}'">
                                                 <h2>{{ data.title }}</h2>
                                             </li>
                                         {% endfor %}
@@ -111,10 +111,11 @@
                                     <div class="col-wrap p-0 w-3">
                                         {% for data in curriculum_data.objects %}
                                             <li class="tb">
-                                                {% if data.file %}
-                                                <a href="{{date.file.url}}" download>보기</a>
+                                                {% if data.status %}
+                                                    {#                                                <a href="{{date.file.url}}" download>보기</a>#}
+                                                    <h2>제출</h2>
                                                 {% else %}
-                                                <p>미제출</p>
+                                                    <h2>미제출</h2>
                                                 {% endif %}                                            </li>
                                         {% endfor %}
                                     </div>
@@ -125,7 +126,8 @@
                                                     <li class="tb">
                                                         <input type="number" id="percent" class="small-input"
                                                                name="eval-{{ data.id }}"
-                                                               value="{% if data.score %}{{ data.score }}{% else %}0{% endif %}">
+                                                               value="
+                                                                       {% if data.score %}{{ data.score }}{% else %}0{% endif %}">
                                                         <h2 class="ml-10">/100</h2>
                                                     </li>
                                                 {% else %}

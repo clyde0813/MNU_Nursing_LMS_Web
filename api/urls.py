@@ -11,5 +11,6 @@ urlpatterns = [
     path("curriculum", views.curriculum),
     path("comment", views.comment),
     path("<int:assignment_id>/comment", views.comment_web, name="comment_web"),
-    path("<int:type_id>/checklist", views.checklist_api)
+    path("<int:type_id>/checklist", views.checklist_api),
+    path("pdf", views.pdfViewer, name="pdfViewer")
 ]

@@ -41,7 +41,10 @@
                             <div class="date-wrap">
                                 <div class="container">
                                     <div class="row">
-                                        <input type="date" name="created_date" value="{{ today|date:"Y-m-d" }}">
+                                        <input type="datetime-local" name="start-date" value="{{ today|date:"Y-m-d" }}">
+                                        <h3>부터</h3>
+                                        <input type="datetime-local" name="end-date" value="{{ today|date:"Y-m-d" }}">
+                                        <h3>까지</h3>
                                     </div>
                                 </div>
                             </div>

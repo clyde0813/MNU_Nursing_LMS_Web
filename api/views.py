@@ -143,3 +143,9 @@ def checklist_api(request, type_id):
                 "content": i.checklist.content
             })
     return JsonResponse(return_json, safe=False)
+
+
+def pdfViewer(request):
+    file = request.GET.get("file", None)
+    context = {"file": file}
+    return render(request, "common/layout/pdf.html", context)
